@@ -213,20 +213,41 @@ std::unique_ptr<LinkedList> LinkedList::split() {
         return nullptr;
     }
 
+    std::tie(this->size, new_list->size) =
+        this->size % 2 == 0
+        ? std::make_tuple(split_index, split_index)
+        : std::make_tuple(split_index, split_index + 1);
+
     return new_list;
 }
 
-// void LinkedList::merge(std::unique_ptr<LinkedList> list) {
-//     if (this->empty() || list->empty()) {
-//         std::cout << "One of the list is empty.\n";
+std::unique_ptr<LinkedList> LinkedList::merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2) {
+    if (list1->empty() || list2->empty()) {
+        std::cout << "One of the list is empty.\n";
 
-//         return nullptr;
-//     }
+        return nullptr;
+    }
 
-//     size_t i = 0;
-//     while (!this->empty() && !list->empty()) {
-//         if (this->first->value > list->first->value) {
+    std::unique_ptr<LinkedList> res = std::make_unique<LinkedList>();
+    while (!list1->empty() && !list2->empty()) {
+        if (list1->first->value <= list2->first->value) {
+            std::unique_ptr<Node> n = list1->pop_front();
+            res->push_back(n->value);
+        } else {
+            std::unique_ptr<Node> n = list2->pop_front();
+            res->push_back(n->value);
+        }
+    }
 
-//         }
-//     }
-// }
+    while (!list1->empty()) {
+        std::unique_ptr<Node> n = list1->pop_front();
+        res->push_back(n->value);   
+    }
+
+    while (!list2->empty()) {
+        std::unique_ptr<Node> n = list2->pop_front();
+        res->push_back(n->value);   
+    }
+
+    return res;
+}

@@ -19,15 +19,12 @@
 
 
 int main() {
-    std::vector<size_t> arr = {1, 2, 3, 4, 5, 6};
+    std::vector<size_t> arr = {75, 2, 3, 65, 5, 45, 85, 18, 102, 250, 1000, 7, 5};
+
     std::unique_ptr<LinkedList> list = std::make_unique<LinkedList>(arr);
 
     list->print();
-
-    std::unique_ptr<Node> n = list->pop_front();
-
-    std::cout << n->value << "\n";
-    list->print();
+    sort(std::move(list));
 
     return 0;
 }

@@ -61,6 +61,6 @@ class LinkedList {
         // Split in two lists, returns the 2nd part of the list, since the first one is modified anyway
         std::unique_ptr<LinkedList> split();
 
-        // Merge current list with new one, in ascending order
-        void merge(std::unique_ptr<LinkedList> list);
+        // Merge two sorted lists into a new one, keeping it sorted
+        static std::unique_ptr<LinkedList> merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);
 };
