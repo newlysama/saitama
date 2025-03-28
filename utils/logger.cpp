@@ -1,17 +1,17 @@
 #include "logger.hh"
 
 void Logger::success(const std::string msg) {
-    std::cout << GREEN << msg << RESET << "\n";
+    std::cout << GREEN << "[SUCCESS] " << msg << RESET << "\n";
 }
 
 void Logger::status(const std::string msg) {
-    std::cout << YELLOW << msg << RESET << "\n";
+    std::cout << YELLOW << "[STATUS] " << msg << RESET << "\n";
 }
 
 void Logger::debug(const std::string msg) {
-    std::cout << CYAN << msg << RESET << "\n";
+    std::cout << CYAN << "[DEBUG] " << msg << RESET << "\n";
 }
 
 void Logger::error(const std::string msg) {
-    std::cout << RED << msg << RESET << "\n";
+    std::cout << RED << "[ERROR] " << msg << RESET << "\n";
 }
