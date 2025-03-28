@@ -15,11 +15,11 @@ UTILS_SRC = $(wildcard $(UTILS_DIR)/*.cpp)
 UTILS_OBJ = $(patsubst $(UTILS_DIR)/%.cpp, $(BUILD_DIR)/utils_%.o, $(UTILS_SRC))
 
 # Exercise to compile
-EXO ?=
-EXO_SRC = $(wildcard $(EXO)/*.cpp)
-EXO_OBJ = $(patsubst $(EXO)/%.cpp, $(BUILD_DIR)/$(EXO)_%.o, $(EXO_SRC))
-TARGET   = main
-TARGET_PATH = ./$(TARGET)
+EXO 		?=
+EXO_SRC      = $(wildcard $(EXO)/*.cpp)
+EXO_OBJ      = $(patsubst $(EXO)/%.cpp, $(BUILD_DIR)/$(EXO)_%.o, $(EXO_SRC))
+TARGET       = main
+TARGET_PATH  = ./$(TARGET)
 
 all:
 ifeq ($(EXO),)
