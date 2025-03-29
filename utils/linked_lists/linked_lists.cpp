@@ -1,4 +1,4 @@
-#include "linked_list.hh"
+#include "linked_lists.hh"
 
 Node::Node(size_t _value, std::unique_ptr<Node> _next)
     : value(_value)
@@ -25,7 +25,6 @@ bool LinkedList::empty() {
 
 void LinkedList::print() {
     if (this->empty()) {
-        std::cout << "Empty list.\n";
         return;
     }
 
@@ -166,7 +165,6 @@ Node *LinkedList::get(std::size_t index) {
     if (index == 0) {
         return this->first.get();
     } else if (index >= this->size) {
-        std::cout << "Cannot access element at index " << index << " on list of size " << this->size << ".\n";
         return nullptr;
     }
 
@@ -180,22 +178,20 @@ Node *LinkedList::get(std::size_t index) {
     return current;
 }
 
-std::unique_ptr<LinkedList> LinkedList::split() {
-    if (this->empty()) {
-        std::cout << "Empty list cannot be splitted.\n";
-        
-        return nullptr;
-    } else if (this->size == 1) {
-        std::cout << "List of size 1 cannot be splitted.\n";
-
-        return nullptr;
+std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>> LinkedList::split(std::unique_ptr<LinkedList> list) {
+    if (list->empty()) {
+        return std::make_tuple(nullptr, nullptr);
+    } else if (list->size == 1) {
+        return std::make_tuple(nullptr, nullptr);
     }
 
-    size_t split_index = this->size / 2;
+    size_t split_index = list->size / 2;
 
-    std::unique_ptr<LinkedList> new_list = std::make_unique<LinkedList>();
+    std::unique_ptr<LinkedList> new_list1 = std::make_unique<LinkedList>();
+    std::unique_ptr<LinkedList> new_list2 = std::make_unique<LinkedList>();
 
-    Node *current = this->first.get();
+    new_list1->first = std::move(list->first);
+    Node *current = new_list1->first.get();
     size_t i = 0;
     while (i < split_index - 1) {
         current = current->next.get();
@@ -203,28 +199,26 @@ std::unique_ptr<LinkedList> LinkedList::split() {
     }
 
     try {
-        new_list->first = std::move(current->next);
+        new_list2->first = std::move(current->next);
         current->next = nullptr;
     } catch (std::exception &e) {
         std::ostringstream oss;
         oss << "Exception raised in LinkedList::split() during assinging new least head : " << e.what() << "\n";
         Logger::error(oss.str());
 
-        return nullptr;
+        return std::make_tuple(nullptr, nullptr);
     }
 
-    std::tie(this->size, new_list->size) =
-        this->size % 2 == 0
+    std::tie(new_list1->size, new_list2->size) =
+        list->size % 2 == 0
         ? std::make_tuple(split_index, split_index)
         : std::make_tuple(split_index, split_index + 1);
 
-    return new_list;
+    return std::make_tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>(std::move(new_list1), std::move(new_list2));
 }
 
 std::unique_ptr<LinkedList> LinkedList::merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2) {
     if (list1->empty() || list2->empty()) {
-        std::cout << "One of the list is empty.\n";
-
         return nullptr;
     }
 

@@ -5,12 +5,13 @@
 #include <exception>
 #include <sstream>
 #include <vector>
+#include <tuple>
 
-#include <logger.hh>
+#include <logger/logger.hh>
 
 /*
 *  Class implementing integer Linked List structure (at least the one we needs)
-*  No need to implement clear() method since we use smart pointers
+*  No need to implement clear() method since we use unique pointers
 */
 
 class Node {
@@ -58,8 +59,8 @@ class LinkedList {
         // Get element at index
         Node *get(std::size_t index);
 
-        // Split in two lists, returns the 2nd part of the list, since the first one is modified anyway
-        std::unique_ptr<LinkedList> split();
+        // Split list in two lists, returns a tuple of the splited lists
+        static std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>> split(std::unique_ptr<LinkedList> list);
 
         // Merge two sorted lists into a new one, keeping it sorted
         static std::unique_ptr<LinkedList> merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);

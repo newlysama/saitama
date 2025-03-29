@@ -2,8 +2,6 @@
 * DAY ONE OF TRAINING
 */
 
-
-#include "linked_list.hh"
 #include "merge_sort.hh"
 #include "quick_sort.hh"
 

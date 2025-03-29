@@ -1,6 +1,6 @@
 #pragma once
 
-#include "linked_list.hh"
+#include <linked_lists/linked_lists.hh>
 
 
 void quick_sort(std::unique_ptr<LinkedList> list);
