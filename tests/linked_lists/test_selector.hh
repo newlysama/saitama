@@ -12,3 +12,4 @@
 #define TEST_SWAP_VALUES
 #define TEST_SPLIT
 #define TEST_MERGE
+#define TEST_CONCAT

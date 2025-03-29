@@ -32,6 +32,11 @@
 #include "test_merge.cpp"
 #endif
 
+#ifdef TEST_CONCAT
+#include "test_concat.cpp"
+#endif
+
+
 int main() {
     Logger::status("Running test runner...");
 
@@ -111,6 +116,16 @@ int main() {
     test_merge_duplicates_are_preserved();
     Logger::success("===> TEST_MERGE: ALL TESTS PASSED");
     #endif
+
+    #ifdef TEST_CONCAT
+    Logger::status("===> TEST_CONCAT:");
+    test_concat_two_non_empty_lists();
+    test_concat_with_first_list_empty();
+    test_concat_with_second_list_empty();
+    test_concat_with_both_empty_returns_empty_list();
+    Logger::success("===> TEST_CONCAT: ALL TESTS PASSED");
+    #endif
+    
 
     std::cout << "\n";
     Logger::success("<==== ALL SELECTED TESTS COMPLETED ====>");

@@ -71,4 +71,7 @@ class LinkedList {
 
         // Merge two sorted lists into a new one, keeping it sorted
         static std::unique_ptr<LinkedList> merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);
+
+        // Concat 2 lists
+        static std::unique_ptr<LinkedList> concat(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);
 };
