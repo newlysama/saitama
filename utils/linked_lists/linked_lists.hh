@@ -56,8 +56,11 @@ class LinkedList {
         // Pop node at the end of the list
         std::unique_ptr<Node> pop_back();
 
-        // Get element at index
+        // Get element at index, use brut ptr since we don't want to tranfer ownership
         Node *get(std::size_t index);
+
+        // Swap nodes values at specified index
+        void swap_values(size_t i, size_t j);
 
         // Split list in two lists, returns a tuple of the splited lists
         static std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>> split(std::unique_ptr<LinkedList> list);

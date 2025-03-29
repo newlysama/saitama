@@ -110,7 +110,7 @@ Node *LinkedList::get(std::size_t index) {
     if (index == 0) {
         return this->first.get();
     } else if (index >= this->size) {
-        return nullptr;
+       throw std::invalid_argument("Get() required index is out of bounds.");
     }
 
     Node *current = this->first.get();
@@ -121,6 +121,34 @@ Node *LinkedList::get(std::size_t index) {
     }
 
     return current;
+}
+
+void LinkedList::swap_values(size_t i, size_t j) {
+    if (i >= this->size || j >= this->size) {
+        throw std::invalid_argument("Swap() required index is out of bounds.");
+    } else if (i == j) {
+        throw std::invalid_argument("Swap() required indexs are equal.");
+    }
+
+    // So we don't have to check and build 2 loops...
+    if (i > j) { std::swap(i, j); }
+
+    // Don't use this->get() here since we want don't want to go through our list twice
+    std::size_t index = 0;
+    Node *current = this->first.get();
+    while (index < i) {
+        current = current->next.get();
+        index++;
+    }
+    Node* tmp = current;
+
+    while (index < j) {
+        current = current->next.get();
+        index++;     
+    }
+
+    // Only swap values since we don't care about the node itself here
+    std::swap(tmp->value, current->value);
 }
 
 std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>> LinkedList::split(std::unique_ptr<LinkedList> list) {
@@ -164,6 +192,7 @@ std::unique_ptr<LinkedList> LinkedList::merge(std::unique_ptr<LinkedList> list1,
         return list1;
     }
 
+    // Return a new list is simplier here, since we didn't implement insert() method
     std::unique_ptr<LinkedList> res = std::make_unique<LinkedList>();
     while (!list1->empty() && !list2->empty()) {
         if (list1->first->value <= list2->first->value) {

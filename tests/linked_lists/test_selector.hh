@@ -9,5 +9,6 @@
 #define TEST_PUSH
 #define TEST_POP
 #define TEST_GET
+#define TEST_SWAP_VALUES
 #define TEST_SPLIT
 #define TEST_MERGE

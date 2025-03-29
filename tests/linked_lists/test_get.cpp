@@ -27,9 +27,16 @@ void test_get_last_element() {
     Logger::success("test_get_last_element passed.");
 }
 
-void test_get_out_of_bounds_returns_nullptr() {
+void test_get_out_of_bounds_throws() {
     LinkedList list({1, 2, 3});
-    Node* n = list.get(10);
-    assert(n == nullptr);
-    Logger::success("test_get_out_of_bounds_returns_nullptr passed.");
+    bool exception_thrown = false;
+
+    try {
+        list.get(10);
+    } catch (const std::invalid_argument& e) {
+        exception_thrown = true;
+    }
+
+    assert(exception_thrown);
+    Logger::success("test_get_out_of_bounds_throws passed.");
 }
