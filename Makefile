@@ -35,14 +35,14 @@ TARGET_PATH = ./$(TARGET)
 TEST        ?=
 TEST_SRC    = $(TEST)/runner.cpp
 TEST_OBJ    = $(patsubst $(TEST)/%.cpp, $(BUILD_DIR)/$(notdir $(TEST))_%.o, $(TEST_SRC))
-TEST_BIN    = test
+TEST_BIN    = test_runner
 TEST_PATH   = ./$(TEST_BIN)
 
 # ===========================
 # DEFAULT BUILD: EXO
 # ===========================
 all:
-ifeq ($(EXO),)
+ifeq ($(strip $(EXO)),)
 	$(error Merci de spécifier un exercice avec EXO=nom_du_dossier)
 endif
 	@mkdir -p $(BUILD_DIR)
@@ -52,16 +52,21 @@ endif
 $(TARGET_PATH): $(EXO_OBJ) $(UTILS_OBJ)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Compile exercise source files
+# Compile EXO source files
+$(BUILD_DIR)/$(EXO)_%.o: $(EXO)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Compile UTILS sources
 $(BUILD_DIR)/utils_%.o: $(UTILS_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # ===========================
-# TESTING TARGET
+# TEST TARGET
 # ===========================
 test:
-ifeq ($(TEST),)
+ifeq ($(strip $(TEST)),)
 	$(error Merci de spécifier un dossier de test avec TEST=chemin_du_dossier)
 endif
 	@mkdir -p $(BUILD_DIR)
@@ -71,7 +76,7 @@ endif
 $(TEST_PATH): $(TEST_OBJ) $(UTILS_OBJ)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Compile test source files
+# Compile test_runner
 $(BUILD_DIR)/$(notdir $(TEST))_%.o: $(TEST)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
