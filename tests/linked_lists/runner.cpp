@@ -62,8 +62,8 @@ int main() {
     Logger::status("➤ TEST_POP:");
     test_pop_front_from_list_of_multiple_elements();
     test_pop_back_from_list_of_multiple_elements();
-    test_pop_front_on_empty_list_returns_nullptr();
-    test_pop_back_on_empty_list_returns_nullptr();
+    test_pop_front_on_empty_list_throws();
+    test_pop_back_on_empty_list_throws();
     test_pop_back_on_single_element_list();
     test_pop_front_on_single_element_list();
     Logger::success("➤ TEST_POP: ALL TESTS PASSED");
@@ -82,8 +82,8 @@ int main() {
     Logger::status("➤ TEST_SPLIT:");
     test_split_even_length_list_returns_two_equal_parts();
     test_split_odd_length_list_returns_correct_sizes();
-    test_split_empty_list_returns_nullptr();
-    test_split_single_element_list_returns_nullptr();
+    test_split_empty_list_throws();
+    test_split_single_element_list_throws();
     test_split_preserves_order_in_both_parts();
     Logger::success("➤ TEST_SPLIT: ALL TESTS PASSED");
     #endif
@@ -92,7 +92,7 @@ int main() {
     Logger::status("➤ TEST_MERGE:");
     test_merge_two_sorted_lists();
     test_merge_with_one_list_empty();
-    test_merge_with_both_lists_empty_returns_nullptr();
+    test_merge_with_both_lists_empty();
     test_merge_preserves_order_and_elements();
     test_merge_duplicates_are_preserved();
     Logger::success("➤ TEST_MERGE: ALL TESTS PASSED");

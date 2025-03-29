@@ -25,10 +25,11 @@ bool LinkedList::empty() {
 
 void LinkedList::print() {
     if (this->empty()) {
+        std::cout << "[ ]\n";
         return;
     }
 
-    Node *current = this->first.get();
+    Node *current = this->first.get(); // use .get() to iterate so that we don't tranfer ownership
     std::ostringstream oss;
 
     oss << "[ ";
@@ -43,56 +44,18 @@ void LinkedList::print() {
 }
 
 void LinkedList::push_front(size_t value) {
-    std::unique_ptr<Node> new_node;
-
-    try {
-        new_node = std::make_unique<Node>(value, std::move(this->first));
-    } catch (std::exception &e) {
-        std::ostringstream oss;
-        oss << "Exception raised in LinkedList::push_front() during new_node creation : " << e.what() << "\n";
-        Logger::error(oss.str());
-
-        return;
-    }
+    std::unique_ptr<Node> new_node = std::make_unique<Node>(value, std::move(this->first));
    
-    try {
-        this->first = std::move(new_node);
-    } catch (std::exception &e) {
-        std::ostringstream oss;
-        oss << "Exception raised in LinkedList::push_front() during first elt attribution : " << e.what() << "\n";
-        Logger::error(oss.str());
-
-        return;
-    }    
-
+    this->first = std::move(new_node);
     this->size++;
 }
 
 void LinkedList::push_back(size_t value) {
-    std::unique_ptr<Node> new_node;
-
-    try {
-        new_node = std::make_unique<Node>(value, nullptr);
-    } catch (std::exception &e) {
-        std::ostringstream oss;
-        oss << "Exception raised in LinkedList::push_back() during new_node creation : " << e.what() << "\n";
-        Logger::error(oss.str());
-
-        return;
-    }
-
-    if (this->empty()) {
-        try {
-            this->first = std::move(new_node);
-        } catch (std::exception &e) {
-            std::ostringstream oss;
-            oss << "Exception raised in LinkedList::push_back() during first/last elt attribution : " << e.what() << "\n";
-            Logger::error(oss.str());
+    std::unique_ptr<Node> new_node = std::make_unique<Node>(value, nullptr); 
     
-            return;
-        }
+    if (this->empty()) {
+        this->first = std::move(new_node);
         this->size++;
-
         return;
     }
 
@@ -101,40 +64,22 @@ void LinkedList::push_back(size_t value) {
         current = current->next.get();
     }
 
-    try {
-        current->next = std::move(new_node);
-    } catch (std::exception &e) {
-        std::ostringstream oss;
-        oss << "Exception raised in LinkedList::push_back() during last elt attribution : " << e.what() << "\n";
-        Logger::error(oss.str());
-
-        return;
-    }
-
+    current->next = std::move(new_node);
     this->size++;
 }
 
 std::unique_ptr<Node> LinkedList::pop_front() {
     if (this->empty()) {
-        return nullptr;
+        throw std::invalid_argument("Cannot pop_front() on empty list.");
     }
 
-    std::unique_ptr<Node> res;
-
-    try {
-        res = std::move(this->first);
-        this->first = std::move(res->next);
-        res->next = nullptr;
-    } catch (std::exception &e) {
-        std::ostringstream oss;
-        oss << "Exception raised in LinkedList::pop_front() during first elt delete : " << e.what() << "\n";
-        Logger::error(oss.str());
-
-        return nullptr;;
-    }
+    std::unique_ptr<Node> res = std::move(this->first);
+    this->first = std::move(res->next);
+    res->next = nullptr;
 
     this->size--;
 
+    // Return the poped node, since we'll need it leter
     return res;
 }
 
@@ -142,7 +87,7 @@ std::unique_ptr<Node> LinkedList::pop_back() {
     std::unique_ptr<Node> res;
 
     if (this->empty()) {
-        return nullptr;
+        throw std::invalid_argument("Cannot pop_back() on empty list.");
     } else if (this->first->next == nullptr) {
         res = std::move(this->first);
         this->size--;
@@ -180,9 +125,9 @@ Node *LinkedList::get(std::size_t index) {
 
 std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>> LinkedList::split(std::unique_ptr<LinkedList> list) {
     if (list->empty()) {
-        return std::make_tuple(nullptr, nullptr);
+        throw std::invalid_argument("Cannot split() on empty list.");
     } else if (list->size == 1) {
-        return std::make_tuple(nullptr, nullptr);
+        throw std::invalid_argument("Cannot split() list of size 1.");
     }
 
     size_t split_index = list->size / 2;
@@ -198,17 +143,10 @@ std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>> LinkedList:
         i++;
     }
 
-    try {
-        new_list2->first = std::move(current->next);
-        current->next = nullptr;
-    } catch (std::exception &e) {
-        std::ostringstream oss;
-        oss << "Exception raised in LinkedList::split() during assinging new least head : " << e.what() << "\n";
-        Logger::error(oss.str());
+    new_list2->first = std::move(current->next);
+    current->next = nullptr;
 
-        return std::make_tuple(nullptr, nullptr);
-    }
-
+    // Double assignment because it's cool
     std::tie(new_list1->size, new_list2->size) =
         list->size % 2 == 0
         ? std::make_tuple(split_index, split_index)
@@ -218,8 +156,11 @@ std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>> LinkedList:
 }
 
 std::unique_ptr<LinkedList> LinkedList::merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2) {
-    if (list1->empty() || list2->empty()) {
-        return nullptr;
+    // We don't care about checking if both lists are empty, we'll just return the other one anyway
+    if (list1->empty()) {
+        return list2;
+    } else if (list2->empty()) {
+        return list1;
     }
 
     std::unique_ptr<LinkedList> res = std::make_unique<LinkedList>();

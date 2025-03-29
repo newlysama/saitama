@@ -23,18 +23,33 @@ void test_pop_back_from_list_of_multiple_elements() {
     Logger::success("test_pop_back_from_list_of_multiple_elements passed.");
 }
 
-void test_pop_front_on_empty_list_returns_nullptr() {
+void test_pop_front_on_empty_list_throws() {
     LinkedList list;
-    std::unique_ptr<Node> popped = list.pop_front();
-    assert(popped == nullptr);
-    Logger::success("test_pop_front_on_empty_list_returns_nullptr passed.");
+    bool exception_thrown = false;
+
+    try {
+        list.pop_front();
+    } catch (const std::invalid_argument& e) {
+        exception_thrown = true;
+    }
+
+    assert(exception_thrown);
+    Logger::success("test_pop_front_on_empty_list_throws passed.");
 }
 
-void test_pop_back_on_empty_list_returns_nullptr() {
+
+void test_pop_back_on_empty_list_throws() {
     LinkedList list;
-    std::unique_ptr<Node> popped = list.pop_back();
-    assert(popped == nullptr);
-    Logger::success("test_pop_back_on_empty_list_returns_nullptr passed.");
+    bool exception_thrown = false;
+
+    try {
+        list.pop_back();
+    } catch (const std::invalid_argument& e) {
+        exception_thrown = true;
+    }
+
+    assert(exception_thrown);
+    Logger::success("test_pop_back_on_empty_list_throws passed.");
 }
 
 void test_pop_back_on_single_element_list() {

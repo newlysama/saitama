@@ -20,17 +20,17 @@ void test_merge_with_one_list_empty() {
     auto list2 = std::make_unique<LinkedList>(std::vector<size_t>{10, 20});
     auto merged = LinkedList::merge(std::move(list1), std::move(list2));
 
-    assert(merged == nullptr);
+    assert(merged->first->value == 10);
     Logger::success("test_merge_with_one_list_empty passed.");
 }
 
-void test_merge_with_both_lists_empty_returns_nullptr() {
+void test_merge_with_both_lists_empty() {
     auto list1 = std::make_unique<LinkedList>();
     auto list2 = std::make_unique<LinkedList>();
     auto merged = LinkedList::merge(std::move(list1), std::move(list2));
 
-    assert(merged == nullptr);
-    Logger::success("test_merge_with_both_lists_empty_returns_nullptr passed.");
+    assert(merged->first == nullptr);
+    Logger::success("test_merge_with_both_lists_empty passed.");
 }
 
 void test_merge_preserves_order_and_elements() {
