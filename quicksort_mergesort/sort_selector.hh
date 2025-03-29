@@ -1,5 +1,0 @@
-// #define QUICK_LINKED_LISTS
-// #define QUICK_SORT
-
-#define MERGE_SORT_LINKED_LISTS
-#define MERGE_SORT

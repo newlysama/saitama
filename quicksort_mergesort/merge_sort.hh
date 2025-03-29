@@ -1,7 +1,8 @@
 #pragma once
 
-#include <linked_lists/linked_lists.hh>
-#include "sort_selector.hh"
+#include <exception>
 
-std::unique_ptr<LinkedList> sort(std::unique_ptr<LinkedList> list);
-void sort(std::vector<size_t> list);
+#include <linked_lists/linked_lists.hh>
+
+std::unique_ptr<LinkedList> merge_sort(std::unique_ptr<LinkedList> list);
+std::vector<std::size_t> merge_sort(std::vector<size_t> list);
