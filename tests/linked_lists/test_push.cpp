@@ -8,6 +8,7 @@ void test_push_front_single_element() {
     list.push_front(10);
     assert(list.size == 1);
     assert(list.get(0)->value == 10);
+    assert(list.last->value == 10);
     Logger::success("test_push_front_single_element passed.");
 }
 
@@ -25,23 +26,26 @@ void test_push_front_multiple_elements_order() {
 
 void test_push_back_single_element() {
     LinkedList list;
-    list.push_back(99);
+    list.push_back(10);
+    assert(!list.empty());
     assert(list.size == 1);
-    assert(list.get(0)->value == 99);
+    assert(list.get(0)->value == 10);
+    assert(list.get(0) == list.last);
     Logger::success("test_push_back_single_element passed.");
 }
 
 void test_push_back_multiple_elements_order() {
     LinkedList list;
-    list.push_back(4);
-    list.push_back(5);
-    list.push_back(6);
-    assert(list.size == 3);
-    assert(list.get(0)->value == 4);
-    assert(list.get(1)->value == 5);
-    assert(list.get(2)->value == 6);
+    std::vector<size_t> input = {1, 2, 3, 4};
+    for (size_t v : input) list.push_back(v);
+    assert(list.size == input.size());
+    for (size_t i = 0; i < input.size(); ++i) {
+        assert(list.get(i)->value == input[i]);
+    }
+    assert(list.last->value == input.back());
     Logger::success("test_push_back_multiple_elements_order passed.");
 }
+
 
 void test_push_front_and_back_combination() {
     LinkedList list;
@@ -52,5 +56,6 @@ void test_push_front_and_back_combination() {
     assert(list.get(0)->value == 5);
     assert(list.get(1)->value == 10);
     assert(list.get(2)->value == 15);
+    assert(list.last->value == 15);
     Logger::success("test_push_front_and_back_combination passed.");
 }

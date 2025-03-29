@@ -12,6 +12,8 @@ void test_merge_two_sorted_lists() {
     for (size_t i = 0; i < 6; ++i) {
         assert(merged->get(i)->value == i + 1);
     }
+
+    assert(merged->last->value == 6);
     Logger::success("test_merge_two_sorted_lists passed.");
 }
 
@@ -21,6 +23,7 @@ void test_merge_with_one_list_empty() {
     auto merged = LinkedList::merge(std::move(list1), std::move(list2));
 
     assert(merged->first->value == 10);
+    assert(merged->last->value == 20);
     Logger::success("test_merge_with_one_list_empty passed.");
 }
 
@@ -30,6 +33,7 @@ void test_merge_with_both_lists_empty() {
     auto merged = LinkedList::merge(std::move(list1), std::move(list2));
 
     assert(merged->first == nullptr);
+    assert(merged->last == nullptr);
     Logger::success("test_merge_with_both_lists_empty passed.");
 }
 
@@ -42,6 +46,8 @@ void test_merge_preserves_order_and_elements() {
     for (size_t i = 0; i < expected.size(); ++i) {
         assert(merged->get(i)->value == expected[i]);
     }
+
+    assert(merged->last->value == 6);
     Logger::success("test_merge_preserves_order_and_elements passed.");
 }
 
@@ -55,5 +61,7 @@ void test_merge_duplicates_are_preserved() {
     for (size_t i = 0; i < expected.size(); ++i) {
         assert(merged->get(i)->value == expected[i]);
     }
+
+    assert(merged->last->value == 4);
     Logger::success("test_merge_duplicates_are_preserved passed.");
 }

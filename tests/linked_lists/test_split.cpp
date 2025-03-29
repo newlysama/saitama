@@ -14,6 +14,9 @@ void test_split_even_length_list_returns_two_equal_parts() {
     assert(left->get(1)->value == 2);
     assert(right->get(0)->value == 3);
     assert(right->get(1)->value == 4);
+
+    assert(left->last->value == 2);
+    assert(right->last->value == 4);
     Logger::success("test_split_even_length_list_returns_two_equal_parts passed.");
 }
 

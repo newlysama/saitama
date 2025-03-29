@@ -29,6 +29,7 @@ class Node {
 class LinkedList {
     public:
         std::unique_ptr<Node> first;
+        Node *last; // Need this one so push_back(), pop_back() and concat() are O(1) complexity (can't make it unique_ptr because penultimate node->next already has ownership)
         std::size_t size;
     
         /*
@@ -49,6 +50,9 @@ class LinkedList {
 
         // Append new node at the end of the list
         void push_back(size_t value);
+    
+        // Need this version for last handleing
+        void push_back(std::unique_ptr<Node> new_node);
 
         // Pop node at the beginning of the list
         std::unique_ptr<Node> pop_front();
