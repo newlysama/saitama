@@ -1,9 +1,9 @@
 /*
-* DAY ONE OF TRAINING
+* DAY ONE/TWO OF TRAINING
 */
 
-#include "merge_sort.hh"
-#include "quick_sort.hh"
+#include "quicksort_mergesort/merge_sort.hh"
+#include "quicksort_mergesort/quick_sort.hh"
 
 // std::vector<size_t> arr = {75, 2, 3, 65, 5, 45, 85, 18, 102, 250, 1000, 7, 5};
 

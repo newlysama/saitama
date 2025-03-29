@@ -1,90 +1,100 @@
-# ===========================
-# Compiler and flags
-# ===========================
+# =========================
+#         COMPILER
+# =========================
+
 CXX       = g++
 CXXFLAGS += -std=c++17 -Wall -Wextra -Werror -pedantic
 CXXFLAGS += -Wconversion -Wcast-align -Wunused -Wshadow
 CXXFLAGS += -Wold-style-cast -Wpointer-arith
 CXXFLAGS += -fsanitize=address
-CXXFLAGS += -I$(UTILS_DIR)
+CXXFLAGS += -Iutils -Iexos
 
-# ===========================
-# Folders
-# ===========================
-UTILS_DIR = utils
+# =========================
+#        FOLDERS
+# =========================
+
 BUILD_DIR = build
+BIN_DIR   = bin
 
-# ===========================
-# UTILS SOURCES & OBJECTS
-# ===========================
-UTILS_SRC = $(shell find $(UTILS_DIR) -name "*.cpp")
-UTILS_OBJ = $(patsubst $(UTILS_DIR)/%.cpp,$(BUILD_DIR)/utils_%.o,$(UTILS_SRC))
+# =========================
+#    SOURCES MACCROS
+# =========================
 
-# ===========================
-# EXERCISE BUILD
-# ===========================
-EXO         ?=
-EXO_SRC     = $(wildcard $(EXO)/*.cpp)
-EXO_OBJ     = $(patsubst $(EXO)/%.cpp, $(BUILD_DIR)/$(EXO)_%.o, $(EXO_SRC))
-TARGET      = main
-TARGET_PATH = ./$(TARGET)
+EXO_SRC   :=
+UTILS_SRC :=
+TEST_SRC  :=
 
-# ===========================
-# TEST BUILD
-# ===========================
-TEST        ?=
-TEST_SRC    = $(TEST)/runner.cpp
-TEST_OBJ    = $(patsubst $(TEST)/%.cpp, $(BUILD_DIR)/$(notdir $(TEST))_%.o, $(TEST_SRC))
-TEST_BIN    = test_runner
-TEST_PATH   = ./$(TEST_BIN)
+include config.mk
 
-# ===========================
-# DEFAULT BUILD: EXO
-# ===========================
-all:
-ifeq ($(strip $(EXO)),)
-	$(error Merci de spécifier un exercice avec EXO=nom_du_dossier)
-endif
-	@mkdir -p $(BUILD_DIR)
-	$(MAKE) $(TARGET_PATH)
+# Delete doublons
+EXO_SRC   := $(sort $(EXO_SRC))
+UTILS_SRC := $(sort $(UTILS_SRC))
+TEST_SRC  := $(sort $(TEST_SRC))
 
-# Link EXO binary
-$(TARGET_PATH): $(EXO_OBJ) $(UTILS_OBJ)
+# =========================
+#      OBJ FILES
+# =========================
+
+OBJ_EXO   = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(EXO_SRC))
+OBJ_UTILS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(UTILS_SRC))
+OBJ_TESTS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(TEST_SRC))
+
+ALL_OBJ = $(OBJ_EXO) $(OBJ_UTILS)
+
+# =========================
+#        BINARIES
+# =========================
+
+EXE_NAME   = $(BIN_DIR)/main
+TEST_NAME  = $(BIN_DIR)/test_runner
+
+# =========================
+#          RULES
+# =========================
+
+all: $(EXE_NAME)
+
+test: $(TEST_NAME)
+
+# =========================
+#          LINK
+# =========================
+
+$(EXE_NAME): $(ALL_OBJ)
+	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Compile EXO source files
-$(BUILD_DIR)/$(EXO)_%.o: $(EXO)/%.cpp
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# Compile UTILS sources
-$(BUILD_DIR)/utils_%.o: $(UTILS_DIR)/%.cpp
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# ===========================
-# TEST TARGET
-# ===========================
-test:
-ifeq ($(strip $(TEST)),)
-	$(error Merci de spécifier un dossier de test avec TEST=chemin_du_dossier)
-endif
-	@mkdir -p $(BUILD_DIR)
-	$(MAKE) $(TEST_PATH)
-
-# Link test binary
-$(TEST_PATH): $(TEST_OBJ) $(UTILS_OBJ)
+$(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
+	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Compile test_runner
-$(BUILD_DIR)/$(notdir $(TEST))_%.o: $(TEST)/%.cpp
+# =========================
+#         COMPILE
+# =========================
+
+$(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# ===========================
-# CLEAN
-# ===========================
+# =========================
+#          RUN
+# =========================
+
+run:
+	@echo "Running all executables in $(BIN_DIR)/"
+	@for exe in $(BIN_DIR)/*; do \
+		if [ -x $$exe ]; then \
+			echo ""; \
+			echo "Running $$exe:"; \
+			./$$exe || exit $$?; \
+		fi; \
+	done
+
+# =========================
+#        CLEAN
+# =========================
+
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET) $(TEST_BIN)
+	rm -rf $(BUILD_DIR) $(BIN_DIR)
 
-.PHONY: all clean test
+.PHONY: all test clean
