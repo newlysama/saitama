@@ -9,7 +9,7 @@ void test_push_front_single_element() {
     assert(list.size == 1);
     assert(list.get(0)->value == 10);
     assert(list.last->value == 10);
-    Logger::success("test_push_front_single_element passed.");
+    Logger::def("test_push_front_single_element passed.");
 }
 
 void test_push_front_multiple_elements_order() {
@@ -21,7 +21,7 @@ void test_push_front_multiple_elements_order() {
     assert(list.get(0)->value == 3);
     assert(list.get(1)->value == 2);
     assert(list.get(2)->value == 1);
-    Logger::success("test_push_front_multiple_elements_order passed.");
+    Logger::def("test_push_front_multiple_elements_order passed.");
 }
 
 void test_push_back_single_element() {
@@ -31,7 +31,7 @@ void test_push_back_single_element() {
     assert(list.size == 1);
     assert(list.get(0)->value == 10);
     assert(list.get(0) == list.last);
-    Logger::success("test_push_back_single_element passed.");
+    Logger::def("test_push_back_single_element passed.");
 }
 
 void test_push_back_multiple_elements_order() {
@@ -43,7 +43,7 @@ void test_push_back_multiple_elements_order() {
         assert(list.get(i)->value == input[i]);
     }
     assert(list.last->value == input.back());
-    Logger::success("test_push_back_multiple_elements_order passed.");
+    Logger::def("test_push_back_multiple_elements_order passed.");
 }
 
 
@@ -57,5 +57,5 @@ void test_push_front_and_back_combination() {
     assert(list.get(1)->value == 10);
     assert(list.get(2)->value == 15);
     assert(list.last->value == 15);
-    Logger::success("test_push_front_and_back_combination passed.");
+    Logger::def("test_push_front_and_back_combination passed.");
 }

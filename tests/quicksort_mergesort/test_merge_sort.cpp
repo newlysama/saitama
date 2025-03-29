@@ -13,7 +13,7 @@ void test_vector_split_even_size() {
     auto [left, right] = split(input);
     assert(left == std::vector<size_t>({1, 2}));
     assert(right == std::vector<size_t>({3, 4}));
-    Logger::success("test_vector_split_even_size passed.");
+    Logger::def("test_vector_split_even_size passed.");
 }
 
 void test_vector_split_odd_size() {
@@ -21,7 +21,7 @@ void test_vector_split_odd_size() {
     auto [left, right] = split(input);
     assert(left == std::vector<size_t>({10, 20}));
     assert(right == std::vector<size_t>({30, 40, 50}));
-    Logger::success("test_vector_split_odd_size passed.");
+    Logger::def("test_vector_split_odd_size passed.");
 }
 
 void test_vector_split_empty_throws() {
@@ -32,7 +32,7 @@ void test_vector_split_empty_throws() {
         threw = true;
     }
     assert(threw);
-    Logger::success("test_vector_split_empty_throws passed.");
+    Logger::def("test_vector_split_empty_throws passed.");
 }
 
 void test_vector_merge_sorted_inputs() {
@@ -40,7 +40,7 @@ void test_vector_merge_sorted_inputs() {
     std::vector<size_t> b = {2, 4, 6};
     std::vector<size_t> merged = merge(a, b);
     assert(merged == std::vector<size_t>({1, 2, 3, 4, 5, 6}));
-    Logger::success("test_vector_merge_sorted_inputs passed.");
+    Logger::def("test_vector_merge_sorted_inputs passed.");
 }
 
 void test_vector_merge_with_duplicates() {
@@ -48,21 +48,21 @@ void test_vector_merge_with_duplicates() {
     std::vector<size_t> b = {2, 3};
     std::vector<size_t> merged = merge(a, b);
     assert(merged == std::vector<size_t>({1, 2, 2, 2, 3}));
-    Logger::success("test_vector_merge_with_duplicates passed.");
+    Logger::def("test_vector_merge_with_duplicates passed.");
 }
 
 void test_vector_merge_sort_unsorted_input() {
     std::vector<size_t> input = {5, 1, 4, 2, 3};
     std::vector<size_t> sorted = merge_sort(input);
     assert(sorted == std::vector<size_t>({1, 2, 3, 4, 5}));
-    Logger::success("test_vector_merge_sort_unsorted_input passed.");
+    Logger::def("test_vector_merge_sort_unsorted_input passed.");
 }
 
 void test_vector_merge_sort_stability_and_duplicates() {
     std::vector<size_t> input = {4, 2, 2, 4, 1};
     std::vector<size_t> sorted = merge_sort(input);
     assert(sorted == std::vector<size_t>({1, 2, 2, 4, 4}));
-    Logger::success("test_vector_merge_sort_stability_and_duplicates passed.");
+    Logger::def("test_vector_merge_sort_stability_and_duplicates passed.");
 }
 
 /*
@@ -77,7 +77,7 @@ void test_linkedlist_merge_sort_already_sorted() {
     }
     assert(sorted->first->value == 1);
     assert(sorted->last->value == 5);
-    Logger::success("test_linkedlist_merge_sort_already_sorted passed.");
+    Logger::def("test_linkedlist_merge_sort_already_sorted passed.");
 }
 
 void test_linkedlist_merge_sort_reverse_order() {
@@ -88,7 +88,7 @@ void test_linkedlist_merge_sort_reverse_order() {
     }
     assert(sorted->first->value == 1);
     assert(sorted->last->value == 5);
-    Logger::success("test_linkedlist_merge_sort_reverse_order passed.");
+    Logger::def("test_linkedlist_merge_sort_reverse_order passed.");
 }
 
 void test_linkedlist_merge_sort_with_duplicates() {
@@ -100,7 +100,7 @@ void test_linkedlist_merge_sort_with_duplicates() {
     }
     assert(sorted->first->value == 1);
     assert(sorted->last->value == 4);
-    Logger::success("test_linkedlist_merge_sort_with_duplicates passed.");
+    Logger::def("test_linkedlist_merge_sort_with_duplicates passed.");
 }
 
 void test_linkedlist_merge_sort_single_element() {
@@ -109,7 +109,7 @@ void test_linkedlist_merge_sort_single_element() {
     assert(sorted->size == 1);
     assert(sorted->first->value == 42);
     assert(sorted->last->value == 42);
-    Logger::success("test_linkedlist_merge_sort_single_element passed.");
+    Logger::def("test_linkedlist_merge_sort_single_element passed.");
 }
 
 void test_linkedlist_merge_sort_empty_list() {
@@ -118,5 +118,5 @@ void test_linkedlist_merge_sort_empty_list() {
     assert(sorted->empty());
     assert(sorted->first == nullptr);
     assert(sorted->last == nullptr);
-    Logger::success("test_linkedlist_merge_sort_empty_list passed.");
+    Logger::def("test_linkedlist_merge_sort_empty_list passed.");
 }

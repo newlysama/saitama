@@ -17,7 +17,7 @@ void test_split_even_length_list_returns_two_equal_parts() {
 
     assert(left->last->value == 2);
     assert(right->last->value == 4);
-    Logger::success("test_split_even_length_list_returns_two_equal_parts passed.");
+    Logger::def("test_split_even_length_list_returns_two_equal_parts passed.");
 }
 
 void test_split_odd_length_list_returns_correct_sizes() {
@@ -27,7 +27,7 @@ void test_split_odd_length_list_returns_correct_sizes() {
 
     assert(left->size == 2);
     assert(right->size == 3);
-    Logger::success("test_split_odd_length_list_returns_correct_sizes passed.");
+    Logger::def("test_split_odd_length_list_returns_correct_sizes passed.");
 }
 
 void test_split_empty_list_throws() {
@@ -41,7 +41,7 @@ void test_split_empty_list_throws() {
     }
 
     assert(exception_thrown);
-    Logger::success("test_split_empty_list_throws passed.");
+    Logger::def("test_split_empty_list_throws passed.");
 }
 
 
@@ -56,7 +56,7 @@ void test_split_single_element_list_throws() {
     }
 
     assert(exception_thrown);
-    Logger::success("test_split_single_element_list_throws passed.");
+    Logger::def("test_split_single_element_list_throws passed.");
 }
 
 
@@ -69,5 +69,5 @@ void test_split_preserves_order_in_both_parts() {
     assert(left->get(1)->value == 3);
     assert(right->get(0)->value == 5);
     assert(right->get(1)->value == 7);
-    Logger::success("test_split_preserves_order_in_both_parts passed.");
+    Logger::def("test_split_preserves_order_in_both_parts passed.");
 }

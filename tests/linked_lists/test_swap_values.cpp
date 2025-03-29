@@ -8,7 +8,7 @@ void test_swap_values_two_elements() {
     list.swap_values(0, 1);
     assert(list.get(0)->value == 2);
     assert(list.get(1)->value == 1);
-    Logger::success("test_swap_values_two_elements passed.");
+    Logger::def("test_swap_values_two_elements passed.");
 }
 
 void test_swap_values_middle_elements() {
@@ -18,7 +18,7 @@ void test_swap_values_middle_elements() {
     assert(list.get(1)->value == 30);
     assert(list.get(2)->value == 20);
     assert(list.get(3)->value == 40);
-    Logger::success("test_swap_values_middle_elements passed.");
+    Logger::def("test_swap_values_middle_elements passed.");
 }
 
 void test_swap_values_first_and_last() {
@@ -26,7 +26,7 @@ void test_swap_values_first_and_last() {
     list.swap_values(0, 3);
     assert(list.get(0)->value == 8);
     assert(list.get(3)->value == 5);
-    Logger::success("test_swap_values_first_and_last passed.");
+    Logger::def("test_swap_values_first_and_last passed.");
 }
 
 void test_swap_values_invalid_indices_throws() {
@@ -40,7 +40,7 @@ void test_swap_values_invalid_indices_throws() {
     }
 
     assert(exception_thrown);
-    Logger::success("test_swap_values_invalid_indices_throws passed.");
+    Logger::def("test_swap_values_invalid_indices_throws passed.");
 }
 
 void test_swap_values_same_indices_throws() {
@@ -54,5 +54,5 @@ void test_swap_values_same_indices_throws() {
     }
 
     assert(exception_thrown);
-    Logger::success("test_swap_values_same_indices_throws passed.");
+    Logger::def("test_swap_values_same_indices_throws passed.");
 }

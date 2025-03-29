@@ -14,7 +14,7 @@ void test_merge_two_sorted_lists() {
     }
 
     assert(merged->last->value == 6);
-    Logger::success("test_merge_two_sorted_lists passed.");
+    Logger::def("test_merge_two_sorted_lists passed.");
 }
 
 void test_merge_with_one_list_empty() {
@@ -24,7 +24,7 @@ void test_merge_with_one_list_empty() {
 
     assert(merged->first->value == 10);
     assert(merged->last->value == 20);
-    Logger::success("test_merge_with_one_list_empty passed.");
+    Logger::def("test_merge_with_one_list_empty passed.");
 }
 
 void test_merge_with_both_lists_empty() {
@@ -34,7 +34,7 @@ void test_merge_with_both_lists_empty() {
 
     assert(merged->first == nullptr);
     assert(merged->last == nullptr);
-    Logger::success("test_merge_with_both_lists_empty passed.");
+    Logger::def("test_merge_with_both_lists_empty passed.");
 }
 
 void test_merge_preserves_order_and_elements() {
@@ -48,7 +48,7 @@ void test_merge_preserves_order_and_elements() {
     }
 
     assert(merged->last->value == 6);
-    Logger::success("test_merge_preserves_order_and_elements passed.");
+    Logger::def("test_merge_preserves_order_and_elements passed.");
 }
 
 void test_merge_duplicates_are_preserved() {
@@ -63,5 +63,5 @@ void test_merge_duplicates_are_preserved() {
     }
 
     assert(merged->last->value == 4);
-    Logger::success("test_merge_duplicates_are_preserved passed.");
+    Logger::def("test_merge_duplicates_are_preserved passed.");
 }

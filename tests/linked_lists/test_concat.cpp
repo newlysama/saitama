@@ -13,7 +13,7 @@ void test_concat_two_non_empty_lists() {
     assert(result->get(2)->value == 2);
     assert(result->get(3)->value == 4);
     assert(result->last->value == 4);
-    Logger::success("test_concat_two_non_empty_lists passed.");
+    Logger::def("test_concat_two_non_empty_lists passed.");
 }
 
 void test_concat_with_first_list_empty() {
@@ -24,7 +24,7 @@ void test_concat_with_first_list_empty() {
     assert(result->get(0)->value == 5);
     assert(result->get(1)->value == 6);
     assert(result->last->value == 6);
-    Logger::success("test_concat_with_first_list_empty passed.");
+    Logger::def("test_concat_with_first_list_empty passed.");
 }
 
 void test_concat_with_second_list_empty() {
@@ -35,7 +35,7 @@ void test_concat_with_second_list_empty() {
     assert(result->get(0)->value == 7);
     assert(result->get(1)->value == 8);
     assert(result->last->value == 8);
-    Logger::success("test_concat_with_second_list_empty passed.");
+    Logger::def("test_concat_with_second_list_empty passed.");
 }
 
 void test_concat_with_both_empty_returns_empty_list() {
@@ -44,5 +44,5 @@ void test_concat_with_both_empty_returns_empty_list() {
     auto result = LinkedList::concat(std::move(list1), std::move(list2));
     assert(result->empty());
     assert(result->last == nullptr);
-    Logger::success("test_concat_with_both_empty_returns_empty_list passed.");
+    Logger::def("test_concat_with_both_empty_returns_empty_list passed.");
 }

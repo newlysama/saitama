@@ -8,7 +8,7 @@ void test_init_from_empty_vector() {
     LinkedList list(input);
     assert(list.empty());
     assert(list.size == 0);
-    Logger::success("test_init_from_empty_vector passed.");
+    Logger::def("test_init_from_empty_vector passed.");
 }
 
 void test_init_from_vector_single_element() {
@@ -18,7 +18,7 @@ void test_init_from_vector_single_element() {
     assert(list.size == 1);
     assert(list.get(0)->value == 42);
     assert(list.get(0) == list.last);
-    Logger::success("test_init_from_vector_single_element passed.");
+    Logger::def("test_init_from_vector_single_element passed.");
 }
 
 void test_init_from_vector_multiple_elements() {
@@ -30,5 +30,5 @@ void test_init_from_vector_multiple_elements() {
         assert(list.get(i)->value == input[i]);
     }
     assert(list.last->value == input.back());
-    Logger::success("test_init_from_vector_multiple_elements passed.");
+    Logger::def("test_init_from_vector_multiple_elements passed.");
 }

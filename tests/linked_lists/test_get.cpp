@@ -8,7 +8,7 @@ void test_get_first_element() {
     Node* n = list.get(0);
     assert(n != nullptr);
     assert(n->value == 10);
-    Logger::success("test_get_first_element passed.");
+    Logger::def("test_get_first_element passed.");
 }
 
 void test_get_middle_element() {
@@ -16,7 +16,7 @@ void test_get_middle_element() {
     Node* n = list.get(1);
     assert(n != nullptr);
     assert(n->value == 20);
-    Logger::success("test_get_middle_element passed.");
+    Logger::def("test_get_middle_element passed.");
 }
 
 void test_get_last_element() {
@@ -24,7 +24,7 @@ void test_get_last_element() {
     Node* n = list.get(2);
     assert(n != nullptr);
     assert(n->value == 30);
-    Logger::success("test_get_last_element passed.");
+    Logger::def("test_get_last_element passed.");
 }
 
 void test_get_out_of_bounds_throws() {
@@ -38,5 +38,5 @@ void test_get_out_of_bounds_throws() {
     }
 
     assert(exception_thrown);
-    Logger::success("test_get_out_of_bounds_throws passed.");
+    Logger::def("test_get_out_of_bounds_throws passed.");
 }

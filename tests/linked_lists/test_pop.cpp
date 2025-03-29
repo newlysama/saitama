@@ -10,7 +10,7 @@ void test_pop_front_from_list_of_multiple_elements() {
     assert(popped->value == 1);
     assert(list.size == 2);
     assert(list.get(0)->value == 2);
-    Logger::success("test_pop_front_from_list_of_multiple_elements passed.");
+    Logger::def("test_pop_front_from_list_of_multiple_elements passed.");
 }
 
 void test_pop_back_from_list_of_multiple_elements() {
@@ -21,7 +21,7 @@ void test_pop_back_from_list_of_multiple_elements() {
     assert(list.size == 2);
     assert(list.get(1)->value == 2);
     assert(list.last->value == 2);
-    Logger::success("test_pop_back_from_list_of_multiple_elements passed.");
+    Logger::def("test_pop_back_from_list_of_multiple_elements passed.");
 }
 
 void test_pop_front_on_empty_list_throws() {
@@ -35,7 +35,7 @@ void test_pop_front_on_empty_list_throws() {
     }
 
     assert(exception_thrown);
-    Logger::success("test_pop_front_on_empty_list_throws passed.");
+    Logger::def("test_pop_front_on_empty_list_throws passed.");
 }
 
 
@@ -50,7 +50,7 @@ void test_pop_back_on_empty_list_throws() {
     }
 
     assert(exception_thrown);
-    Logger::success("test_pop_back_on_empty_list_throws passed.");
+    Logger::def("test_pop_back_on_empty_list_throws passed.");
 }
 
 void test_pop_back_on_single_element_list() {
@@ -60,7 +60,7 @@ void test_pop_back_on_single_element_list() {
     assert(popped->value == 99);
     assert(list.empty());
     assert(list.last == nullptr);
-    Logger::success("test_pop_back_on_single_element_list passed.");
+    Logger::def("test_pop_back_on_single_element_list passed.");
 }
 
 void test_pop_front_on_single_element_list() {
@@ -70,5 +70,5 @@ void test_pop_front_on_single_element_list() {
     assert(popped->value == 88);
     assert(list.empty());
     assert(list.last == nullptr);
-    Logger::success("test_pop_front_on_single_element_list passed.");
+    Logger::def("test_pop_front_on_single_element_list passed.");
 }

@@ -1,5 +1,6 @@
 # Build files
 build/
+bin/
 
 # Trash files
 .vscode/

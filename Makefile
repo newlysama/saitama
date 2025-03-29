@@ -17,68 +17,42 @@ BUILD_DIR = build
 BIN_DIR   = bin
 
 # =========================
-#    SOURCES MACCROS
+#      SOURCE MACROS
 # =========================
 
 EXO_SRC   :=
 UTILS_SRC :=
 TEST_SRC  :=
+TEST_DEFINES :=
 
 include config.mk
 
-# Delete doublons
+# =========================
+#  REMOVE DUPLICATES
+# =========================
+
 EXO_SRC   := $(sort $(EXO_SRC))
 UTILS_SRC := $(sort $(UTILS_SRC))
 TEST_SRC  := $(sort $(TEST_SRC))
 
 # =========================
-#      OBJ FILES
+#     OBJECTS & BINARY
 # =========================
 
 OBJ_EXO   = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(EXO_SRC))
 OBJ_UTILS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(UTILS_SRC))
 OBJ_TESTS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(TEST_SRC))
 
-ALL_OBJ = $(OBJ_EXO) $(OBJ_UTILS)
-
-# =========================
-#        BINARIES
-# =========================
-
 EXE_NAME   = $(BIN_DIR)/main
 TEST_NAME  = $(BIN_DIR)/test_runner
 
 # =========================
-#          RULES
+#         TARGETS
 # =========================
 
 all: $(EXE_NAME)
 
 test: $(TEST_NAME)
-
-# =========================
-#          LINK
-# =========================
-
-$(EXE_NAME): $(ALL_OBJ)
-	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-$(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
-	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-# =========================
-#         COMPILE
-# =========================
-
-$(BUILD_DIR)/%.o: %.cpp
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# =========================
-#          RUN
-# =========================
 
 run:
 	@echo "Running all executables in $(BIN_DIR)/"
@@ -90,11 +64,27 @@ run:
 		fi; \
 	done
 
-# =========================
-#        CLEAN
-# =========================
-
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
 
-.PHONY: all test clean
+.PHONY: all test clean run
+
+# =========================
+#         LINK
+# =========================
+
+$(EXE_NAME): $(OBJ_EXO) $(OBJ_UTILS)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+$(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $(TEST_DEFINES) $^ -o $@
+
+# =========================
+#       COMPILE RULE
+# =========================
+
+$(BUILD_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(TEST_DEFINES) -c $< -o $@

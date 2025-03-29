@@ -15,3 +15,7 @@ void Logger::debug(const std::string msg) {
 void Logger::error(const std::string msg) {
     std::cout << RED << "[ERROR] " << msg << RESET << "\n";
 }
+
+void Logger::def(const std::string msg) {
+    std::cout << "[DEFAULT] " << msg << "\n";
+}
