@@ -20,9 +20,9 @@ BIN_DIR   = bin
 #      SOURCE MACROS
 # =========================
 
-EXO_SRC   :=
-UTILS_SRC :=
-TEST_SRC  :=
+EXO_SRC   	 :=
+UTILS_SRC 	 :=
+TEST_SRC  	 :=
 TEST_DEFINES :=
 
 include config.mk
@@ -39,9 +39,9 @@ TEST_SRC  := $(sort $(TEST_SRC))
 #     OBJECTS & BINARY
 # =========================
 
-OBJ_EXO   = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(EXO_SRC))
-OBJ_UTILS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(UTILS_SRC))
-OBJ_TESTS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(TEST_SRC))
+OBJ_EXO    = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(EXO_SRC))
+OBJ_UTILS  = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(UTILS_SRC))
+OBJ_TESTS  = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(TEST_SRC))
 
 EXE_NAME   = $(BIN_DIR)/main
 TEST_NAME  = $(BIN_DIR)/test_runner
@@ -64,11 +64,6 @@ run:
 		fi; \
 	done
 
-clean:
-	rm -rf $(BUILD_DIR) $(BIN_DIR)
-
-.PHONY: all test clean run
-
 # =========================
 #         LINK
 # =========================
@@ -88,3 +83,10 @@ $(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
 $(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(TEST_DEFINES) -c $< -o $@
+
+
+
+clean:
+	rm -rf $(BUILD_DIR) $(BIN_DIR)
+
+.PHONY: all test clean run
