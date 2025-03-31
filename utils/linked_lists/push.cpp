@@ -5,9 +5,10 @@ void LinkedList::push_front(size_t value) {
    
     if (this->empty()) {
         this->last = new_node.get();
+    } else {
+        this->first->prev = new_node.get();
     }
 
-    this->first->prev = new_node.get();
     this->first = std::move(new_node);
     this->size++;
 }

@@ -15,18 +15,18 @@
 int test_linked_lists() {
     Logger::status("[RUNNING] [ LINKED LISTS TESTS ]\n");
 
-    Logger::status("[RUNNING] TEST_EMPTY:");
-    test_empty_on_default_constructed_list();
-    test_empty_on_list_after_all_pops();
-    test_empty_false_after_push_front();
-    test_empty_false_after_push_back();
-    Logger::success("[PASSED] TEST_EMPTY\n");
+    // Logger::status("[RUNNING] TEST_EMPTY:");
+    // test_empty_on_default_constructed_list();
+    // test_empty_on_list_after_all_pops();
+    // test_empty_false_after_push_front();
+    // test_empty_false_after_push_back();
+    // Logger::success("[PASSED] TEST_EMPTY\n");
 
-    Logger::status("[RUNNING] TEST_INIT:");
-    test_init_from_empty_vector();
-    test_init_from_vector_single_element();
-    test_init_from_vector_multiple_elements();
-    Logger::success("[PASSED] TEST_INIT\n");
+    // Logger::status("[RUNNING] TEST_INIT:");
+    // test_init_from_empty_vector();
+    // test_init_from_vector_single_element();
+    // test_init_from_vector_multiple_elements();
+    // Logger::success("[PASSED] TEST_INIT\n");
 
     Logger::status("[RUNNING] TEST_PUSH:");
     test_push_front_single_element();

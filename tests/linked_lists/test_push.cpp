@@ -66,9 +66,9 @@ void test_push_back_multiple_elements_order() {
 
 void test_push_front_and_back_combination() {
     LinkedList list;
-    list.push_back(10);   // 10
-    list.push_front(5);   // 5 -> 10
-    list.push_back(15);   // 5 -> 10 -> 15
+    list.push_back(10);
+    list.push_front(5);
+    list.push_back(15);
 
     assert(list.size == 3);
     assert(list.get(0)->value == 5);
