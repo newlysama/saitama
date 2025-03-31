@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <tuple>
+#include <optional>
 
 #include <logger/logger.hh>
 
@@ -18,11 +19,12 @@ class Node {
     public:
         size_t value;
         std::unique_ptr<Node> next;
+        Node *prev;
 
         /*
         *  Constructor / Destructor
         */
-        Node(size_t value, std::unique_ptr<Node> next);
+        Node(size_t value, std::unique_ptr<Node> next, Node* prev);
         ~Node() = default;
 };
 
@@ -30,7 +32,7 @@ class LinkedList {
     public:
         std::unique_ptr<Node> first;
         Node *last; // Need this one so push_back(), pop_back() and concat() are O(1) complexity (can't make it unique_ptr because penultimate node->next already has ownership)
-        std::size_t size;
+        size_t size;
     
         /*
         *  Constructor / Destructor
@@ -61,17 +63,31 @@ class LinkedList {
         std::unique_ptr<Node> pop_back();
 
         // Get element at index, use brut ptr since we don't want to tranfer ownership
-        Node *get(std::size_t index);
+        Node *get(size_t index);
 
         // Swap nodes values at specified index
         void swap_values(size_t i, size_t j);
 
         // Split list in two lists, returns a tuple of the splited lists
-        static std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>> split(std::unique_ptr<LinkedList> list);
+        // Use optional split_index parameter, so we can specify or not at which index we want to split
+        // Split index is middle by default
+        static std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
+        split(std::unique_ptr<LinkedList> list, std::optional<size_t> split_index = std::nullopt);
+
+        // Custom split to isolate the pivot (used for quick sort Lomuto version)
+        // Return pivot as LinkedList so we can concat it in quicksort
+        static std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
+        split_around_pivot(std::unique_ptr<LinkedList> list, size_t pivot_index);
 
         // Merge two sorted lists into a new one, keeping it sorted
         static std::unique_ptr<LinkedList> merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);
 
         // Concat 2 lists
         static std::unique_ptr<LinkedList> concat(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);
+
+        // Lomuto partition algorithm
+        size_t partition_lomuto(size_t low, size_t high);
+
+        // Hoare's partition algorithm
+        size_t partition_hoare(size_t low, size_t high);
 };

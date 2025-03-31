@@ -42,17 +42,3 @@ void test_swap_values_invalid_indices_throws() {
     assert(exception_thrown);
     Logger::def("test_swap_values_invalid_indices_throws passed.");
 }
-
-void test_swap_values_same_indices_throws() {
-    LinkedList list({9, 8});
-    bool exception_thrown = false;
-
-    try {
-        list.swap_values(1, 1);
-    } catch (const std::invalid_argument&) {
-        exception_thrown = true;
-    }
-
-    assert(exception_thrown);
-    Logger::def("test_swap_values_same_indices_throws passed.");
-}

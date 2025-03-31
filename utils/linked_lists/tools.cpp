@@ -34,6 +34,10 @@ Node *LinkedList::get(std::size_t index) {
     Node *current = this->first.get();
     size_t i = 0;
     while (i < index) {
+        if (!current) {
+           throw std::logic_error("Get() trying to access nullptr.");
+        }
+
         current = current->next.get();
         i++;
     }

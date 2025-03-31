@@ -1,8 +1,9 @@
 #include "linked_lists.hh"
 
-Node::Node(size_t _value, std::unique_ptr<Node> _next)
+Node::Node(size_t _value, std::unique_ptr<Node> _next, Node* _prev)
     : value(_value)
     , next(std::move(_next))
+    , prev(_prev)
     {}
 
 LinkedList::LinkedList()

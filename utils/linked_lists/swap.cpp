@@ -4,7 +4,7 @@ void LinkedList::swap_values(size_t i, size_t j) {
     if (i >= this->size || j >= this->size) {
         throw std::invalid_argument("Swap() required index is out of bounds.");
     } else if (i == j) {
-        throw std::invalid_argument("Swap() required indexs are equal.");
+        return;
     }
 
     // So we don't have to check and build 2 loops...

@@ -6,10 +6,11 @@
 #include "test_push.cpp"
 #include "test_pop.cpp"
 #include "test_get.cpp"
-#include "test_swap_values.cpp"
+#include "test_swap.cpp"
 #include "test_split.cpp"
 #include "test_merge.cpp"
 #include "test_concat.cpp"
+#include "test_partition.cpp"
 
 int test_linked_lists() {
     Logger::status("[RUNNING] [ LINKED LISTS TESTS ]\n");
@@ -56,7 +57,6 @@ int test_linked_lists() {
     test_swap_values_middle_elements();
     test_swap_values_first_and_last();
     test_swap_values_invalid_indices_throws();
-    test_swap_values_same_indices_throws();
     Logger::success("[PASSED] TEST_SWAP_VALUES\n");
 
     Logger::status("[RUNNING] TEST_SPLIT:");
@@ -65,7 +65,15 @@ int test_linked_lists() {
     test_split_empty_list_throws();
     test_split_single_element_list_throws();
     test_split_preserves_order_in_both_parts();
+    test_split_at_index_custom();
     Logger::success("[PASSED] TEST_SPLIT\n");
+
+    Logger::status("[RUNNING] TEST_SPLIT_AROUND_PIVOT");
+    test_split_around_pivot_middle();
+    test_split_around_pivot_zero();
+    test_split_around_pivot_last();
+    test_split_around_pivot_invalid();
+    Logger::success("[PASSED] TEST_SPLIT_AROUND_PIVOT\n");
 
     Logger::status("[RUNNING] TEST_MERGE:");
     test_merge_two_sorted_lists();
@@ -81,6 +89,15 @@ int test_linked_lists() {
     test_concat_with_second_list_empty();
     test_concat_with_both_empty_returns_empty_list();
     Logger::success("[PASSED] TEST_CONCAT\n");
+
+    Logger::status("[RUNNING] TEST_PARTITION:");
+    test_partition_lomuto_basic_case();
+    test_partition_lomuto_sorted_list();
+    test_partition_lomuto_reverse_list();
+    test_partition_hoare_basic_case();
+    test_partition_hoare_sorted_list();
+    test_partition_hoare_reverse_list();
+    Logger::success("[PASSED] TEST_PARTITION\n");
 
     Logger::success("[ ALL LINKED_LISTS TESTS COMPLETED ]\n");
     return 0;

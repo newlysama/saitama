@@ -1,11 +1,11 @@
 #include "merge_sort.hh"
 
 /*
-*  ============================= LINKED LISTS =============================
-*/
+ *  ============================= LINKED LISTS =============================
+ */
 
 std::unique_ptr<LinkedList> merge_sort(std::unique_ptr<LinkedList> list) {
-    if (list->empty() || list->size == 1) {
+    if (list->size <= 1) {
         return list;
     }
 
@@ -17,8 +17,8 @@ std::unique_ptr<LinkedList> merge_sort(std::unique_ptr<LinkedList> list) {
 }
 
 /*
-*  ============================= VECTORS =============================
-*/
+ *  ============================= VECTORS =============================
+ */
 
 std::tuple<std::vector<std::size_t>, std::vector<std::size_t>> split(std::vector<std::size_t> list) {
     std::vector<std::size_t> new_list1;
@@ -76,7 +76,7 @@ std::vector<std::size_t> merge(std::vector<std::size_t> list1, std::vector<std::
 }
 
 std::vector<std::size_t> merge_sort(std::vector<size_t> list) {
-    if (list.empty() || list.size() == 1) {
+    if (list.size() <= 1) {
         return list;
     }
 

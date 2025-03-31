@@ -3,6 +3,7 @@
 # =========================
 
 CXX       = g++
+CXXFLAGS :=
 CXXFLAGS += -std=c++17 -Wall -Wextra -Werror -pedantic
 CXXFLAGS += -Wconversion -Wcast-align -Wunused -Wshadow
 CXXFLAGS += -Wold-style-cast -Wpointer-arith
@@ -63,6 +64,9 @@ run:
 			./$$exe || exit $$?; \
 		fi; \
 	done
+
+run-benchmark:
+	./bin/main --benchmark_format=console --benchmark_time_unit=s
 
 # =========================
 #         LINK

@@ -5,7 +5,7 @@
 #include <logger/logger.hh>
 
 /*
- * VECTOR FUNCTIONS
+ *  ============================= VECTORS =============================
  */
 
 void test_vector_split_even_size() {
@@ -66,7 +66,7 @@ void test_vector_merge_sort_stability_and_duplicates() {
 }
 
 /*
- * LINKED LISTS
+ *  ============================= LINKED LISTS =============================
  */
 
 void test_linkedlist_merge_sort_already_sorted() {

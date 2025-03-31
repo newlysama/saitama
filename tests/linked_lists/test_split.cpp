@@ -71,3 +71,84 @@ void test_split_preserves_order_in_both_parts() {
     assert(right->get(1)->value == 7);
     Logger::def("test_split_preserves_order_in_both_parts passed.");
 }
+
+void test_split_at_index_custom() {
+    auto splited = LinkedList::split(std::make_unique<LinkedList>(std::vector<size_t>{10, 20, 30, 40, 50}));
+    auto left = std::move(std::get<0>(splited));
+    auto right = std::move(std::get<1>(splited));
+    
+    assert(left->size == 2);
+    assert(right->size == 3);
+    assert(left->get(0)->value == 10);
+    assert(left->get(1)->value == 20);
+    assert(right->get(0)->value == 30);
+    assert(right->get(1)->value == 40);
+    assert(right->get(2)->value == 50);
+    assert(left->last->value == 20);
+    assert(right->last->value == 50);
+
+    Logger::def("test_split_at_index_custom passed.");
+}
+
+// CUSTOM SPLIT FUNCTION
+void test_split_around_pivot_middle() {
+    auto list = std::make_unique<LinkedList>(std::vector<size_t>{1, 2, 3, 4, 5});
+    auto [left, pivot, right] = LinkedList::split_around_pivot(std::move(list), 2);
+
+    assert(left->size == 2);
+    assert(left->get(0)->value == 1);
+    assert(left->get(1)->value == 2);
+
+    assert(pivot->size == 1);
+    assert(pivot->get(0)->value == 3);
+
+    assert(right->size == 2);
+    assert(right->get(0)->value == 4);
+    assert(right->get(1)->value == 5);
+
+    Logger::def("test_split_around_pivot_middle passed.");
+}
+
+void test_split_around_pivot_zero() {
+    auto list = std::make_unique<LinkedList>(std::vector<size_t>{10, 20, 30});
+    auto [left, pivot, right] = LinkedList::split_around_pivot(std::move(list), 0);
+    assert(left->size == 0);
+
+    assert(pivot->size == 1);
+    assert(pivot->get(0)->value == 10);
+
+    assert(right->size == 2);
+    assert(right->get(0)->value == 20);
+    assert(right->get(1)->value == 30);
+
+    Logger::def("test_split_around_pivot_zero passed.");
+}
+
+void test_split_around_pivot_last() {
+    auto list = std::make_unique<LinkedList>(std::vector<size_t>{7, 8, 9});
+    auto [left, pivot, right] = LinkedList::split_around_pivot(std::move(list), 2);
+
+    assert(left->size == 2);
+    assert(left->get(0)->value == 7);
+    assert(left->get(1)->value == 8);
+
+    assert(pivot->size == 1);
+    assert(pivot->get(0)->value == 9);
+
+    assert(right->size == 0);
+
+    Logger::def("test_split_around_pivot_last passed.");
+}
+
+void test_split_around_pivot_invalid() {
+    bool exception_thrown = false;
+    try {
+        auto list = std::make_unique<LinkedList>(std::vector<size_t>{1});
+        LinkedList::split_around_pivot(std::move(list), 0);
+    } catch (const std::invalid_argument&) {
+        exception_thrown = true;
+    }
+
+    assert(exception_thrown);
+    Logger::def("test_split_around_pivot_invalid passed.");
+}

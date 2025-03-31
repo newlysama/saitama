@@ -15,7 +15,7 @@ std::unique_ptr<Node> LinkedList::pop_front() {
         this->last = nullptr;
     }
 
-    // Return the poped node, since we'll need it leter
+    // Return the poped node, since we'll need it later
     return res;
 }
 
@@ -24,7 +24,7 @@ std::unique_ptr<Node> LinkedList::pop_back() {
 
     if (this->empty()) {
         throw std::invalid_argument("Cannot pop_back() on empty list.");
-    } else if (this->first->next == nullptr) {
+    } else if (this->size == 1) {
         res = std::move(this->first);
         this->size--;
         this->last = nullptr;

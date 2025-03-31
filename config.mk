@@ -3,12 +3,12 @@
 # ===========================================================================
 
 # <============ EXERCISES ============>
-EXO_QUICKSORT_MERGESORT		:= 1
+EXO_QUICKSORT_MERGESORT		:= 0
 
 # <============== TESTS ==============>
 TEST_ON						:= 1
 TEST_LINKED_LISTS			:= 1
-TEST_QUICKSORT_MERGESORT	:= 1
+TEST_QUICKSORT_MERGESORT	:= 0
 
 
 
@@ -29,7 +29,8 @@ ifeq ($(EXO_QUICKSORT_MERGESORT),1)
 	endif
 
 	EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
-	UTILS_SRC 	+= $(wildcard utils/linked_lists/*.cpp)
+	UTILS_SRC 	+= $(wildcard utils/linked_lists/*.cpp) utils/tools.cpp
+	CXXFLAGS += -O2 -lbenchmark -lpthread
 endif
 
 # <============== TESTS ==============>
@@ -40,7 +41,6 @@ TEST_DEFINES :=
 ifeq ($(TEST_LINKED_LISTS),1)
 	TEST_SRC 		+= tests/runner.cpp
 	TEST_DEFINES 	+= -DTEST_LINKED_LISTS
-	EXO_SRC 		+= $(wildcard exos/quicksort_mergesort/*.cpp)
 	UTILS_SRC 		+= $(wildcard utils/linked_lists/*.cpp)
 endif
 
