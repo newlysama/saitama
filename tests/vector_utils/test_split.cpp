@@ -30,11 +30,3 @@ TEST_F(VectorSplitTest, T04_SplitOddLength) {
     EXPECT_EQ(left, (std::vector<size_t>{1, 2}));
     EXPECT_EQ(right, (std::vector<size_t>{3, 4, 5}));
 }
-
-TEST_F(VectorSplitTest, T05_SplitAtIndexTwoManually) {
-    std::vector<size_t> vec = {1, 3, 5, 7, 9};
-    auto [left, right] = VectorUtils::split(vec);
-    // par défaut split_index = vec.size() / 2 = 2
-    EXPECT_EQ(left, (std::vector<size_t>{1, 3}));
-    EXPECT_EQ(right, (std::vector<size_t>{5, 7, 9}));
-}
