@@ -3,12 +3,11 @@
 # =========================
 
 CXX       = g++
-CXXFLAGS :=
 CXXFLAGS += -std=c++17 -Wall -Wextra -Werror -pedantic
 CXXFLAGS += -Wconversion -Wcast-align -Wunused -Wshadow
 CXXFLAGS += -Wold-style-cast -Wpointer-arith
 CXXFLAGS += -fsanitize=address
-CXXFLAGS += -Iutils -Iexos
+CXXFLAGS += -Iutils -Iexos -Itests
 
 # =========================
 #        FOLDERS
@@ -24,7 +23,6 @@ BIN_DIR   = bin
 EXO_SRC   	 :=
 UTILS_SRC 	 :=
 TEST_SRC  	 :=
-TEST_DEFINES :=
 
 include config.mk
 
@@ -65,20 +63,17 @@ run:
 		fi; \
 	done
 
-run-benchmark:
-	./bin/main --benchmark_format=console --benchmark_time_unit=s
-
 # =========================
 #         LINK
 # =========================
 
 $(EXE_NAME): $(OBJ_EXO) $(OBJ_UTILS)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) -O2 -lbenchmark -lpthread $^ -o $@
 
 $(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $(TEST_DEFINES) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ -lgtest -lgtest_main -pthread -o $@
 
 # =========================
 #       COMPILE RULE
@@ -86,9 +81,15 @@ $(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
 
 $(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(TEST_DEFINES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# =========================
+#        RULES
+# =========================
 
+# Force seconds as benchmark time unit
+run-benchmark:
+	./bin/main --benchmark_format=console --benchmark_time_unit=s
 
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
