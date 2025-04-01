@@ -9,6 +9,8 @@
 #include <optional>
 #include <iostream>
 
+#include <logger/logger.hh>
+
 /*
 *  Class implementing size_t Linked List structure (at least the methods we needs)
 *  No need to implement clear() method since we use unique pointers

@@ -73,12 +73,6 @@ Node *LinkedList::get(std::size_t index) {
     return current;
 }
 
-void LinkedList::transfer(std::unique_ptr<LinkedList>& dest, std::unique_ptr<LinkedList>& src) {
-    dest->first = std::move(src->first);
-    dest->last = src->last;
-    dest->size = src->size;
-}
-
 void check_access_nullptr(Node* node, const std::string& function, std::optional<size_t> index) {
     if (node == nullptr) {
         std::ostringstream oss;
