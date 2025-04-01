@@ -4,7 +4,10 @@
 
 size_t LinkedList::partition_lomuto(size_t low, size_t high) {
     if (low >= high || high >= this->size) {
-        throw std::invalid_argument("Invalid indices for partition_lomuto.");
+        std::ostringstream oss;
+        oss << "LinkedList::partition_lomuto() : invalid indices.";
+        oss << "Got low : " << low << " || " << "high : " << high;
+        throw std::invalid_argument(oss.str());
     }
 
     // Chose 1st/last element as pivot since we work with linked lists
@@ -25,10 +28,15 @@ size_t LinkedList::partition_lomuto(size_t low, size_t high) {
 
 size_t LinkedList::partition_hoare(size_t low, size_t high) {
     if (low >= high || high >= this->size) {
-        throw std::invalid_argument("Invalid indices for partition_hoare.");
+        std::ostringstream oss;
+        oss << "LinkedList::partition_hoare() : invalid indices.";
+        oss << "Got low : " << low << " || " << "high : " << high;
+        throw std::invalid_argument(oss.str());
     }
 
     size_t pivot_value = this->get(low)->value;
+
+    // Convert to singed long so that if low = 0, low - 1 won't be max positive long
     std::ptrdiff_t i = static_cast<std::ptrdiff_t>(low) - 1;
     std::ptrdiff_t j = static_cast<std::ptrdiff_t>(high) + 1;
 

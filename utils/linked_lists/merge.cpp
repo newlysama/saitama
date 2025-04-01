@@ -8,25 +8,27 @@ std::unique_ptr<LinkedList> LinkedList::merge(std::unique_ptr<LinkedList> list1,
         return list1;
     }
 
-    // Return a new list is simplier here, since we didn't implement insert() method
+    // Return a new list is simplier and more readable here
+    // But if we want to improve memory managment, we can merge list2 into list 1 in-place
     std::unique_ptr<LinkedList> res = std::make_unique<LinkedList>();
+
     while (!list1->empty() && !list2->empty()) {
         if (list1->first->value <= list2->first->value) {
-            std::unique_ptr<Node> n = list1->pop_front();
+            auto n = list1->pop_front();
             res->push_back(std::move(n));
         } else {
-            std::unique_ptr<Node> n = list2->pop_front();
+            auto n = list2->pop_front();
             res->push_back(std::move(n));
         }
     }
 
     while (!list1->empty()) {
-        std::unique_ptr<Node> n = list1->pop_front();
+        auto n = list1->pop_front();
         res->push_back(std::move(n));   
     }
 
     while (!list2->empty()) {
-        std::unique_ptr<Node> n = list2->pop_front();
+        auto n = list2->pop_front();
         res->push_back(std::move(n));   
     }
 

@@ -2,76 +2,93 @@
 
 std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
 LinkedList::split(std::unique_ptr<LinkedList> list, std::optional<size_t> split_index) {
+
     if (list->empty()) {
-        throw std::invalid_argument("Cannot split() on empty list.");
+        throw std::invalid_argument("LinkedList::split() : cannot split empty list.");
     } else if (list->size == 1) {
-        throw std::invalid_argument("Cannot split() list of size 1.");
+        throw std::invalid_argument("LinkedList::split() : cannot split list of size 1.");
     }
+    
 
     split_index = split_index.value_or(list->size / 2);
+    check_index("split()", split_index.value(), list->size);
 
-    if (split_index.value() > list->size) {
-        throw std::invalid_argument("Cannot split() beyond the end of the list.");
-    }
+    auto left = std::make_unique<LinkedList>();
+    auto right = std::make_unique<LinkedList>();
 
-    // Custom handling for pivot_index = 0, since 'pivot_index - 1' in next while loop won't behave as expected (pivot_index is size_t)
+    // Custom handling for split at last element to save time
+    // Also, next coming loop compares to split_index - 1, which makes 0 - 1 at first element (doesn't work as expected with size_t's)
     if (split_index.value() == 0) {
-        auto left = std::make_unique<LinkedList>();
+        auto first = list->pop_front();
+        left->push_back(std::move(first));
+
         return std::make_tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>(std::move(left), std::move(list));
+    } else if (split_index.value() == list->size - 1) {
+        auto last = list->pop_back();
+        right->push_back(std::move(last));
+
+        return std::make_tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>(std::move(list), std::move(right));      
     }
 
-    std::unique_ptr<LinkedList> new_list1 = std::make_unique<LinkedList>();
-    std::unique_ptr<LinkedList> new_list2 = std::make_unique<LinkedList>();
-
-    new_list1->first = std::move(list->first);
-    Node *current = new_list1->first.get();
+    left->first = std::move(list->first);
+    auto current = left->first.get();
     size_t i = 0;
+
     while (i < split_index.value() - 1) {
+        check_access_nullptr(current, "split()", i);
+
         current = current->next.get();
         i++;
     }
-    new_list1->last = current;
+    left->last = current;
 
-    new_list2->first = std::move(current->next);
-    current->next = nullptr;
-    new_list2->last = list->last;
+    check_access_nullptr(current, "split()", i);
 
-    // Double assignment because it's cool
-    std::tie(new_list1->size, new_list2->size) =
-        list->size % 2 == 0
-        ? std::make_tuple(split_index.value(), split_index.value())
-        : std::make_tuple(split_index.value(), split_index.value() + 1);
+    right->first = std::move(current->next);
+    right->first->prev = nullptr;
+    left->last->next = nullptr;
+    right->last = list->last;
 
-    return std::make_tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>(std::move(new_list1), std::move(new_list2));
+    left->size = i + 1;
+    right->size = list->size - left->size;
+
+    return std::make_tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>(std::move(left), std::move(right));
 }
 
 std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
 LinkedList::split_around_pivot(std::unique_ptr<LinkedList> list, size_t pivot_index) {
     if (list->empty()) {
-        throw std::invalid_argument("Cannot split() on empty list.");
+        throw std::invalid_argument("LinkedList::split_around_pivot() : cannot split empty list.");
     } else if (list->size == 1) {
-        throw std::invalid_argument("Cannot split() list of size 1.");
+        throw std::invalid_argument("LinkedList::split_around_pivot() : cannot split list of size 1.");
     }
 
-    std::unique_ptr<LinkedList> left = std::make_unique<LinkedList>();
-    std::unique_ptr<LinkedList> pivot = std::make_unique<LinkedList>();
-    std::unique_ptr<LinkedList> right = std::make_unique<LinkedList>();
+    check_index("split_around_pivot()", pivot_index, list->size);
 
-    // Custom handling for pivot_index = 0, since 'pivot_index - 1' in next while loop won't behave as expected (pivot_index is size_t)
+    auto left = std::make_unique<LinkedList>();
+    auto right = std::make_unique<LinkedList>();
+    auto pivot = std::make_unique<LinkedList>();
+
+    // Custom handling handling again (see split() above)
     if (pivot_index == 0) {
-        pivot->push_back(list->first->value);
+        auto first = list->pop_front();
+        pivot->push_back(std::move(first));
         
-        right->first = std::move(list->first->next);
-        right->last = list->last;
-        right->size = list->size - 1;
+        return std::make_tuple(std::move(left), std::move(pivot), std::move(list));
+    } else if (pivot_index == list->size - 1) {
+        auto last = list->pop_back();
+        pivot->push_back(std::move(last));
         
-        return std::make_tuple(std::move(left), std::move(pivot), std::move(right));
+        return std::make_tuple(std::move(list), std::move(pivot), std::move(right));    
     }
 
     left->first = std::move(list->first);
-    Node *current = left->first.get();
+    auto current = left->first.get();
     size_t i = 0;
+
     while (i < pivot_index - 1) {
+        check_access_nullptr(current, "split_around_pivot()", i);
+
         current = current->next.get();
         i++;
     }
@@ -81,7 +98,9 @@ LinkedList::split_around_pivot(std::unique_ptr<LinkedList> list, size_t pivot_in
     left->last = current;
 
     right->first = std::move(pivot->first->next);
+    right->first->prev = nullptr;
     pivot->first->next = nullptr;
+    pivot->first->prev = nullptr;
 
     left->size = pivot_index;
     pivot->size = 1;

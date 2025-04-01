@@ -1,85 +1,67 @@
-#include <cassert>
-
+#include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
-#include <logger/logger.hh>
+#include <test_utils.hh>
 
-void test_push_front_single_element() {
-    LinkedList list;
-    list.push_front(10);
-    assert(list.size == 1);
-    assert(list.get(0)->value == 10);
-    assert(list.last->value == 10);
-    assert(list.first->prev == nullptr);
-    assert(list.last->prev == nullptr);
-    Logger::def("test_push_front_single_element passed.");
-}
+class PushTest : public ::testing::Test {
+protected:
+    std::unique_ptr<LinkedList> list;
 
-void test_push_front_multiple_elements_order() {
-    LinkedList list;
-    list.push_front(1);  // Liste: 1
-    list.push_front(2);  // Liste: 2 -> 1
-    list.push_front(3);  // Liste: 3 -> 2 -> 1
-
-    assert(list.size == 3);
-    assert(list.get(0)->value == 3);
-    assert(list.get(1)->value == 2);
-    assert(list.get(2)->value == 1);
-
-    // Vérifie prev
-    assert(list.get(0)->prev == nullptr);
-    assert(list.get(1)->prev == list.get(0));
-    assert(list.get(2)->prev == list.get(1));
-
-    Logger::def("test_push_front_multiple_elements_order passed.");
-}
-
-void test_push_back_single_element() {
-    LinkedList list;
-    list.push_back(10);
-
-    assert(!list.empty());
-    assert(list.size == 1);
-    assert(list.get(0)->value == 10);
-    assert(list.get(0) == list.last);
-    assert(list.get(0)->prev == nullptr);
-    Logger::def("test_push_back_single_element passed.");
-}
-
-void test_push_back_multiple_elements_order() {
-    LinkedList list;
-    std::vector<size_t> input = {1, 2, 3, 4};
-    for (size_t v : input) list.push_back(v);
-
-    assert(list.size == input.size());
-    for (size_t i = 0; i < input.size(); ++i) {
-        assert(list.get(i)->value == input[i]);
-        if (i == 0) {
-            assert(list.get(i)->prev == nullptr);
-        } else {
-            assert(list.get(i)->prev == list.get(i - 1));
-        }
+    void SetUp() override {
+        list = std::make_unique<LinkedList>();
     }
+};
 
-    assert(list.last->value == input.back());
-    Logger::def("test_push_back_multiple_elements_order passed.");
+// ============================== push_front ==============================
+
+TEST_F(PushTest, T01_PushFrontOnEmptyList) {
+    list->push_front(42);
+
+    test_linked_list_integrity(*list, {42});
 }
 
-void test_push_front_and_back_combination() {
-    LinkedList list;
-    list.push_back(10);
-    list.push_front(5);
-    list.push_back(15);
+TEST_F(PushTest, T02_PushFrontMultipleElements) {
+    list->push_front(1);
+    list->push_front(2);
+    list->push_front(3);
 
-    assert(list.size == 3);
-    assert(list.get(0)->value == 5);
-    assert(list.get(1)->value == 10);
-    assert(list.get(2)->value == 15);
+    test_linked_list_integrity(*list, {3, 2, 1});
+}
 
-    // Vérifie prev
-    assert(list.get(0)->prev == nullptr);
-    assert(list.get(1)->prev == list.get(0));
-    assert(list.get(2)->prev == list.get(1));
+// ============================== push_back(size_t) ==============================
 
-    assert(list.last->value == 15);
-    Logger::def("test_push_front_and_back_combination passed.");
+TEST_F(PushTest, T03_PushBackOnEmptyList) {
+    list->push_back(7);
+
+    test_linked_list_integrity(*list, {7});
+}
+
+TEST_F(PushTest, T04_PushBackMultipleElements) {
+    list->push_back(10);
+    list->push_back(20);
+    list->push_back(30);
+
+    test_linked_list_integrity(*list, {10, 20, 30});
+}
+
+// ============================== push_back(unique_ptr<Node>) ==============================
+
+TEST_F(PushTest, T05_PushBackNodeOnEmptyList) {
+    std::unique_ptr<Node> node = std::make_unique<Node>(99, nullptr, nullptr);
+    list->push_back(std::move(node));
+
+    test_linked_list_integrity(*list, {99});
+}
+
+TEST_F(PushTest, T06_PushBackMultipleUniqueNodes) {
+    list->push_back(std::make_unique<Node>(1, nullptr, nullptr));
+    list->push_back(std::make_unique<Node>(2, nullptr, nullptr));
+    list->push_back(std::make_unique<Node>(3, nullptr, nullptr));
+
+    test_linked_list_integrity(*list, {1, 2, 3});
+}
+
+TEST_F(PushTest, T06_PushBackUniquePtrThrowsOnNullptr) {
+    std::unique_ptr<Node> null_node = nullptr;
+
+    EXPECT_THROW(list->push_back(std::move(null_node)), std::invalid_argument);
 }

@@ -1,84 +1,96 @@
-#include <cassert>
-
+#include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
-#include <logger/logger.hh>
+#include <test_utils.hh>
 
-// Helper functions to check if elements are partitioned correctly around pivot
-bool is_partitioned_lomuto(LinkedList& list, size_t pivot_index) {
-    size_t pivot = list.get(pivot_index)->value;
-    for (size_t i = 0; i < pivot_index; ++i)
-        if (list.get(i)->value > pivot)
-            return false;
-    for (size_t i = pivot_index + 1; i < list.size; ++i)
-        if (list.get(i)->value < pivot)
-            return false;
-    return true;
-}
+class PartitionTest : public ::testing::Test {};
 
-// Also checks if the elements are partitionned correctly around split_index
-bool is_partitioned_hoare(LinkedList& list, size_t left, size_t right, size_t pivot, size_t split_index) {
-    for (size_t i = left; i <= split_index; ++i) {
-        if (list.get(i)->value > pivot) return false;
-    }
+/*
+ * ======================== partition_lomuto ========================
+ */
 
-    for (size_t i = split_index + 1; i <= right; ++i) {
-        if (list.get(i)->value < pivot) return false;
-    }
-
-    return true;
-}
-
-
-// ====================
-//    Lomuto tests
-// ====================
-
-void test_partition_lomuto_basic_case() {
-    LinkedList list({9, 3, 7, 1, 5});
-    size_t pivot_index = list.partition_lomuto(0, list.size - 1);
-    assert(pivot_index < list.size);
-    assert(is_partitioned_lomuto(list, pivot_index));
-    Logger::def("test_partition_lomuto_basic_case passed.");
-}
-
-void test_partition_lomuto_sorted_list() {
+TEST_F(PartitionTest, T01_Lomuto_SortedList) {
     LinkedList list({1, 2, 3, 4, 5});
-    size_t pivot_index = list.partition_lomuto(0, list.size - 1);
-    assert(is_partitioned_lomuto(list, pivot_index));
-    Logger::def("test_partition_lomuto_sorted_list passed.");
+    size_t pivot = list.partition_lomuto(0, 4);
+    EXPECT_EQ(pivot, 4);
+    test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
-void test_partition_lomuto_reverse_list() {
+TEST_F(PartitionTest, T02_Lomuto_ReversedList) {
     LinkedList list({5, 4, 3, 2, 1});
-    size_t pivot_index = list.partition_lomuto(0, list.size - 1);
-    assert(is_partitioned_lomuto(list, pivot_index));
-    Logger::def("test_partition_lomuto_reverse_list passed.");
+    size_t pivot = list.partition_lomuto(0, 4);
+    EXPECT_EQ(pivot, 0);
+    test_linked_list_integrity(list, {1, 4, 3, 2, 5});
 }
 
-// ====================
-//    Hoare tests
-// ====================
-
-void test_partition_hoare_basic_case() {
-    LinkedList list({5, 1, 8, 2, 9});
-    size_t pivot = list.get(0)->value;
-    size_t split_index = list.partition_hoare(0, list.size - 1);
-    assert(is_partitioned_hoare(list, 0, list.size - 1, pivot, split_index));
-    Logger::def("test_partition_hoare_basic_case passed.");
+TEST_F(PartitionTest, T03_Lomuto_Duplicates) {
+    LinkedList list({3, 3, 3, 3, 3});
+    size_t pivot = list.partition_lomuto(0, 4);
+    EXPECT_EQ(pivot, 0);
+    test_linked_list_integrity(list, {3, 3, 3, 3, 3});
 }
 
-void test_partition_hoare_sorted_list() {
+TEST_F(PartitionTest, T04_Lomuto_AlreadyPartitioned) {
+    LinkedList list({1, 4, 3, 2, 5});
+    size_t pivot = list.partition_lomuto(0, 4);
+    EXPECT_EQ(pivot, 4);
+    test_linked_list_integrity(list, {1, 4, 3, 2, 5});
+}
+
+TEST_F(PartitionTest, T05_Lomuto_TwoElementsSorted) {
+    LinkedList list({1, 2});
+    size_t pivot = list.partition_lomuto(0, 1);
+    EXPECT_EQ(pivot, 1);
+    test_linked_list_integrity(list, {1, 2});
+}
+
+TEST_F(PartitionTest, T06_Lomuto_TwoElementsUnsorted) {
+    LinkedList list({2, 1});
+    size_t pivot = list.partition_lomuto(0, 1);
+    EXPECT_EQ(pivot, 0);
+    test_linked_list_integrity(list, {1, 2});
+}
+
+TEST_F(PartitionTest, T07_Lomuto_InvalidLowHigh) {
+    LinkedList list({1, 2, 3});
+    EXPECT_THROW(list.partition_lomuto(2, 2), std::invalid_argument);
+}
+
+TEST_F(PartitionTest, T08_Lomuto_HighOutOfBounds) {
+    LinkedList list({1, 2, 3});
+    EXPECT_THROW(list.partition_lomuto(0, 5), std::invalid_argument);
+}
+
+/*
+ * ======================== partition_hoare ========================
+ */
+
+ TEST_F(PartitionTest, T09_Hoare_SortedList) {
     LinkedList list({1, 2, 3, 4, 5});
-    size_t pivot = list.get(0)->value;
-    size_t split_index = list.partition_hoare(0, list.size - 1);
-    assert(is_partitioned_hoare(list, 0, list.size - 1, pivot, split_index));
-    Logger::def("test_partition_hoare_sorted_list passed.");
+    size_t pivot = list.partition_hoare(0, 4);
+    EXPECT_TRUE(pivot < 4);
+    test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
-void test_partition_hoare_reverse_list() {
+TEST_F(PartitionTest, T10_Hoare_ReversedList) {
     LinkedList list({5, 4, 3, 2, 1});
-    size_t pivot = list.get(0)->value;
-    size_t split_index = list.partition_hoare(0, list.size - 1);
-    assert(is_partitioned_hoare(list, 0, list.size - 1, pivot, split_index));
-    Logger::def("test_partition_hoare_reverse_list passed.");
+    size_t pivot = list.partition_hoare(0, 4);
+    EXPECT_TRUE(pivot < 4);
+    test_linked_list_integrity(list, {1, 4, 3, 2, 5});
+}
+
+TEST_F(PartitionTest, T11_Hoare_Duplicates) {
+    LinkedList list({4, 1, 4, 4, 3, 4});
+    size_t pivot = list.partition_hoare(0, 5);
+    EXPECT_TRUE(pivot <= 5);
+    test_linked_list_integrity(list, {4, 1, 3, 4, 4, 4});
+}
+
+TEST_F(PartitionTest, T12_Hoare_InvalidLowHigh) {
+    LinkedList list({1, 2, 3});
+    EXPECT_THROW(list.partition_hoare(3, 2), std::invalid_argument);
+}
+
+TEST_F(PartitionTest, T13_Hoare_HighOutOfBounds) {
+    LinkedList list({1, 2, 3});
+    EXPECT_THROW(list.partition_hoare(0, 5), std::invalid_argument);
 }

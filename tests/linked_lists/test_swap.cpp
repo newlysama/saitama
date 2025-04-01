@@ -1,44 +1,58 @@
-#include <cassert>
-
+#include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
-#include <logger/logger.hh>
+#include <test_utils.hh>
 
-void test_swap_values_two_elements() {
+class SwapValuesTest : public ::testing::Test {};
+
+TEST_F(SwapValuesTest, T01_SwapTwoElementsAtBeginning) {
     LinkedList list({1, 2});
     list.swap_values(0, 1);
-    assert(list.get(0)->value == 2);
-    assert(list.get(1)->value == 1);
-    Logger::def("test_swap_values_two_elements passed.");
+
+    test_linked_list_integrity(list, {2, 1});
 }
 
-void test_swap_values_middle_elements() {
-    LinkedList list({10, 20, 30, 40});
+TEST_F(SwapValuesTest, T02_SwapTwoMiddleElements) {
+    LinkedList list({1, 2, 3, 4});
     list.swap_values(1, 2);
-    assert(list.get(0)->value == 10);
-    assert(list.get(1)->value == 30);
-    assert(list.get(2)->value == 20);
-    assert(list.get(3)->value == 40);
-    Logger::def("test_swap_values_middle_elements passed.");
+
+    test_linked_list_integrity(list, {1, 3, 2, 4});
 }
 
-void test_swap_values_first_and_last() {
-    LinkedList list({5, 6, 7, 8});
+TEST_F(SwapValuesTest, T03_SwapFirstAndLast) {
+    LinkedList list({1, 2, 3, 4});
     list.swap_values(0, 3);
-    assert(list.get(0)->value == 8);
-    assert(list.get(3)->value == 5);
-    Logger::def("test_swap_values_first_and_last passed.");
+
+    test_linked_list_integrity(list, {4, 2, 3, 1});
 }
 
-void test_swap_values_invalid_indices_throws() {
-    LinkedList list({1, 2, 3});
-    bool exception_thrown = false;
+TEST_F(SwapValuesTest, T04_SameIndexShouldDoNothing) {
+    LinkedList list({5, 6, 7});
+    list.swap_values(1, 1);
 
-    try {
-        list.swap_values(0, 10);
-    } catch (const std::invalid_argument&) {
-        exception_thrown = true;
-    }
+    test_linked_list_integrity(list, {5, 6, 7});
+}
 
-    assert(exception_thrown);
-    Logger::def("test_swap_values_invalid_indices_throws passed.");
+TEST_F(SwapValuesTest, T05_SwapReverseIndexOrder) {
+    LinkedList list({10, 20, 30});
+    list.swap_values(2, 0);
+
+    test_linked_list_integrity(list, {30, 20, 10});
+}
+
+TEST_F(SwapValuesTest, T06_IndexIOutOfBounds) {
+    LinkedList list({1, 2});
+
+    EXPECT_THROW(list.swap_values(5, 1), std::invalid_argument);
+}
+
+TEST_F(SwapValuesTest, T07_IndexJOutOfBounds) {
+    LinkedList list({1, 2});
+
+    EXPECT_THROW(list.swap_values(0, 10), std::invalid_argument);
+}
+
+TEST_F(SwapValuesTest, T08_EmptyListShouldThrow) {
+    LinkedList list;
+
+    EXPECT_THROW(list.swap_values(0, 1), std::invalid_argument);
 }

@@ -7,11 +7,13 @@
 #include <vector>
 #include <tuple>
 #include <optional>
+#include <string_view>
 
 #include <logger/logger.hh>
+#include <tools.hh>
 
 /*
-*  Class implementing integer Linked List structure (at least the one we needs)
+*  Class implementing size_t Linked List structure (at least the methods we needs)
 *  No need to implement clear() method since we use unique pointers
 */
 
@@ -19,19 +21,22 @@ class Node {
     public:
         size_t value;
         std::unique_ptr<Node> next;
+        // can't make prev unique_ptr because node->prev->prev->next already has ownership
         Node *prev;
 
         /*
         *  Constructor / Destructor
         */
         Node(size_t value, std::unique_ptr<Node> next, Node* prev);
+        Node(Node* node);
         ~Node() = default;
 };
 
 class LinkedList {
     public:
         std::unique_ptr<Node> first;
-        Node *last; // Need this one so push_back(), pop_back() and concat() are O(1) complexity (can't make it unique_ptr because penultimate node->next already has ownership)
+        // can't make last unique_ptr because penultimate node->next already has ownership
+        Node *last; 
         size_t size;
     
         /*
@@ -47,6 +52,12 @@ class LinkedList {
         // Print the list
         void print();
 
+        // Get element at index, use brut ptr since we don't want to tranfer ownership
+        Node *get(size_t index);
+
+        // Transfer src into dest in-place
+        static void transfer(std::unique_ptr<LinkedList>& dest, std::unique_ptr<LinkedList>& src);
+
         // Append new node at the beginning of the list
         void push_front(size_t value);
 
@@ -61,9 +72,6 @@ class LinkedList {
 
         // Pop node at the end of the list
         std::unique_ptr<Node> pop_back();
-
-        // Get element at index, use brut ptr since we don't want to tranfer ownership
-        Node *get(size_t index);
 
         // Swap nodes values at specified index
         void swap_values(size_t i, size_t j);
@@ -82,8 +90,8 @@ class LinkedList {
         // Merge two sorted lists into a new one, keeping it sorted
         static std::unique_ptr<LinkedList> merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);
 
-        // Concat 2 lists
-        static std::unique_ptr<LinkedList> concat(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);
+        // Concat 2 lists in-place
+        static void concat(std::unique_ptr<LinkedList>& list1, std::unique_ptr<LinkedList>& list2);
 
         // Lomuto partition algorithm
         size_t partition_lomuto(size_t low, size_t high);
@@ -91,3 +99,9 @@ class LinkedList {
         // Hoare's partition algorithm
         size_t partition_hoare(size_t low, size_t high);
 };
+
+// Used to check if we try to access nullptr, throw std::logic_arg if yes
+void check_access_nullptr(Node* node, const std::string& function, std::optional<size_t> index = std::nullopt);
+
+// Used to check if the required index is out of bounds, throw std::invalid_argument if yes
+void check_index(const std::string& function, size_t index, size_t list_size);

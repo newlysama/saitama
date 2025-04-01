@@ -1,74 +1,77 @@
-#include <cassert>
-
+#include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
-#include <logger/logger.hh>
+#include <test_utils.hh>
 
-void test_pop_front_from_list_of_multiple_elements() {
-    LinkedList list({1, 2, 3});
-    std::unique_ptr<Node> popped = list.pop_front();
-    assert(popped != nullptr);
-    assert(popped->value == 1);
-    assert(list.size == 2);
-    assert(list.get(0)->value == 2);
-    Logger::def("test_pop_front_from_list_of_multiple_elements passed.");
-}
+class PopTest : public ::testing::Test {};
 
-void test_pop_back_from_list_of_multiple_elements() {
-    LinkedList list({1, 2, 3});
-    std::unique_ptr<Node> popped = list.pop_back();
-    assert(popped != nullptr);
-    assert(popped->value == 3);
-    assert(list.size == 2);
-    assert(list.get(1)->value == 2);
-    assert(list.last->value == 2);
-    Logger::def("test_pop_back_from_list_of_multiple_elements passed.");
-}
+/*
+ * ======================== pop_front ========================
+ */
 
-void test_pop_front_on_empty_list_throws() {
+TEST_F(PopTest, T_01_PopFrontThrowsOnEmptyList) {
     LinkedList list;
-    bool exception_thrown = false;
-
-    try {
-        list.pop_front();
-    } catch (const std::invalid_argument& e) {
-        exception_thrown = true;
-    }
-
-    assert(exception_thrown);
-    Logger::def("test_pop_front_on_empty_list_throws passed.");
+    EXPECT_THROW(list.pop_front(), std::invalid_argument);
 }
 
+TEST_F(PopTest, T_02_PopFrontOnSingleElementList) {
+    LinkedList list({42});
+    auto node = list.pop_front();
 
-void test_pop_back_on_empty_list_throws() {
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 42);
+    EXPECT_EQ(node->next, nullptr);
+    EXPECT_EQ(node->prev, nullptr);
+
+    test_linked_list_integrity(list, {});
+}
+
+TEST_F(PopTest, T_03_PopFrontOnMultipleElementList) {
+    LinkedList list({10, 20, 30});
+    auto node = list.pop_front();
+
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 10);
+    EXPECT_EQ(node->next, nullptr);
+    EXPECT_EQ(node->prev, nullptr);
+
+    test_linked_list_integrity(list, {20, 30});
+}
+
+/*
+ * ======================== pop_back ========================
+ */
+
+TEST_F(PopTest, T_04_PopBackThrowsOnEmptyList) {
     LinkedList list;
-    bool exception_thrown = false;
-
-    try {
-        list.pop_back();
-    } catch (const std::invalid_argument& e) {
-        exception_thrown = true;
-    }
-
-    assert(exception_thrown);
-    Logger::def("test_pop_back_on_empty_list_throws passed.");
+    EXPECT_THROW(list.pop_back(), std::invalid_argument);
 }
 
-void test_pop_back_on_single_element_list() {
+TEST_F(PopTest, T_05_PopBackThrowsIfLastIsNull) {
+    LinkedList list({1});
+    list.last = nullptr;  // Simulate corrupted state
+    EXPECT_THROW(list.pop_back(), std::logic_error);
+}
+
+TEST_F(PopTest, T_06_PopBackOnSingleElementList) {
     LinkedList list({99});
-    std::unique_ptr<Node> popped = list.pop_back();
-    assert(popped != nullptr);
-    assert(popped->value == 99);
-    assert(list.empty());
-    assert(list.last == nullptr);
-    Logger::def("test_pop_back_on_single_element_list passed.");
+    auto node = list.pop_back();
+
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 99);
+    EXPECT_EQ(node->next, nullptr);
+    EXPECT_EQ(node->prev, nullptr);
+
+    test_linked_list_integrity(list, {});
 }
 
-void test_pop_front_on_single_element_list() {
-    LinkedList list({88});
-    std::unique_ptr<Node> popped = list.pop_front();
-    assert(popped != nullptr);
-    assert(popped->value == 88);
-    assert(list.empty());
-    assert(list.last == nullptr);
-    Logger::def("test_pop_front_on_single_element_list passed.");
+TEST_F(PopTest, T_07_PopBackOnMultipleElementList) {
+    LinkedList list({5, 10, 15});
+    auto node = list.pop_back();
+
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 15);
+    EXPECT_EQ(node->prev, nullptr);
+    EXPECT_EQ(node->next, nullptr);
+
+    test_linked_list_integrity(list, {5, 10});
 }

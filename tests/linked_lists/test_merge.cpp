@@ -1,67 +1,73 @@
-#include <cassert>
-
+#include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
-#include <logger/logger.hh>
+#include <test_utils.hh>
 
-void test_merge_two_sorted_lists() {
-    auto list1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 3, 5});
-    auto list2 = std::make_unique<LinkedList>(std::vector<size_t>{2, 4, 6});
-    auto merged = LinkedList::merge(std::move(list1), std::move(list2));
+class MergeTest : public ::testing::Test {
+protected:
+    std::unique_ptr<LinkedList> list1;
+    std::unique_ptr<LinkedList> list2;
 
-    assert(merged->size == 6);
-    for (size_t i = 0; i < 6; ++i) {
-        assert(merged->get(i)->value == i + 1);
+    void SetUp() override {
+        list1 = std::make_unique<LinkedList>();
+        list2 = std::make_unique<LinkedList>();
     }
+};
 
-    assert(merged->last->value == 6);
-    Logger::def("test_merge_two_sorted_lists passed.");
+TEST_F(MergeTest, T01_BothEmpty) {
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {});
 }
 
-void test_merge_with_one_list_empty() {
-    auto list1 = std::make_unique<LinkedList>(std::vector<size_t>{});
-    auto list2 = std::make_unique<LinkedList>(std::vector<size_t>{10, 20});
-    auto merged = LinkedList::merge(std::move(list1), std::move(list2));
-
-    assert(merged->first->value == 10);
-    assert(merged->last->value == 20);
-    Logger::def("test_merge_with_one_list_empty passed.");
+TEST_F(MergeTest, T02_FirstEmpty) {
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{1, 3, 5});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 3, 5});
 }
 
-void test_merge_with_both_lists_empty() {
-    auto list1 = std::make_unique<LinkedList>();
-    auto list2 = std::make_unique<LinkedList>();
-    auto merged = LinkedList::merge(std::move(list1), std::move(list2));
-
-    assert(merged->first == nullptr);
-    assert(merged->last == nullptr);
-    Logger::def("test_merge_with_both_lists_empty passed.");
+TEST_F(MergeTest, T03_SecondEmpty) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{2, 4});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {2, 4});
 }
 
-void test_merge_preserves_order_and_elements() {
-    auto list1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 4, 5});
-    auto list2 = std::make_unique<LinkedList>(std::vector<size_t>{2, 3, 6});
-    auto merged = LinkedList::merge(std::move(list1), std::move(list2));
-
-    std::vector<size_t> expected = {1, 2, 3, 4, 5, 6};
-    for (size_t i = 0; i < expected.size(); ++i) {
-        assert(merged->get(i)->value == expected[i]);
-    }
-
-    assert(merged->last->value == 6);
-    Logger::def("test_merge_preserves_order_and_elements passed.");
+TEST_F(MergeTest, T04_AlternatingElements) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 3, 5});
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{2, 4, 6});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 2, 3, 4, 5, 6});
 }
 
-void test_merge_duplicates_are_preserved() {
-    auto list1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 3, 3});
-    auto list2 = std::make_unique<LinkedList>(std::vector<size_t>{2, 3, 4});
-    auto merged = LinkedList::merge(std::move(list1), std::move(list2));
+TEST_F(MergeTest, T05_List1BeforeList2) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 2});
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{3, 4});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 2, 3, 4});
+}
 
-    std::vector<size_t> expected = {1, 2, 3, 3, 3, 4};
-    assert(merged->size == expected.size());
-    for (size_t i = 0; i < expected.size(); ++i) {
-        assert(merged->get(i)->value == expected[i]);
-    }
+TEST_F(MergeTest, T06_List2BeforeList1) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{5, 6});
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{1, 2});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 2, 5, 6});
+}
 
-    assert(merged->last->value == 4);
-    Logger::def("test_merge_duplicates_are_preserved passed.");
+TEST_F(MergeTest, T07_WithDuplicates) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 2, 2});
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{2, 3});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 2, 2, 2, 3});
+}
+
+TEST_F(MergeTest, T08_SingleElementEach) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{2});
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{1});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 2});
+}
+
+TEST_F(MergeTest, T09_SingleElementAndMultiple) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{5});
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{1, 2, 3});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 2, 3, 5});
 }

@@ -1,42 +1,70 @@
-#include <cassert>
-
+#include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
-#include <logger/logger.hh>
+#include <test_utils.hh>
+#include <stdexcept>
+#include <sstream>
 
-void test_get_first_element() {
-    LinkedList list({10, 20, 30});
-    Node* n = list.get(0);
-    assert(n != nullptr);
-    assert(n->value == 10);
-    Logger::def("test_get_first_element passed.");
-}
+class GetTest : public ::testing::Test {
+protected:
+    std::unique_ptr<LinkedList> list;
 
-void test_get_middle_element() {
-    LinkedList list({10, 20, 30});
-    Node* n = list.get(1);
-    assert(n != nullptr);
-    assert(n->value == 20);
-    Logger::def("test_get_middle_element passed.");
-}
-
-void test_get_last_element() {
-    LinkedList list({10, 20, 30});
-    Node* n = list.get(2);
-    assert(n != nullptr);
-    assert(n->value == 30);
-    Logger::def("test_get_last_element passed.");
-}
-
-void test_get_out_of_bounds_throws() {
-    LinkedList list({1, 2, 3});
-    bool exception_thrown = false;
-
-    try {
-        list.get(10);
-    } catch (const std::invalid_argument& e) {
-        exception_thrown = true;
+    void SetUp() override {
+        list = std::make_unique<LinkedList>(std::vector<size_t>{10, 20, 30, 40, 50});
     }
+};
 
-    assert(exception_thrown);
-    Logger::def("test_get_out_of_bounds_throws passed.");
+TEST_F(GetTest, T01_GetFirstElement) {
+    Node* node = list->get(0);
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 10);
+    EXPECT_EQ(node->prev, nullptr);
+}
+
+TEST_F(GetTest, T02_GetMiddleElement_FirstHalf) {
+    Node* node = list->get(2);
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 30);
+    EXPECT_EQ(node->prev->value, 20);
+}
+
+TEST_F(GetTest, T03_GetMiddleElement_SecondHalf) {
+    Node* node = list->get(3);
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 40);
+    EXPECT_EQ(node->prev->value, 30);
+}
+
+TEST_F(GetTest, T04_GetLastElement) {
+    Node* node = list->get(4);
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 50);
+    EXPECT_EQ(node->next, nullptr);
+    EXPECT_EQ(node->prev->value, 40);
+}
+
+TEST_F(GetTest, T05_IndexEqualToSizeThrows) {
+    EXPECT_THROW({
+        list->get(5);
+    }, std::invalid_argument);
+}
+
+TEST_F(GetTest, T06_IndexMuchGreaterThanSizeThrows) {
+    EXPECT_THROW({
+        list->get(999);
+    }, std::invalid_argument);
+}
+
+TEST_F(GetTest, T07_GetFromEmptyListThrows) {
+    LinkedList empty_list;
+    EXPECT_THROW({
+        empty_list.get(0);
+    }, std::invalid_argument);
+}
+
+TEST_F(GetTest, T08_InternalNullTraversalThrowsLogicError) {
+    list->first = nullptr;
+    list->size = 5;
+    EXPECT_THROW({
+        list->get(0);
+    }, std::logic_error);
 }

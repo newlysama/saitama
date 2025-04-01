@@ -1,48 +1,41 @@
-#include <cassert>
-
+#include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
-#include <logger/logger.hh>
+#include <test_utils.hh>
 
-void test_concat_two_non_empty_lists() {
-    auto list1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 3});
-    auto list2 = std::make_unique<LinkedList>(std::vector<size_t>{2, 4});
-    auto result = LinkedList::concat(std::move(list1), std::move(list2));
-    assert(result->size == 4);
-    assert(result->get(0)->value == 1);
-    assert(result->get(1)->value == 3);
-    assert(result->get(2)->value == 2);
-    assert(result->get(3)->value == 4);
-    assert(result->last->value == 4);
-    Logger::def("test_concat_two_non_empty_lists passed.");
+class ConcatTest : public ::testing::Test {
+protected:
+    std::unique_ptr<LinkedList> left;
+    std::unique_ptr<LinkedList> right;
+
+    void SetUp() override {
+        left = std::make_unique<LinkedList>();
+        right = std::make_unique<LinkedList>();
+    }
+};
+
+TEST_F(ConcatTest, T01_TwoNonEmptyLists) {
+    left = std::make_unique<LinkedList>(std::vector<size_t>{1, 3});
+    right = std::make_unique<LinkedList>(std::vector<size_t>{2, 4});
+    LinkedList::concat(left, right);
+
+    test_linked_list_integrity(*left, {1, 3, 2, 4});
 }
 
-void test_concat_with_first_list_empty() {
-    auto list1 = std::make_unique<LinkedList>();
-    auto list2 = std::make_unique<LinkedList>(std::vector<size_t>{5, 6});
-    auto result = LinkedList::concat(std::move(list1), std::move(list2));
-    assert(result->size == 2);
-    assert(result->get(0)->value == 5);
-    assert(result->get(1)->value == 6);
-    assert(result->last->value == 6);
-    Logger::def("test_concat_with_first_list_empty passed.");
+TEST_F(ConcatTest, T02_FirstListEmpty) {
+    right = std::make_unique<LinkedList>(std::vector<size_t>{5, 6});
+    LinkedList::concat(left, right);
+
+    test_linked_list_integrity(*left, {5, 6});
 }
 
-void test_concat_with_second_list_empty() {
-    auto list1 = std::make_unique<LinkedList>(std::vector<size_t>{7, 8});
-    auto list2 = std::make_unique<LinkedList>();
-    auto result = LinkedList::concat(std::move(list1), std::move(list2));
-    assert(result->size == 2);
-    assert(result->get(0)->value == 7);
-    assert(result->get(1)->value == 8);
-    assert(result->last->value == 8);
-    Logger::def("test_concat_with_second_list_empty passed.");
+TEST_F(ConcatTest, T03_SecondListEmpty) {
+    left = std::make_unique<LinkedList>(std::vector<size_t>{7, 8});
+    LinkedList::concat(left, right);
+
+    test_linked_list_integrity(*left, {7, 8});
 }
 
-void test_concat_with_both_empty_returns_empty_list() {
-    auto list1 = std::make_unique<LinkedList>();
-    auto list2 = std::make_unique<LinkedList>();
-    auto result = LinkedList::concat(std::move(list1), std::move(list2));
-    assert(result->empty());
-    assert(result->last == nullptr);
-    Logger::def("test_concat_with_both_empty_returns_empty_list passed.");
+TEST_F(ConcatTest, T04_BothListsEmpty) {
+    LinkedList::concat(left, right);
+    test_linked_list_integrity(*left, {});
 }

@@ -6,6 +6,12 @@ Node::Node(size_t _value, std::unique_ptr<Node> _next, Node* _prev)
     , prev(_prev)
     {}
 
+Node::Node(Node* node)
+    : value(node->value)
+    , next(std::move(node->next))
+    , prev(node->prev)
+    {}
+
 LinkedList::LinkedList()
     : first(nullptr)
     , last(nullptr)
@@ -17,7 +23,5 @@ LinkedList::LinkedList(std::vector<std::size_t> list)
     , last(nullptr)
     , size(0)
     {
-        for (auto e : list) {
-            this->push_back(e);
-        }
+        for (auto e : list) { this->push_back(e); }
     }

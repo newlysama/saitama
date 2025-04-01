@@ -2,10 +2,11 @@
 
 void LinkedList::swap_values(size_t i, size_t j) {
     if (i >= this->size || j >= this->size) {
-        throw std::invalid_argument("Swap() required index is out of bounds.");
-    } else if (i == j) {
-        return;
-    }
+        std::ostringstream oss;
+        oss << "LinkedList::swap_values() : required index is out of bounds.\n";
+        oss << "i : " << i << " <==> " << "j : " << j;
+        throw std::invalid_argument(oss.str());
+    } else if (i == j) return;
 
     // So we don't have to check and build 2 loops...
     if (i > j) { std::swap(i, j); }
@@ -13,17 +14,31 @@ void LinkedList::swap_values(size_t i, size_t j) {
     // Don't use this->get() here since we want don't want to go through our list twice
     std::size_t index = 0;
     Node *current = this->first.get();
+
     while (index < i) {
+        if (current == nullptr) {
+            std::ostringstream oss;
+            oss << "LinkedList::swap_values() : trying to access nullptr at index : " << index;
+            throw std::logic_error(oss.str());
+        }
+
         current = current->next.get();
         index++;
     }
+
+    // Save first element we want to swap
     Node* tmp = current;
 
     while (index < j) {
+        if (current == nullptr) {
+            std::ostringstream oss;
+            oss << "LinkedList::swap_values() : trying to access nullptr at index : " << index;
+            throw std::logic_error(oss.str());
+        }
+
         current = current->next.get();
         index++;     
     }
 
-    // Only swap values since we don't care about the node itself here
     std::swap(tmp->value, current->value);
 }

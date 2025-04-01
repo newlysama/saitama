@@ -2,10 +2,11 @@
 
 std::unique_ptr<Node> LinkedList::pop_front() {
     if (this->empty()) {
-        throw std::invalid_argument("Cannot pop_front() on empty list.");
+        throw std::invalid_argument("LinkedList::pop_front() : cannot pop on empty list.");
     }
 
-    std::unique_ptr<Node> res = std::move(this->first);
+    auto res = std::move(this->first);
+
     this->first = std::move(res->next);
     res->next = nullptr;
 
@@ -13,9 +14,10 @@ std::unique_ptr<Node> LinkedList::pop_front() {
 
     if (this->empty()) {
         this->last = nullptr;
+    } else {
+        this->first->prev = nullptr;
     }
 
-    // Return the poped node, since we'll need it later
     return res;
 }
 
@@ -23,21 +25,26 @@ std::unique_ptr<Node> LinkedList::pop_back() {
     std::unique_ptr<Node> res;
 
     if (this->empty()) {
-        throw std::invalid_argument("Cannot pop_back() on empty list.");
-    } else if (this->size == 1) {
+        throw std::invalid_argument("LinkedList::pop_back() : cannot pop on empty list.");
+    } else if (this->last == nullptr) {
+        throw std::logic_error("LinkedList::pop_back() : trying to pop nullptr.");
+    }
+
+    else if (this->size == 1) {
         res = std::move(this->first);
         this->size--;
         this->last = nullptr;
+
         return res;
     }
 
-    Node *current = this->first.get();
-    while (current->next->next != nullptr) {
-        current = current->next.get();
-    }
+    res = std::make_unique<Node>(this->last);
 
-    this->last = current;
-    res = std::move(current->next);
+    check_access_nullptr(res->prev, "pop_back()");
+
+    this->last = res->prev;
+    res->prev->next = nullptr;
+    res->prev = nullptr;
     this->size--;
 
     return res;
