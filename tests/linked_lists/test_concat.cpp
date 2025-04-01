@@ -39,3 +39,24 @@ TEST_F(LinkedListConcatTest, T04_BothListsEmpty) {
     LinkedList::concat(left, right);
     test_linked_list_integrity(*left, {});
 }
+
+TEST_F(LinkedListConcatTest, T05_ConcatMultipleTimes) {
+    auto l1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 2});
+    auto l2 = std::make_unique<LinkedList>(std::vector<size_t>{3, 4});
+    auto l3 = std::make_unique<LinkedList>(std::vector<size_t>{5, 6});
+
+    LinkedList::concat(l1, l2);
+    LinkedList::concat(l1, l3);
+
+    test_linked_list_integrity(*l1, {1, 2, 3, 4, 5, 6});
+}
+
+TEST_F(LinkedListConcatTest, T06_ForceCorruption) {
+    left = std::make_unique<LinkedList>(std::vector<size_t>{1, 3});
+    right = std::make_unique<LinkedList>(std::vector<size_t>{2, 4});
+    left->last = nullptr; // Force curruption
+
+    EXPECT_THROW({
+        LinkedList::concat(left, right);
+    }, std::logic_error);
+}

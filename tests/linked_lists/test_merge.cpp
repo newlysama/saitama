@@ -71,3 +71,30 @@ TEST_F(LinkedListMergeTest, T09_SingleElementAndMultiple) {
     auto result = LinkedList::merge(std::move(list1), std::move(list2));
     test_linked_list_integrity(*result, {1, 2, 3, 5});
 }
+
+TEST_F(LinkedListMergeTest, T10_MixedLengthLists) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{1});
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{2, 3, 4, 5});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 2, 3, 4, 5});
+}
+
+TEST_F(LinkedListMergeTest, T11_InterleavedEqualElements) {
+    list1 = std::make_unique<LinkedList>(std::vector<size_t>{1, 3, 5});
+    list2 = std::make_unique<LinkedList>(std::vector<size_t>{1, 3, 5});
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+    test_linked_list_integrity(*result, {1, 1, 3, 3, 5, 5});
+}
+
+TEST_F(LinkedListMergeTest, T12_LargeLists) {
+    std::vector<size_t> v1(500, 1);
+    std::vector<size_t> v2(500, 2);
+    list1 = std::make_unique<LinkedList>(v1);
+    list2 = std::make_unique<LinkedList>(v2);
+    auto result = LinkedList::merge(std::move(list1), std::move(list2));
+
+    std::vector<size_t> expected(1000);
+    std::fill(expected.begin(), expected.begin() + 500, 1);
+    std::fill(expected.begin() + 500, expected.end(), 2);
+    test_linked_list_integrity(*result, expected);
+}

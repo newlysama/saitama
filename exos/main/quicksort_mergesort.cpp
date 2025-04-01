@@ -8,6 +8,7 @@
 #include <linked_lists/linked_lists.hh>
 #include <quicksort_mergesort/quick_sort.hh>
 #include <quicksort_mergesort/merge_sort.hh>
+#include <logger/logger.hh>
 
 constexpr size_t SIZE = 50'000; // Taille des listes 
 constexpr size_t MAX_VAL = 1'000'000;
@@ -75,7 +76,7 @@ BENCHMARK(BM_VectorMergeSort_Random);
 static void BM_VectorQuickSortLomuto_Random(benchmark::State& state) {
     for (auto _ : state) {
         auto data = generate_random_data(SIZE);
-        quick_sort_lomuto(data, 0, data.size() - 1);
+        quick_sort_lomuto(data);
         benchmark::DoNotOptimize(data);
     }
 }
@@ -84,7 +85,7 @@ BENCHMARK(BM_VectorQuickSortLomuto_Random);
 static void BM_VectorQuickSortHoare_Random(benchmark::State& state) {
     for (auto _ : state) {
         auto data = generate_random_data(SIZE);
-        quick_sort_hoare(data, 0, data.size() - 1);
+        quick_sort_hoare(data);
         benchmark::DoNotOptimize(data);
     }
 }
@@ -103,7 +104,8 @@ BENCHMARK(BM_LinkedListMergeSort_Random);
 static void BM_LinkedListQuickSortLomuto_Random(benchmark::State& state) {
     for (auto _ : state) {
         auto list = generate_random_linked_list(SIZE);
-        benchmark::DoNotOptimize(quick_sort_lomuto(std::move(list)));
+        quick_sort_lomuto(*list);
+        benchmark::DoNotOptimize(list);
     }
 }
 BENCHMARK(BM_LinkedListQuickSortLomuto_Random);
@@ -111,7 +113,7 @@ BENCHMARK(BM_LinkedListQuickSortLomuto_Random);
 static void BM_LinkedListQuickSortHoare_Random(benchmark::State& state) {
     for (auto _ : state) {
         auto list = generate_random_linked_list(SIZE);
-        quick_sort_hoare(*list, 0, list->size - 1);
+        quick_sort_hoare(*list);
         benchmark::DoNotOptimize(list);
     }
 }
@@ -130,7 +132,7 @@ BENCHMARK(BM_VectorMergeSort_Sorted);
 static void BM_VectorQuickSortLomuto_Sorted(benchmark::State& state) {
     for (auto _ : state) {
         auto data = generate_sorted_data(SIZE);
-        quick_sort_lomuto(data, 0, data.size() - 1);
+        quick_sort_lomuto(data);
         benchmark::DoNotOptimize(data);
     }
 }
@@ -139,7 +141,7 @@ BENCHMARK(BM_VectorQuickSortLomuto_Sorted);
 static void BM_VectorQuickSortHoare_Sorted(benchmark::State& state) {
     for (auto _ : state) {
         auto data = generate_sorted_data(SIZE);
-        quick_sort_hoare(data, 0, data.size() - 1);
+        quick_sort_hoare(data);
         benchmark::DoNotOptimize(data);
     }
 }
@@ -158,7 +160,8 @@ BENCHMARK(BM_LinkedListMergeSort_Sorted);
 static void BM_LinkedListQuickSortLomuto_Sorted(benchmark::State& state) {
     for (auto _ : state) {
         auto list = generate_sorted_linked_list(SIZE);
-        benchmark::DoNotOptimize(quick_sort_lomuto(std::move(list)));
+        quick_sort_lomuto(*list);
+        benchmark::DoNotOptimize(list);
     }
 }
 BENCHMARK(BM_LinkedListQuickSortLomuto_Sorted);
@@ -166,7 +169,7 @@ BENCHMARK(BM_LinkedListQuickSortLomuto_Sorted);
 static void BM_LinkedListQuickSortHoare_Sorted(benchmark::State& state) {
     for (auto _ : state) {
         auto list = generate_sorted_linked_list(SIZE);
-        quick_sort_hoare(*list, 0, list->size - 1);
+        quick_sort_hoare(*list);
         benchmark::DoNotOptimize(list);
     }
 }
@@ -185,7 +188,7 @@ BENCHMARK(BM_VectorMergeSort_Reverse);
 static void BM_VectorQuickSortLomuto_Reverse(benchmark::State& state) {
     for (auto _ : state) {
         auto data = generate_reverse_sorted_data(SIZE);
-        quick_sort_lomuto(data, 0, data.size() - 1);
+        quick_sort_lomuto(data);
         benchmark::DoNotOptimize(data);
     }
 }
@@ -194,7 +197,7 @@ BENCHMARK(BM_VectorQuickSortLomuto_Reverse);
 static void BM_VectorQuickSortHoare_Reverse(benchmark::State& state) {
     for (auto _ : state) {
         auto data = generate_reverse_sorted_data(SIZE);
-        quick_sort_hoare(data, 0, data.size() - 1);
+        quick_sort_hoare(data);
         benchmark::DoNotOptimize(data);
     }
 }
@@ -213,7 +216,8 @@ BENCHMARK(BM_LinkedListMergeSort_Reverse);
 static void BM_LinkedListQuickSortLomuto_Reverse(benchmark::State& state) {
     for (auto _ : state) {
         auto list = generate_reverse_sorted_linked_list(SIZE);
-        benchmark::DoNotOptimize(quick_sort_lomuto(std::move(list)));
+        quick_sort_lomuto(*list);
+        benchmark::DoNotOptimize(list);
     }
 }
 BENCHMARK(BM_LinkedListQuickSortLomuto_Reverse);
@@ -221,7 +225,7 @@ BENCHMARK(BM_LinkedListQuickSortLomuto_Reverse);
 static void BM_LinkedListQuickSortHoare_Reverse(benchmark::State& state) {
     for (auto _ : state) {
         auto list = generate_reverse_sorted_linked_list(SIZE);
-        quick_sort_hoare(*list, 0, list->size - 1);
+        quick_sort_hoare(*list);
         benchmark::DoNotOptimize(list);
     }
 }

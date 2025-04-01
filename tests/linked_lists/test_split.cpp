@@ -56,6 +56,22 @@ TEST_F(LinkedListSplitTest, T08_SplitOutOfBoundsThrows) {
     EXPECT_THROW(LinkedList::split(std::move(list), 5), std::invalid_argument);
 }
 
+/* ========== SPLIT + CONCAT / MERGE (ROUNDTRIP VALIDATION) ========== */
+
+TEST_F(LinkedListSplitTest, T16_SplitThenConcatRestoresList) {
+    auto list = std::make_unique<LinkedList>(std::vector<size_t>{1, 2, 3, 4});
+    auto [left, right] = LinkedList::split(std::move(list));
+    LinkedList::concat(left, right);
+    test_linked_list_integrity(*left, {1, 2, 3, 4});
+}
+
+TEST_F(LinkedListSplitTest, T17_SplitThenMergeRestoresSortedList) {
+    auto list = std::make_unique<LinkedList>(std::vector<size_t>{1, 3, 5, 7});
+    auto [left, right] = LinkedList::split(std::move(list));
+    auto result = LinkedList::merge(std::move(left), std::move(right));
+    test_linked_list_integrity(*result, {1, 3, 5, 7});
+}
+
 /* ================= SPLIT AROUND PIVOT ================= */
 
 TEST_F(LinkedListSplitTest, T09_SplitAroundPivotThrowsOnEmpty) {
@@ -103,4 +119,21 @@ TEST_F(LinkedListSplitTest, T14_SplitAroundPivotMiddleOdd) {
 TEST_F(LinkedListSplitTest, T15_SplitAroundPivotOutOfBoundsThrows) {
     auto list = std::make_unique<LinkedList>(std::vector<size_t>{1, 2});
     EXPECT_THROW(LinkedList::split_around_pivot(std::move(list), 5), std::invalid_argument);
+}
+
+/* ========== SPLIT_AROUND_PIVOT + CONCAT / MERGE (ROUNDTRIP VALIDATION) ========== */
+
+TEST_F(LinkedListSplitTest, T18_SplitAroundPivotThenConcatRestoresList) {
+    auto list = std::make_unique<LinkedList>(std::vector<size_t>{10, 20, 30, 40});
+    auto [left, pivot, right] = LinkedList::split_around_pivot(std::move(list), 2);
+    LinkedList::concat(left, pivot);
+    LinkedList::concat(left, right);
+    test_linked_list_integrity(*left, {10, 20, 30, 40});
+}
+
+TEST_F(LinkedListSplitTest, T19_SplitAroundPivotThenMergeRestoresSortedList) {
+    auto list = std::make_unique<LinkedList>(std::vector<size_t>{1, 4, 6, 8});
+    auto [left, pivot, right] = LinkedList::split_around_pivot(std::move(list), 2);
+    auto result = LinkedList::merge(LinkedList::merge(std::move(left), std::move(pivot)), std::move(right));
+    test_linked_list_integrity(*result, {1, 4, 6, 8});
 }

@@ -6,40 +6,42 @@
 
 // Lomuto
 
-void quick_sort_lomuto(std::unique_ptr<LinkedList>& list) {
-    if (list->size <= 1) return;
+void _quick_sort_lomuto(LinkedList& list, size_t low, size_t high) {
+    if (low >= high) return;
 
-    size_t pivot_index = list->partition_lomuto(0, list->size - 1);
+    size_t pivot_index = list.partition_lomuto(low, high);
 
-    auto [left, pivot, right] = LinkedList::split_around_pivot(std::move(list), pivot_index);
-    quick_sort_lomuto(left);
-    quick_sort_lomuto(right);
+    if (pivot_index > 0) {
+        _quick_sort_lomuto(list, low, pivot_index - 1);
+    }
+    _quick_sort_lomuto(list, pivot_index + 1, high);
+}
 
-    LinkedList::concat(left, pivot);
-    LinkedList::concat(left, right);
+void quick_sort_lomuto(LinkedList& list) {
+    if (list.empty() || list.size <= 1) return;
 
-    list = std::move(left);
+    _quick_sort_lomuto(list, 0, list.size - 1);
 }
 
 // Hoare
 
-void _quick_sort_hoare(std::unique_ptr<LinkedList>& list, size_t low, size_t high) {
+void _quick_sort_hoare(LinkedList& list, size_t low, size_t high) {
     if (low >= high) {
         return;
     }
 
-    size_t pivot_index = list->partition_hoare(low, high);
+    size_t pivot_index = list.partition_hoare(low, high);
 
     _quick_sort_hoare(list, low, pivot_index);
     _quick_sort_hoare(list, pivot_index + 1, high);
 }
 
-void quick_sort_hoare(std::unique_ptr<LinkedList>& list) {
-    if (list->empty()) {
+void quick_sort_hoare(LinkedList& list) {
+    if (list.empty()) {
         return;
     }
 
-    _quick_sort_hoare(list, 0, list->size - 1);
+    _quick_sort_hoare(list, 0, list.size - 1);
 }
 
 /*

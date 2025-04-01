@@ -3,17 +3,17 @@
 # ===========================================================================
 
 # <============ EXERCISES ============>
-EXO_QUICKSORT_MERGESORT		:= 0
+EXO_QUICKSORT_MERGESORT		:= 1
 
 # <============== TESTS ==============>
-TEST_ON						:= 1
+TEST_ON						:= 0
 
 # Test Utils
 TEST_LINKED_LISTS			:= 0
 TEST_VECTOR_UTILS           := 0
 
 # Test Exercises
-TEST_QUICKSORT_MERGESORT	:= 1
+TEST_QUICKSORT_MERGESORT	:= 0
 
 
 

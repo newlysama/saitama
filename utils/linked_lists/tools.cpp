@@ -31,45 +31,35 @@ Node *LinkedList::get(std::size_t index) {
 
     if (index == 0) return this->first.get();
 
-    else if (index >= this->size) {
-        std::ostringstream oss;
-        oss << "LinkedList::get() : required index is out of bounds : " << index;
-        throw std::invalid_argument(oss.str());
-    }
+    check_index("LinkedList::get()", index, this->size);
 
     Node *current;
+    size_t i;
 
     // If i is after middle of the list, browse from the back
     if (index <= this->size / 2) {
-        size_t i = 0;
+        i = 0;
         current = this->first.get();
 
         while (i < index) {
-            if (!current) {
-                std::ostringstream oss;
-                oss << "LinkedList::get() : trying to access nullptr at index " << i;
-                throw std::logic_error(oss.str());
-            }
+            check_access_nullptr(current, "LinkedList::get() forward", i);
     
             current = current->next.get();
             i++;
         }
     } else {
-        size_t i = this->size - 1;
+        i = this->size - 1;
         current = this->last;
 
         while (i > index) {
-            if (!current) {
-                std::ostringstream oss;
-                oss << "LinkedList::get() : trying to access nullptr at index " << i;
-                throw std::logic_error(oss.str());
-            }
+            check_access_nullptr(current, "LinkedList::get() backward", i);
     
             current = current->prev;
             i--;
         }
     }
 
+    check_access_nullptr(current, "LinkedList::get()", i);
     return current;
 }
 

@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include <logger/logger.hh>
+#include <quicksort_mergesort/pivot.hh>
 
 /*
 *  Class implementing size_t Linked List structure (at least the methods we needs)

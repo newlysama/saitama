@@ -68,3 +68,18 @@ TEST_F(LinkedListGetTest, T08_InternalNullTraversalThrowsLogicError) {
         list->get(0);
     }, std::logic_error);
 }
+
+TEST_F(LinkedListGetTest, T09_TooBigIndexSizeTMaxThrows) {
+    EXPECT_THROW({
+        list->get(std::numeric_limits<size_t>::max());
+    }, std::invalid_argument);
+}
+
+TEST_F(LinkedListGetTest, T10_GetOnSingleElementList) {
+    LinkedList list2 = LinkedList({42});
+    Node* node = list2.get(0);
+    ASSERT_NE(node, nullptr);
+    EXPECT_EQ(node->value, 42);
+    EXPECT_EQ(node->next, nullptr);
+    EXPECT_EQ(node->prev, nullptr);
+}

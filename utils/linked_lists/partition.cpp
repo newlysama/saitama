@@ -2,6 +2,23 @@
 
 #include "linked_lists.hh"
 
+// Chose which pivot strategy to use, maccros are defined in exo/quicksort_mergesort/pivot.hh
+size_t chose_pivot(size_t low, size_t high) {
+    #if PIVOT == RANDOM
+        return low + rand() % (high - low + 1);
+    #elif PIVOT == FIRST
+        (void)high;
+        return low;
+    #elif PIVOT == LAST
+        (void)low;
+        return high;
+    #elif PIVOT == MID
+        return (low + high) / 2;
+    #else
+        throw std::invalid_argument("Unknown pivot strategy for quicksort.");
+    #endif
+}
+
 size_t LinkedList::partition_lomuto(size_t low, size_t high) {
     if (low >= high || high >= this->size) {
         std::ostringstream oss;
@@ -10,19 +27,41 @@ size_t LinkedList::partition_lomuto(size_t low, size_t high) {
         throw std::invalid_argument(oss.str());
     }
 
-    // Chose 1st/last element as pivot since we work with linked lists
-    // Using mid/random element would be more stable, but leff efficient since this->get(index) has O(n) complexity
-    size_t pivot_value = this->get(high)->value;
-    size_t i = low;
+    // Get the pivot and swap it's place with high element
+    // since lomuto's partition works with pivot at high place
+    auto pivot_index = chose_pivot(low, high);
+    auto pivot_node = this->get(pivot_index);
+    auto high_node = this->get(high);
+    
+    std::swap(pivot_node->value, high_node->value);
+    
+    size_t pivot_value = high_node->value; 
 
-    for (size_t j = low; j < high; ++j) {
-        if (this->get(j)->value < pivot_value) {
-            this->swap_values(i, j);
+    size_t i = low;
+    size_t j;
+
+    // Defined those and use them as we browse the list, so that we don't have to make infinite gets
+    // for value checking and node swaping
+    auto node_i = this->get(low);
+    auto node_j = node_i;
+
+    for (j = low; j < high; ++j) {
+        if (node_j->value < pivot_value) {
+            check_access_nullptr(node_i, "LinkedList::partition_lomuto()", i);
+            std::swap(node_i->value, node_j->value);
+
+            node_i = node_i->next.get();
             ++i;
         }
+
+        check_access_nullptr(node_j, "LinkedList::partition_lomuto()", j);
+        node_j = node_j->next.get();
     }
 
-    this->swap_values(i, high);
+    check_access_nullptr(node_i, "LinkedList::partition_lomuto()", i);
+    check_access_nullptr(node_j, "LinkedList::partition_lomuto()", j);
+
+    std::swap(node_i->value, node_j->value);
     return i;
 }
 
@@ -30,23 +69,45 @@ size_t LinkedList::partition_hoare(size_t low, size_t high) {
     if (low >= high || high >= this->size) {
         std::ostringstream oss;
         oss << "LinkedList::partition_hoare() : invalid indices.";
-        oss << "Got low : " << low << " || " << "high : " << high;
+        oss << "Got low : " << low << " || high : " << high;
         throw std::invalid_argument(oss.str());
     }
 
-    size_t pivot_value = this->get(low)->value;
+    // Swap chosen pivot value into low position
+    auto pivot_index = chose_pivot(low, high);
+    auto pivot_node = this->get(pivot_index);
+    auto low_node = this->get(low);
+    
+    std::swap(pivot_node->value, low_node->value);
 
-    // Convert to singed long so that if low = 0, low - 1 won't be max positive long
-    std::ptrdiff_t i = static_cast<std::ptrdiff_t>(low) - 1;
-    std::ptrdiff_t j = static_cast<std::ptrdiff_t>(high) + 1;
+    size_t pivot_value = low_node->value; 
+
+    auto node_i = this->get(low);
+    auto node_j = this->get(high);
 
     while (true) {
-        do { ++i; } while (this->get(i)->value < pivot_value);
+        while (node_i->value < pivot_value) {
+            check_access_nullptr(node_i, "LinkedList::partition_hoare()", low);
+            node_i = node_i->next.get();
+            ++low;
+        }
 
-        do { --j; } while (this->get(j)->value > pivot_value);
+        while (node_j->value > pivot_value) {
+            check_access_nullptr(node_j, "LinkedList::partition_hoare()", high);
+            node_j = node_j->prev;
+            --high;
+        }
 
-        if (i >= j) return j;
+        if (low >= high) return high;
 
-        this->swap_values(i, j);
+        check_access_nullptr(node_i, "LinkedList::partition_hoare()", low);
+        check_access_nullptr(node_j, "LinkedList::partition_hoare()", high);
+
+        std::swap(node_i->value, node_j->value);
+
+        node_i = node_i->next.get();
+        node_j = node_j->prev;
+        ++low;
+        --high;
     }
 }

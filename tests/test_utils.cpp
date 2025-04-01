@@ -9,6 +9,9 @@ void test_linked_list_integrity(LinkedList& list, const std::vector<size_t>& val
         return;
     }
 
+    EXPECT_EQ(list.first->prev, nullptr);
+    EXPECT_EQ(list.last->next, nullptr);
+
     Node* current = list.first.get();
     Node* prev = nullptr;
 

@@ -56,3 +56,10 @@ TEST_F(LinkedListSwapValuesTest, T08_EmptyListShouldThrow) {
 
     EXPECT_THROW(list.swap_values(0, 1), std::invalid_argument);
 }
+
+TEST_F(LinkedListSwapValuesTest, T09_SwapTwiceRestoresList) {
+    LinkedList list({7, 8, 9});
+    list.swap_values(0, 2);
+    list.swap_values(2, 0);
+    test_linked_list_integrity(list, {7, 8, 9});
+}
