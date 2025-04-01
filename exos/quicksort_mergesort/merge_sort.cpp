@@ -25,9 +25,9 @@ std::vector<std::size_t> merge_sort(std::vector<size_t> list) {
         return list;
     }
 
-    auto splited = split(list);
+    auto splited = VectorUtils::split(list);
     auto left = std::get<0>(splited);
     auto right = std::get<1>(splited);
 
-    return merge(merge_sort(left), merge_sort(right));
+    return VectorUtils::merge(merge_sort(left), merge_sort(right));
 }
