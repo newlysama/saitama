@@ -2,18 +2,18 @@
 #include <linked_lists/linked_lists.hh>
 #include <test_utils.hh>
 
-class PopTest : public ::testing::Test {};
+class LinkedListPopTest : public ::testing::Test {};
 
 /*
  * ======================== pop_front ========================
  */
 
-TEST_F(PopTest, T_01_PopFrontThrowsOnEmptyList) {
+TEST_F(LinkedListPopTest, T_01_PopFrontThrowsOnEmptyList) {
     LinkedList list;
     EXPECT_THROW(list.pop_front(), std::invalid_argument);
 }
 
-TEST_F(PopTest, T_02_PopFrontOnSingleElementList) {
+TEST_F(LinkedListPopTest, T_02_PopFrontOnSingleElementList) {
     LinkedList list({42});
     auto node = list.pop_front();
 
@@ -25,7 +25,7 @@ TEST_F(PopTest, T_02_PopFrontOnSingleElementList) {
     test_linked_list_integrity(list, {});
 }
 
-TEST_F(PopTest, T_03_PopFrontOnMultipleElementList) {
+TEST_F(LinkedListPopTest, T_03_PopFrontOnMultipleElementList) {
     LinkedList list({10, 20, 30});
     auto node = list.pop_front();
 
@@ -41,18 +41,18 @@ TEST_F(PopTest, T_03_PopFrontOnMultipleElementList) {
  * ======================== pop_back ========================
  */
 
-TEST_F(PopTest, T_04_PopBackThrowsOnEmptyList) {
+TEST_F(LinkedListPopTest, T_04_PopBackThrowsOnEmptyList) {
     LinkedList list;
     EXPECT_THROW(list.pop_back(), std::invalid_argument);
 }
 
-TEST_F(PopTest, T_05_PopBackThrowsIfLastIsNull) {
+TEST_F(LinkedListPopTest, T_05_PopBackThrowsIfLastIsNull) {
     LinkedList list({1});
     list.last = nullptr;  // Simulate corrupted state
     EXPECT_THROW(list.pop_back(), std::logic_error);
 }
 
-TEST_F(PopTest, T_06_PopBackOnSingleElementList) {
+TEST_F(LinkedListPopTest, T_06_PopBackOnSingleElementList) {
     LinkedList list({99});
     auto node = list.pop_back();
 
@@ -64,7 +64,7 @@ TEST_F(PopTest, T_06_PopBackOnSingleElementList) {
     test_linked_list_integrity(list, {});
 }
 
-TEST_F(PopTest, T_07_PopBackOnMultipleElementList) {
+TEST_F(LinkedListPopTest, T_07_PopBackOnMultipleElementList) {
     LinkedList list({5, 10, 15});
     auto node = list.pop_back();
 

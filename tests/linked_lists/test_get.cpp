@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <sstream>
 
-class GetTest : public ::testing::Test {
+class LinkedListGetTest : public ::testing::Test {
 protected:
     std::unique_ptr<LinkedList> list;
 
@@ -13,28 +13,28 @@ protected:
     }
 };
 
-TEST_F(GetTest, T01_GetFirstElement) {
+TEST_F(LinkedListGetTest, T01_GetFirstElement) {
     Node* node = list->get(0);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 10);
     EXPECT_EQ(node->prev, nullptr);
 }
 
-TEST_F(GetTest, T02_GetMiddleElement_FirstHalf) {
+TEST_F(LinkedListGetTest, T02_GetMiddleElement_FirstHalf) {
     Node* node = list->get(2);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 30);
     EXPECT_EQ(node->prev->value, 20);
 }
 
-TEST_F(GetTest, T03_GetMiddleElement_SecondHalf) {
+TEST_F(LinkedListGetTest, T03_GetMiddleElement_SecondHalf) {
     Node* node = list->get(3);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 40);
     EXPECT_EQ(node->prev->value, 30);
 }
 
-TEST_F(GetTest, T04_GetLastElement) {
+TEST_F(LinkedListGetTest, T04_GetLastElement) {
     Node* node = list->get(4);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 50);
@@ -42,26 +42,26 @@ TEST_F(GetTest, T04_GetLastElement) {
     EXPECT_EQ(node->prev->value, 40);
 }
 
-TEST_F(GetTest, T05_IndexEqualToSizeThrows) {
+TEST_F(LinkedListGetTest, T05_IndexEqualToSizeThrows) {
     EXPECT_THROW({
         list->get(5);
     }, std::invalid_argument);
 }
 
-TEST_F(GetTest, T06_IndexMuchGreaterThanSizeThrows) {
+TEST_F(LinkedListGetTest, T06_IndexMuchGreaterThanSizeThrows) {
     EXPECT_THROW({
         list->get(999);
     }, std::invalid_argument);
 }
 
-TEST_F(GetTest, T07_GetFromEmptyListThrows) {
+TEST_F(LinkedListGetTest, T07_GetFromEmptyListThrows) {
     LinkedList empty_list;
     EXPECT_THROW({
         empty_list.get(0);
     }, std::invalid_argument);
 }
 
-TEST_F(GetTest, T08_InternalNullTraversalThrowsLogicError) {
+TEST_F(LinkedListGetTest, T08_InternalNullTraversalThrowsLogicError) {
     list->first = nullptr;
     list->size = 5;
     EXPECT_THROW({

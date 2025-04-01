@@ -2,7 +2,7 @@
 #include <linked_lists/linked_lists.hh>
 #include <test_utils.hh>
 
-class PushTest : public ::testing::Test {
+class LinkedListPushTest : public ::testing::Test {
 protected:
     std::unique_ptr<LinkedList> list;
 
@@ -13,13 +13,13 @@ protected:
 
 // ============================== push_front ==============================
 
-TEST_F(PushTest, T01_PushFrontOnEmptyList) {
+TEST_F(LinkedListPushTest, T01_PushFrontOnEmptyList) {
     list->push_front(42);
 
     test_linked_list_integrity(*list, {42});
 }
 
-TEST_F(PushTest, T02_PushFrontMultipleElements) {
+TEST_F(LinkedListPushTest, T02_PushFrontMultipleElements) {
     list->push_front(1);
     list->push_front(2);
     list->push_front(3);
@@ -29,13 +29,13 @@ TEST_F(PushTest, T02_PushFrontMultipleElements) {
 
 // ============================== push_back(size_t) ==============================
 
-TEST_F(PushTest, T03_PushBackOnEmptyList) {
+TEST_F(LinkedListPushTest, T03_PushBackOnEmptyList) {
     list->push_back(7);
 
     test_linked_list_integrity(*list, {7});
 }
 
-TEST_F(PushTest, T04_PushBackMultipleElements) {
+TEST_F(LinkedListPushTest, T04_PushBackMultipleElements) {
     list->push_back(10);
     list->push_back(20);
     list->push_back(30);
@@ -45,14 +45,14 @@ TEST_F(PushTest, T04_PushBackMultipleElements) {
 
 // ============================== push_back(unique_ptr<Node>) ==============================
 
-TEST_F(PushTest, T05_PushBackNodeOnEmptyList) {
+TEST_F(LinkedListPushTest, T05_PushBackNodeOnEmptyList) {
     std::unique_ptr<Node> node = std::make_unique<Node>(99, nullptr, nullptr);
     list->push_back(std::move(node));
 
     test_linked_list_integrity(*list, {99});
 }
 
-TEST_F(PushTest, T06_PushBackMultipleUniqueNodes) {
+TEST_F(LinkedListPushTest, T06_PushBackMultipleUniqueNodes) {
     list->push_back(std::make_unique<Node>(1, nullptr, nullptr));
     list->push_back(std::make_unique<Node>(2, nullptr, nullptr));
     list->push_back(std::make_unique<Node>(3, nullptr, nullptr));
@@ -60,7 +60,7 @@ TEST_F(PushTest, T06_PushBackMultipleUniqueNodes) {
     test_linked_list_integrity(*list, {1, 2, 3});
 }
 
-TEST_F(PushTest, T06_PushBackUniquePtrThrowsOnNullptr) {
+TEST_F(LinkedListPushTest, T06_PushBackUniquePtrThrowsOnNullptr) {
     std::unique_ptr<Node> null_node = nullptr;
 
     EXPECT_THROW(list->push_back(std::move(null_node)), std::invalid_argument);
