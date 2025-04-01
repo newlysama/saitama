@@ -1,0 +1,40 @@
+#include <gtest/gtest.h>
+#include <vector_utils/vector_utils.hh>
+
+class VectorSplitTest : public ::testing::Test {};
+
+/*
+ * ======================== Vector Split ========================
+ */
+
+TEST_F(VectorSplitTest, T01_SplitThrowsOnEmptyVector) {
+    std::vector<size_t> vec = {};
+    EXPECT_THROW(VectorUtils::split(vec), std::invalid_argument);
+}
+
+TEST_F(VectorSplitTest, T02_SplitThrowsOnSizeOneVector) {
+    std::vector<size_t> vec = {42};
+    EXPECT_THROW(VectorUtils::split(vec), std::invalid_argument);
+}
+
+TEST_F(VectorSplitTest, T03_SplitEvenLength) {
+    std::vector<size_t> vec = {10, 20, 30, 40};
+    auto [left, right] = VectorUtils::split(vec);
+    EXPECT_EQ(left, (std::vector<size_t>{10, 20}));
+    EXPECT_EQ(right, (std::vector<size_t>{30, 40}));
+}
+
+TEST_F(VectorSplitTest, T04_SplitOddLength) {
+    std::vector<size_t> vec = {1, 2, 3, 4, 5};
+    auto [left, right] = VectorUtils::split(vec);
+    EXPECT_EQ(left, (std::vector<size_t>{1, 2}));
+    EXPECT_EQ(right, (std::vector<size_t>{3, 4, 5}));
+}
+
+TEST_F(VectorSplitTest, T05_SplitAtIndexTwoManually) {
+    std::vector<size_t> vec = {1, 3, 5, 7, 9};
+    auto [left, right] = VectorUtils::split(vec);
+    // par défaut split_index = vec.size() / 2 = 2
+    EXPECT_EQ(left, (std::vector<size_t>{1, 3}));
+    EXPECT_EQ(right, (std::vector<size_t>{5, 7, 9}));
+}
