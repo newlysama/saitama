@@ -40,21 +40,27 @@ endif
 # <============== TESTS ==============>
 
 
-ifeq ($(and $(TEST_LINKED_LISTS),$(TEST_ON)),11)
+ifeq ($(TEST_LINKED_LISTS),1)
+ifeq ($(TEST_ON),1)
 	TEST_SRC        += tests/test_utils.cpp  
 	TEST_SRC 		+= $(wildcard tests/linked_lists/*.cpp)
 	UTILS_SRC 		+= $(wildcard utils/linked_lists/*.cpp)
 endif
+endif
 
-ifeq ($(and $(TEST_VECTOR_UTILS),$(TEST_ON)),11)
+ifeq ($(TEST_VECTOR_UTILS),1)
+ifeq ($(TEST_ON),1)
 	TEST_SRC 		+= $(wildcard tests/vector_utils/*.cpp)
 	UTILS_SRC 		+= $(wildcard utils/vector_utils/*.cpp)
 endif
+endif
 
-ifeq ($(and $(TEST_QUICKSORT_MERGESORT),$(TEST_ON)),11)
+ifeq ($(TEST_QUICKSORT_MERGESORT),1)
+ifeq ($(TEST_ON),1)
 	TEST_SRC        += tests/test_utils.cpp  
 	TEST_SRC 		+= $(wildcard tests/quicksort_mergesort/*.cpp)
 	EXO_SRC 		+= $(wildcard exos/quicksort_mergesort/*.cpp)
 	UTILS_SRC 		+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp)
+endif
 endif
 
