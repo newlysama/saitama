@@ -28,7 +28,7 @@ New features / optimizations / code cleaning should be added daily.
 
 ### 2 - The `config.mk` :
 
-This files allow intelligent building. It defines sources for the Makefile to run.  
+This file allow intelligent building. It defines sources for the Makefile to run.  
 To define a source to build, simply set the according maccros on top of the file to 1.  
 This will get all the needed files for building and add them to EXO_SRC, UTILS_SRC or TEST_SRC.  
 

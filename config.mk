@@ -3,13 +3,13 @@
 # ===========================================================================
 
 # <============ EXERCISES ============>
-EXO_QUICKSORT_MERGESORT		:= 1
+EXO_QUICKSORT_MERGESORT		:= 0
 
 # <============== TESTS ==============>
-TEST_ON						:= 0
+TEST_ON						:= 1
 
 # Test Utils
-TEST_LINKED_LISTS			:= 0
+TEST_LINKED_LISTS			:= 1
 TEST_VECTOR_UTILS           := 0
 
 # Test Exercises
@@ -39,21 +39,19 @@ endif
 
 # <============== TESTS ==============>
 
-# Maccro that links TEST maccros to our cpp program
-TEST_DEFINES :=
 
-ifeq ($(TEST_LINKED_LISTS),1)
+ifeq ($(and $(TEST_LINKED_LISTS),$(TEST_ON)),11)
 	TEST_SRC        += tests/test_utils.cpp  
 	TEST_SRC 		+= $(wildcard tests/linked_lists/*.cpp)
 	UTILS_SRC 		+= $(wildcard utils/linked_lists/*.cpp)
 endif
 
-ifeq ($(TEST_VECTOR_UTILS),1)
+ifeq ($(and $(TEST_VECTOR_UTILS),$(TEST_ON)),11)
 	TEST_SRC 		+= $(wildcard tests/vector_utils/*.cpp)
 	UTILS_SRC 		+= $(wildcard utils/vector_utils/*.cpp)
 endif
 
-ifeq ($(TEST_QUICKSORT_MERGESORT),1)
+ifeq ($(and $(TEST_QUICKSORT_MERGESORT),$(TEST_ON)),11)
 	TEST_SRC        += tests/test_utils.cpp  
 	TEST_SRC 		+= $(wildcard tests/quicksort_mergesort/*.cpp)
 	EXO_SRC 		+= $(wildcard exos/quicksort_mergesort/*.cpp)
