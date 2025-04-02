@@ -8,6 +8,7 @@
 #include <linked_lists/linked_lists.hh>
 #include <quicksort_mergesort/quick_sort.hh>
 #include <quicksort_mergesort/merge_sort.hh>
+#include <quicksort_mergesort/benchmark_selector.hh>
 #include <logger/logger.hh>
 
 constexpr size_t SIZE = 50'000; // Taille des listes 
@@ -63,7 +64,11 @@ std::unique_ptr<LinkedList> generate_reverse_sorted_linked_list(size_t size) {
     return list;
 }
 
+#ifdef RANDOM_LISTS
+
 // ---------------------------- VECTORS RANDOM ----------------------------
+
+#ifdef VECTORS
 
 static void BM_VectorMergeSort_Random(benchmark::State& state) {
     for (auto _ : state) {
@@ -91,7 +96,11 @@ static void BM_VectorQuickSortHoare_Random(benchmark::State& state) {
 }
 BENCHMARK(BM_VectorQuickSortHoare_Random);
 
+#endif // VECTORS
+
 // ------------------------- LINKED LISTS RANDOM -------------------------
+
+#ifdef LINKED_LISTS
 
 static void BM_LinkedListMergeSort_Random(benchmark::State& state) {
     for (auto _ : state) {
@@ -119,7 +128,15 @@ static void BM_LinkedListQuickSortHoare_Random(benchmark::State& state) {
 }
 BENCHMARK(BM_LinkedListQuickSortHoare_Random);
 
+#endif // LINKED_LISTS
+
+#endif // RANDOM LIST
+
+#ifdef SORTED_LISTS
+
 // ---------------------------- VECTORS SORTED ----------------------------
+
+#ifdef VECTORS
 
 static void BM_VectorMergeSort_Sorted(benchmark::State& state) {
     for (auto _ : state) {
@@ -147,7 +164,11 @@ static void BM_VectorQuickSortHoare_Sorted(benchmark::State& state) {
 }
 BENCHMARK(BM_VectorQuickSortHoare_Sorted);
 
+#endif // VECTORS
+
 // ------------------------- LINKED LISTS SORTED -------------------------
+
+#ifdef LINKED_LISTS
 
 static void BM_LinkedListMergeSort_Sorted(benchmark::State& state) {
     for (auto _ : state) {
@@ -175,7 +196,15 @@ static void BM_LinkedListQuickSortHoare_Sorted(benchmark::State& state) {
 }
 BENCHMARK(BM_LinkedListQuickSortHoare_Sorted);
 
+#endif // LINKED_LISTS
+
+#endif // SORTED_LISTS
+
+#ifdef REVERSED_LISTS
+
 // ---------------------------- VECTORS REVERSE ----------------------------
+
+#ifdef VECTORS
 
 static void BM_VectorMergeSort_Reverse(benchmark::State& state) {
     for (auto _ : state) {
@@ -203,7 +232,11 @@ static void BM_VectorQuickSortHoare_Reverse(benchmark::State& state) {
 }
 BENCHMARK(BM_VectorQuickSortHoare_Reverse);
 
+#endif // VECTORS
+
 // ------------------------- LINKED LISTS REVERSE -------------------------
+
+#ifdef LINKED_LISTS
 
 static void BM_LinkedListMergeSort_Reverse(benchmark::State& state) {
     for (auto _ : state) {
@@ -230,6 +263,10 @@ static void BM_LinkedListQuickSortHoare_Reverse(benchmark::State& state) {
     }
 }
 BENCHMARK(BM_LinkedListQuickSortHoare_Reverse);
+
+#endif // LINKED_LISTS
+
+#endif // REVERSED_LISTS
 
 // ---------------------------- MAIN -----------------------------
 

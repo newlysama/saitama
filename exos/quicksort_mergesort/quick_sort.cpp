@@ -18,7 +18,7 @@ void _quick_sort_lomuto(LinkedList& list, size_t low, size_t high) {
 }
 
 void quick_sort_lomuto(LinkedList& list) {
-    if (list.empty() || list.size <= 1) return;
+    if (list.size <= 1) return;
 
     _quick_sort_lomuto(list, 0, list.size - 1);
 }
@@ -37,7 +37,7 @@ void _quick_sort_hoare(LinkedList& list, size_t low, size_t high) {
 }
 
 void quick_sort_hoare(LinkedList& list) {
-    if (list.empty()) {
+    if (list.size <= 1) {
         return;
     }
 

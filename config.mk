@@ -28,7 +28,7 @@ UTILS_SRC += $(wildcard utils/logger/*.cpp)
 # <============ EXERCISES ============>
 
 ifeq ($(EXO_QUICKSORT_MERGESORT),1)
-#  Don't include main.cpp if we are in testing mod, so we don't have 2 mains definitions
+#  Don't include exos/main.cpp if we are in testing mod, so we don't have 2 mains definitions
 	ifneq ($(TEST_ON), 1)
 		EXO_SRC += exos/main/quicksort_mergesort.cpp
 	endif
