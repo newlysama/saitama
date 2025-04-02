@@ -1,8 +1,8 @@
 #include "linked_lists.hh"
+#include "linked_lists_algorithms.hh"
 
 std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
-LinkedList::split(std::unique_ptr<LinkedList> list, std::optional<size_t> split_index) {
-
+LinkedListAlgorithm::split(std::unique_ptr<LinkedList> list, std::optional<size_t> split_index) {
     if (list->empty()) {
         throw std::invalid_argument("LinkedList::split() : cannot split empty list.");
     } else if (list->size == 1) {
@@ -56,7 +56,7 @@ LinkedList::split(std::unique_ptr<LinkedList> list, std::optional<size_t> split_
 }
 
 std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
-LinkedList::split_around_pivot(std::unique_ptr<LinkedList> list, size_t pivot_index) {
+LinkedListAlgorithm::split_around_pivot(std::unique_ptr<LinkedList> list, size_t pivot_index) {
     if (list->empty()) {
         throw std::invalid_argument("LinkedList::split_around_pivot() : cannot split empty list.");
     } else if (list->size == 1) {
@@ -69,7 +69,8 @@ LinkedList::split_around_pivot(std::unique_ptr<LinkedList> list, size_t pivot_in
     auto right = std::make_unique<LinkedList>();
     auto pivot = std::make_unique<LinkedList>();
 
-    // Custom handling handling again (see split() above)
+    // Custom handling for split at last element to save time
+    // Also, next coming loop compares to split_index - 1, which makes 0 - 1 at first element (doesn't work as expected with size_t's)
     if (pivot_index == 0) {
         auto first = list->pop_front();
         pivot->push_back(std::move(first));

@@ -1,7 +1,8 @@
 #include "linked_lists.hh"
+#include "linked_lists_algorithms.hh"
 
-std::unique_ptr<LinkedList> LinkedList::merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2) {
-    // We don't care about checking if both lists are empty, we'll just return the other one anyway
+std::unique_ptr<LinkedList> LinkedListAlgorithm::merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2) {
+    // Doesn't check if both are empty, since it doesn't change anyithing
     if (list1->empty()) {
         return list2;
     } else if (list2->empty()) {
@@ -9,7 +10,6 @@ std::unique_ptr<LinkedList> LinkedList::merge(std::unique_ptr<LinkedList> list1,
     }
 
     // Return a new list is simplier and more readable here
-    // But if we want to improve memory managment, we can merge list2 into list 1 in-place
     std::unique_ptr<LinkedList> res = std::make_unique<LinkedList>();
 
     while (!list1->empty() && !list2->empty()) {

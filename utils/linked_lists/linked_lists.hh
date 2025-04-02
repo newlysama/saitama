@@ -8,100 +8,113 @@
 #include <tuple>
 #include <optional>
 #include <iostream>
-
 #include <logger/logger.hh>
 #include <quicksort_mergesort/pivot.hh>
-
-/*
-*  Class implementing size_t Linked List structure (at least the methods we needs)
-*  No need to implement clear() method since we use unique pointers
-*/
 
 class Node {
     public:
         size_t value;
         std::unique_ptr<Node> next;
-        // can't make prev unique_ptr because node->prev->prev->next already has ownership
-        Node *prev;
+        Node *prev; /* Can't make this unique_ptr since it would transfer ownership */
 
-        /*
-        *  Constructor / Destructor
-        */
         Node(size_t value, std::unique_ptr<Node> next, Node* prev);
         Node(Node* node);
         ~Node() = default;
 };
 
+/**
+ * @brief Doubly-linked list implementation for size_t values
+ *        Provides typical list methods (print, get, push, pop, etc...)
+ */
 class LinkedList {
     public:
         std::unique_ptr<Node> first;
-        // can't make last unique_ptr because penultimate node->next already has ownership
-        Node *last; 
+        Node *last; /* Can't make this unique_ptr since it would transfer ownership */
         size_t size;
     
-        /*
-        *  Constructor / Destructor
-        */
         LinkedList();
         LinkedList(std::vector<size_t> list);
         ~LinkedList() = default;
 
-        // Check if list is empty
+        /**
+         * @brief Check if the linked list is empty
+         * @see tools.cpp
+         * @return bool
+         */
         bool empty();
 
-        // Print the list
+        /**
+         * @brief Print the linked list. Format : [ elt, elt, elt ]
+         * @see tools.cpp
+         */
         void print();
 
-        // Get element at index, use brut ptr since we don't want to tranfer ownership
+        /**
+         * @brief Get a not at a certain index
+         * @see tools.cpp
+         * @param index the requested node index
+         * @return the requested node 
+         */
         Node *get(size_t index);
 
-        // Transfer src into dest in-place
-        static void transfer(std::unique_ptr<LinkedList>& dest, std::unique_ptr<LinkedList>& src);
-
-        // Append new node at the beginning of the list
+        /**
+         * @brief Add new element at the beginning of the list
+         * @see push.cpp
+         * @param value the value we want to add
+         */
         void push_front(size_t value);
 
-        // Append new node at the end of the list
+        /**
+         * @brief Add new element at the end of the list
+         * @see push.cpp
+         * @param value the value we want to add
+         */
         void push_back(size_t value);
     
-        // Need this version for last handleing
+        /**
+         * @brief Add new element at the end of the list
+         * @see push.cpp
+         * @param new_node the node we want to add
+         */
         void push_back(std::unique_ptr<Node> new_node);
 
-        // Pop node at the beginning of the list
+        /**
+         * @brief Remove first element of the list
+         * @see pop.cpp
+         * @return the popped node
+         */
         std::unique_ptr<Node> pop_front();
 
-        // Pop node at the end of the list
+        /**
+         * @brief Remove last element of the list
+         * @see pop.cpp
+         * @return the popped node
+         */
         std::unique_ptr<Node> pop_back();
 
-        // Swap nodes values at specified index
+        /**
+         * @brief Swap values of two nodes by index (nodes themselves are not moved)
+         * @see swap.cpp
+         * @param i index of the first node
+         * @param j index of the second node
+         */
         void swap_values(size_t i, size_t j);
-
-        // Split list in two lists, returns a tuple of the splited lists
-        // Use optional split_index parameter, so we can specify or not at which index we want to split
-        // Split index is middle by default
-        static std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
-        split(std::unique_ptr<LinkedList> list, std::optional<size_t> split_index = std::nullopt);
-
-        // Custom split to isolate the pivot (used for quick sort Lomuto version)
-        // Return pivot as LinkedList so we can concat it in quicksort
-        static std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
-        split_around_pivot(std::unique_ptr<LinkedList> list, size_t pivot_index);
-
-        // Merge two sorted lists into a new one, keeping it sorted
-        static std::unique_ptr<LinkedList> merge(std::unique_ptr<LinkedList> list1, std::unique_ptr<LinkedList> list2);
-
-        // Concat 2 lists in-place
-        static void concat(std::unique_ptr<LinkedList>& list1, std::unique_ptr<LinkedList>& list2);
-
-        // Lomuto partition algorithm
-        size_t partition_lomuto(size_t low, size_t high);
-
-        // Hoare's partition algorithm
-        size_t partition_hoare(size_t low, size_t high);
 };
 
-// Used to check if we try to access nullptr, throw std::logic_arg if yes
+/**
+ * @brief Check if a given node is nullptr
+ * @see tools.cpp
+ * @param node the node to check
+ * @param function the function in which it's called
+ * @param index index of the node in the list
+ */
 void check_access_nullptr(Node* node, const std::string& function, std::optional<size_t> index = std::nullopt);
 
-// Used to check if the required index is out of bounds, throw std::invalid_argument if yes
+/**
+ * @brief Check that index is not out of bounds (here list->size)
+ * @see tools.cpp
+ * @param function the function which calls it
+ * @param index the tested index
+ * @param list_size size of the tested list
+ */
 void check_index(const std::string& function, size_t index, size_t list_size);

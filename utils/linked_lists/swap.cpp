@@ -16,11 +16,7 @@ void LinkedList::swap_values(size_t i, size_t j) {
     Node *current = this->first.get();
 
     while (index < i) {
-        if (current == nullptr) {
-            std::ostringstream oss;
-            oss << "LinkedList::swap_values() : trying to access nullptr at index : " << index;
-            throw std::logic_error(oss.str());
-        }
+        check_access_nullptr(current, "LinkedList::swap_values()", index);
 
         current = current->next.get();
         index++;
@@ -30,11 +26,7 @@ void LinkedList::swap_values(size_t i, size_t j) {
     Node* tmp = current;
 
     while (index < j) {
-        if (current == nullptr) {
-            std::ostringstream oss;
-            oss << "LinkedList::swap_values() : trying to access nullptr at index : " << index;
-            throw std::logic_error(oss.str());
-        }
+        check_access_nullptr(current, "LinkedList::swap_values()", index);
 
         current = current->next.get();
         index++;     

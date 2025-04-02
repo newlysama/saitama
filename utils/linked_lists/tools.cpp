@@ -29,14 +29,14 @@ Node *LinkedList::get(std::size_t index) {
         throw std::invalid_argument("LinkedList::get() : cannot get on empty list.");
     }
 
-    if (index == 0) return this->first.get();
-
     check_index("LinkedList::get()", index, this->size);
+
+    if (index == 0) return this->first.get();
 
     Node *current;
     size_t i;
 
-    // If i is after middle of the list, browse from the back
+    // If index is after middle of the list, browse from the back
     if (index <= this->size / 2) {
         i = 0;
         current = this->first.get();
