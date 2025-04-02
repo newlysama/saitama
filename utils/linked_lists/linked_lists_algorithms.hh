@@ -4,6 +4,7 @@ namespace LinkedListAlgorithm {
 
         /**
          * @brief Split a list in 2
+         * @details Use unique ptrs here since we want to delete list after split
          * @see split.cpp
          * @param list the list we want to split
          * @param split_index Optional index to split the list at. If not provided, the list is split in half
@@ -14,6 +15,7 @@ namespace LinkedListAlgorithm {
 
         /**
          * @brief Split the list around pivot_index in 3 parts
+         * @details Use unique ptrs here since we want to delete list after split
          * @see split.cpp
          * @details constructs 3 lists (left side of the pivot, the pivot itself (list of 1 element) and right side of the pivot)
          *          so we can concat the pivot after (used in quicksort)
@@ -26,20 +28,23 @@ namespace LinkedListAlgorithm {
 
         /**
          * @brief Merge two sorted lists into one, keeping the result sorted
+         * @details Use unique ptrs here since we want to delete left and right after merge
          * @see merge.cpp
          * @param left the first sorted list
          * @param right the second sorted list
-         * @return the resulting merged sorted list 
+         * @return the resulting merged sorted list
+         * @todo Implement in-place merge, with left as reference and returning void 
          */
         std::unique_ptr<LinkedList> merge(std::unique_ptr<LinkedList> left, std::unique_ptr<LinkedList> right);
 
         /**
          * @brief Concat two linked lists in-place
+         * @details Use unique ptr right here since we want to delete it after concat
          * @see concat.cpp
          * @param left list that will 'receive' the other
          * @param right list to concat
          */
-        void concat(std::unique_ptr<LinkedList>& left, std::unique_ptr<LinkedList>& right);
+        void concat(LinkedList& left, std::unique_ptr<LinkedList> right);
 
         /**
          * @brief Lomuto's partition scheme applied to linked lists
@@ -48,7 +53,7 @@ namespace LinkedListAlgorithm {
          * @param high higher boundary index to apply algorithm
          * @return the new pivot index
          */
-        size_t partition_lomuto(std::unique_ptr<LinkedList>& list, size_t low, size_t high);
+        size_t partition_hoare(LinkedList& list, size_t low, size_t high);
 
         /**
          * @brief Hoare's partition scheme applied to linked lists
@@ -57,5 +62,5 @@ namespace LinkedListAlgorithm {
          * @param high higher boundary index to apply algorithm
          * @return the new pivot index
          */
-        size_t partition_hoare(std::unique_ptr<LinkedList>&, size_t low, size_t high);
+        size_t partition_lomuto(LinkedList& list, size_t low, size_t high);
 }

@@ -64,7 +64,7 @@ TEST_F(LinkedListSplitTest, T08_SplitOutOfBoundsThrows) {
 TEST_F(LinkedListSplitTest, T16_SplitThenConcatRestoresList) {
     auto list = std::make_unique<LinkedList>(std::vector<size_t>{1, 2, 3, 4});
     auto [left, right] = split(std::move(list));
-    concat(left, right);
+    concat(*left, std::move(right));
     test_linked_list_integrity(*left, {1, 2, 3, 4});
 }
 
@@ -129,8 +129,8 @@ TEST_F(LinkedListSplitTest, T15_SplitAroundPivotOutOfBoundsThrows) {
 TEST_F(LinkedListSplitTest, T18_SplitAroundPivotThenConcatRestoresList) {
     auto list = std::make_unique<LinkedList>(std::vector<size_t>{10, 20, 30, 40});
     auto [left, pivot, right] = split_around_pivot(std::move(list), 2);
-    concat(left, pivot);
-    concat(left, right);
+    concat(*left, std::move(pivot));
+    concat(*left, std::move(right));
     test_linked_list_integrity(*left, {10, 20, 30, 40});
 }
 
