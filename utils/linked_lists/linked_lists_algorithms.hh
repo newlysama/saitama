@@ -9,6 +9,7 @@ namespace LinkedListAlgorithm {
          * @param list the list we want to split
          * @param split_index Optional index to split the list at. If not provided, the list is split in half
          * @return a tuple of the 2 resulting lists
+         * @todo implement backward split, impoving performance when index > list->size / 2
          */
         std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
         split(std::unique_ptr<LinkedList> list, std::optional<size_t> split_index = std::nullopt);
@@ -21,7 +22,8 @@ namespace LinkedListAlgorithm {
          *          so we can concat the pivot after (used in quicksort)
          * @param list the list we want to split
          * @param pivot_index the required pivot index
-         * @return a tuple of the 3 resulting lists 
+         * @return a tuple of the 3 resulting lists
+         * @todo implement backward split, impoving performance when pivot_index > list->size / 2
          */
         std::tuple<std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>, std::unique_ptr<LinkedList>>
         split_around_pivot(std::unique_ptr<LinkedList> list, size_t pivot_index);
