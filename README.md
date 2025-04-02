@@ -43,6 +43,5 @@ SPOILER ALERT : Do not build exercises alongside tests, otherwise you'll get mul
 
 This project requires several depedencies to build :  
 
-**- Google Benchmark :** Used as exercises' main, allowing us to test our implementations' performance on large/complex data structures.   
-Refs : [Github](https://github.com/google/benchmark)  
+**- Google Benchmark :** Used as exercises' main, allowing us to test our implementations' performance on large/complex data structures. Refs : [Github](https://github.com/google/benchmark)  
 **- Google Tests :** For testing (^^). Refs : [Github](https://github.com/google/googletest)  
