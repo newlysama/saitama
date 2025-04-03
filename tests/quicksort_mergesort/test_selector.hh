@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * @brief Select which test you want to launch
  *        Simply comment/uncomment the maccros 

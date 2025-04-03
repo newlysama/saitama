@@ -4,6 +4,8 @@
 #include <test_utils.hh>
 #include "test_selector.hh"
 
+#ifdef QUICK_SORT_VECTORS
+
 class VectorsQuickSortTest : public ::testing::Test {};
 
 /*
@@ -75,3 +77,5 @@ TEST_F(VectorsQuickSortTest, T10_Hoare_ReverseSorted) {
     quick_sort_hoare(list);
     EXPECT_EQ(list, std::vector<size_t>({1, 3, 5, 7, 9}));
 }
+
+#endif

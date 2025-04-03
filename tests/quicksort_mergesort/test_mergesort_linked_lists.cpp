@@ -4,6 +4,8 @@
 #include <test_utils.hh>
 #include "test_selector.hh"
 
+#ifdef MERGE_SORT_LINKED_LISTS
+
 class LinkedListMergeSortTest : public ::testing::Test {};
 
 
@@ -37,3 +39,5 @@ TEST_F(LinkedListMergeSortTest, T05_ReverseSorted) {
     merge_sort(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
+
+#endif

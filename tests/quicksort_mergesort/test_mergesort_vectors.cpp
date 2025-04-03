@@ -4,6 +4,8 @@
 #include <test_utils.hh>
 #include "test_selector.hh"
 
+#ifdef MERGE_SORT_VECTORS
+
 class VectorsMergeSortTest : public ::testing::Test {};
 
 TEST_F(VectorsMergeSortTest, T01_EmptyList) {
@@ -36,3 +38,5 @@ TEST_F(VectorsMergeSortTest, T05_ReverseSorted) {
     auto res = merge_sort(list);
     EXPECT_EQ(res, std::vector<size_t>({1, 2, 3, 4, 5}));
 }
+
+#endif

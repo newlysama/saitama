@@ -4,6 +4,8 @@
 #include <test_utils.hh>
 #include "test_selector.hh"
 
+#ifdef QUICK_SORT_LINKED_LISTS
+
 class LinkedListQuickSortTest : public ::testing::Test {};
 
 /*
@@ -97,3 +99,5 @@ TEST_F(LinkedListQuickSortTest, T14_Hoare_AllEqual) {
     quick_sort_hoare(list);
     test_linked_list_integrity(list, {7, 7, 7, 7});
 }
+
+#endif
