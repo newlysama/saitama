@@ -48,18 +48,14 @@ namespace LinkedListAlgorithm {
         /**
          * @brief Lomuto's partition scheme applied to linked lists
          * @see partition.cpp
-         * @param low lower boundary index to apply algorithm
-         * @param high higher boundary index to apply algorithm
          * @return the new pivot index
          */
-        size_t partition_hoare(LinkedList& list, size_t low, size_t high);
+        size_t partition_hoare(LinkedList& list);
 
         /**
          * @brief Hoare's partition scheme applied to linked lists
          * @see partition.cpp
-         * @param low lower boundary index to apply algorithm
-         * @param high higher boundary index to apply algorithm
          * @return the new pivot index
          */
-        size_t partition_lomuto(LinkedList& list, size_t low, size_t high);
+        size_t partition_lomuto(LinkedList& list);
 }

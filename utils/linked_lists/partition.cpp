@@ -25,33 +25,26 @@ size_t chose_pivot(size_t low, size_t high) {
     #endif
 }
 
-size_t LinkedListAlgorithm::partition_lomuto(LinkedList& list, size_t low, size_t high) {
-    if (low >= high || high >= list.size) {
-        std::ostringstream oss;
-        oss << "LinkedList::partition_lomuto() : invalid indices.";
-        oss << "Got low : " << low << " || " << "high : " << high;
-        throw std::invalid_argument(oss.str());
-    }
-
+size_t LinkedListAlgorithm::partition_lomuto(LinkedList& list) {
     // Get the pivot and swap its place with list[high]
     // since lomuto's partition works with pivot at high place
-    auto pivot_index = chose_pivot(low, high);
+    auto pivot_index = chose_pivot(0, list.size - 1);
     auto pivot_node = list.get(pivot_index);
-    auto high_node = list.get(high);
+    auto high_node = list.get(list.size - 1);
 
     std::swap(pivot_node->value, high_node->value);
 
     size_t pivot_value = high_node->value;
 
-    size_t i = low;
+    size_t i = 0;
     size_t j;
 
     // Defined those and use them as we browse the list,
     // so that we don't have to make infinite gets for value checking and node swapping
-    auto node_i = list.get(low);
-    auto node_j = node_i;
+    auto node_i = list.first.get();
+    auto node_j = list.first.get();
 
-    for (j = low; j < high; ++j) {
+    for (j = 0; j < list.size - 1; ++j) {
         if (node_j->value < pivot_value) {
             check_access_nullptr(node_i, "LinkedList::partition_lomuto()", i);
             std::swap(node_i->value, node_j->value);
@@ -71,50 +64,46 @@ size_t LinkedListAlgorithm::partition_lomuto(LinkedList& list, size_t low, size_
     return i;
 }
 
-size_t LinkedListAlgorithm::partition_hoare(LinkedList& list, size_t low, size_t high) {
-    if (low >= high || high >= list.size) {
-        std::ostringstream oss;
-        oss << "LinkedList::partition_hoare() : invalid indices.";
-        oss << "Got low : " << low << " || high : " << high;
-        throw std::invalid_argument(oss.str());
-    }
-
+size_t LinkedListAlgorithm::partition_hoare(LinkedList& list) {
     // Swap chosen pivot value into low position
-    auto pivot_index = chose_pivot(low, high);
+    auto pivot_index = chose_pivot(0, list.size - 1);
     auto pivot_node = list.get(pivot_index);
-    auto low_node = list.get(low);
+    auto low_node = list.first.get();
 
     std::swap(pivot_node->value, low_node->value);
     size_t pivot_value = low_node->value;
 
+    size_t i = 0;
+    size_t j = list.size - 1;
+
     // Defined those and use them as we browse the list,
     // so that we don't have to make infinite gets for value checking and node swapping
-    auto node_i = list.get(low);
-    auto node_j = list.get(high);
+    auto node_i = list.first.get();
+    auto node_j = list.last;
 
     while (true) {
         while (node_i->value < pivot_value) {
-            check_access_nullptr(node_i, "LinkedList::partition_hoare()", low);
+            check_access_nullptr(node_i, "LinkedList::partition_hoare()", i);
             node_i = node_i->next.get();
-            ++low;
+            i++;
         }
 
         while (node_j->value > pivot_value) {
-            check_access_nullptr(node_j, "LinkedList::partition_hoare()", high);
+            check_access_nullptr(node_j, "LinkedList::partition_hoare()", j);
             node_j = node_j->prev;
-            --high;
+            j--;
         }
 
-        if (low >= high) return high;
+        if (i >= j) return j;
 
-        check_access_nullptr(node_i, "LinkedList::partition_hoare()", low);
-        check_access_nullptr(node_j, "LinkedList::partition_hoare()", high);
+        check_access_nullptr(node_i, "LinkedList::partition_hoare()", i);
+        check_access_nullptr(node_j, "LinkedList::partition_hoare()", j);
 
         std::swap(node_i->value, node_j->value);
 
         node_i = node_i->next.get();
         node_j = node_j->prev;
-        ++low;
-        --high;
+        i++;
+        j--;
     }
 }
