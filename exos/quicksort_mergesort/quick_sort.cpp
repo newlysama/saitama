@@ -1,85 +1,87 @@
-// #include "quick_sort.hh"
+#include "quick_sort.hh"
 
-// /*
-//  *  ============================= LINKED LISTS =============================
-// */
+using namespace LinkedListAlgorithm;
 
-// // Lomuto
+/*
+ *  ============================= LINKED LISTS =============================
+*/
 
-// void _quick_sort_lomuto(LinkedList& list, size_t low, size_t high) {
-//     if (low >= high) return;
+void quick_sort_lomuto(LinkedList& list) {
+    if (list.size <= 1) return;
 
-//     size_t pivot_index = list.partition_lomuto(low, high);
+    size_t pivot_index = partition_lomuto(list);
 
-//     if (pivot_index > 0) {
-//         _quick_sort_lomuto(list, low, pivot_index - 1);
-//     }
-//     _quick_sort_lomuto(list, pivot_index + 1, high);
-// }
+    auto splited = split_around_pivot(list, pivot_index);
+    
+    auto left = std::get<0>(std::move(splited));
+    auto pivot = std::get<1>(std::move(splited));
+    auto right = std::get<2>(std::move(splited));
 
-// void quick_sort_lomuto(LinkedList& list) {
-//     if (list.size <= 1) return;
+    quick_sort_lomuto(left);
+    quick_sort_lomuto(right);
 
-//     _quick_sort_lomuto(list, 0, list.size - 1);
-// }
+    concat(left, pivot);
+    concat(left, right);
+    
+    list = std::move(left);
+}
 
-// // Hoare
+void quick_sort_hoare(LinkedList& list) {
+    if (list.size <= 1) {
+        return;
+    }
 
-// void _quick_sort_hoare(LinkedList& list, size_t low, size_t high) {
-//     if (low >= high) {
-//         return;
-//     }
+    size_t pivot_index = partition_hoare(list);
 
-//     size_t pivot_index = list.partition_hoare(low, high);
+    auto splited = split(list, pivot_index + 1);
+    
+    auto left = std::get<0>(std::move(splited));
+    auto right = std::get<1>(std::move(splited));
 
-//     _quick_sort_hoare(list, low, pivot_index);
-//     _quick_sort_hoare(list, pivot_index + 1, high);
-// }
+    quick_sort_hoare(left);
+    quick_sort_hoare(right);
 
-// void quick_sort_hoare(LinkedList& list) {
-//     if (list.size <= 1) {
-//         return;
-//     }
+    concat(left, right);
 
-//     _quick_sort_hoare(list, 0, list.size - 1);
-// }
+    list = std::move(left);
+}
 
-// /*
-//  *  ============================= VECTORS =============================
-// */
+/*
+ *  ============================= VECTORS =============================
+*/
 
-// // Lomuto
+// Lomuto
 
-// void _quick_sort_lomuto(std::vector<size_t>& list, size_t low, size_t high) {
+void _quick_sort_lomuto(std::vector<size_t>& list, size_t low, size_t high) {
 
-//     if (list.size() <= 1 || low >= high) {
-//         return;
-//     }
+    if (list.size() <= 1 || low >= high) {
+        return;
+    }
 
-//     size_t pivot_index = VectorUtils::partition_lomuto(list, low, high);
+    size_t pivot_index = VectorUtils::partition_lomuto(list, low, high);
 
-//     if (pivot_index > 0)
-//         _quick_sort_lomuto(list, low, pivot_index - 1);
-//     _quick_sort_lomuto(list, pivot_index + 1, high);
-// }
+    if (pivot_index > 0)
+        _quick_sort_lomuto(list, low, pivot_index - 1);
+    _quick_sort_lomuto(list, pivot_index + 1, high);
+}
 
-// void quick_sort_lomuto(std::vector<size_t>& list) {
-//     _quick_sort_lomuto(list, 0, list.size() - 1);
-// }
+void quick_sort_lomuto(std::vector<size_t>& list) {
+    _quick_sort_lomuto(list, 0, list.size() - 1);
+}
 
-// // Hoare
+// Hoare
 
-// void _quick_sort_hoare(std::vector<size_t>& list, size_t low, size_t high) {
-//     if (list.size() <= 1) return;
+void _quick_sort_hoare(std::vector<size_t>& list, size_t low, size_t high) {
+    if (list.size() <= 1) return;
 
-//     if (low < high) {
-//         size_t pivot_index = VectorUtils::partition_hoare(list, low, high);
+    if (low < high) {
+        size_t pivot_index = VectorUtils::partition_hoare(list, low, high);
 
-//         _quick_sort_hoare(list, low, pivot_index);
-//         _quick_sort_hoare(list, pivot_index + 1, high);
-//     }
-// }
+        _quick_sort_hoare(list, low, pivot_index);
+        _quick_sort_hoare(list, pivot_index + 1, high);
+    }
+}
 
-// void quick_sort_hoare(std::vector<size_t>& list) {
-//     _quick_sort_hoare(list, 0, list.size() - 1);
-// }
+void quick_sort_hoare(std::vector<size_t>& list) {
+    _quick_sort_hoare(list, 0, list.size() - 1);
+}

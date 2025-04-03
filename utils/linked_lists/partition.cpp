@@ -82,14 +82,14 @@ size_t LinkedListAlgorithm::partition_hoare(LinkedList& list) {
     auto node_j = list.last;
 
     while (true) {
-        while (node_i->value < pivot_value) {
-            check_access_nullptr(node_i, "LinkedList::partition_hoare()", i);
+        // add node_i and node_j checks because if they are holding the greatest value of the list
+        // they will end up being nullptr's, resulting in a crash
+        while (node_i && node_i->value < pivot_value) {
             node_i = node_i->next.get();
             i++;
         }
 
-        while (node_j->value > pivot_value) {
-            check_access_nullptr(node_j, "LinkedList::partition_hoare()", j);
+        while (node_j && node_j->value > pivot_value) {
             node_j = node_j->prev;
             j--;
         }
