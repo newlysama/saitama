@@ -26,10 +26,10 @@ void LinkedList::print() {
 
 Node *LinkedList::get(std::size_t index) {
     if (this->empty()) {
-        throw std::invalid_argument("LinkedList::get() : cannot get on empty list.");
+        throw std::invalid_argument("get() : cannot get on empty list.");
     }
 
-    check_index("LinkedList::get()", index, this->size);
+    check_index("get()", index, this->size);
 
     if (index == 0) return this->first.get();
 
@@ -42,7 +42,7 @@ Node *LinkedList::get(std::size_t index) {
         current = this->first.get();
 
         while (i < index) {
-            check_access_nullptr(current, "LinkedList::get() forward", i);
+            check_access_nullptr(current, "get() forward", i);
     
             current = current->next.get();
             i++;
@@ -52,14 +52,14 @@ Node *LinkedList::get(std::size_t index) {
         current = this->last;
 
         while (i > index) {
-            check_access_nullptr(current, "LinkedList::get() backward", i);
+            check_access_nullptr(current, "get() backward", i);
     
             current = current->prev;
             i--;
         }
     }
 
-    check_access_nullptr(current, "LinkedList::get()", i);
+    check_access_nullptr(current, "get()", i);
     return current;
 }
 
