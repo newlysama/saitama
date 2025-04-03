@@ -17,6 +17,7 @@ class Node {
         std::unique_ptr<Node> next;
         Node *prev; /* Can't make this unique_ptr since it would transfer ownership */
 
+        Node(size_t value);
         Node(size_t value, std::unique_ptr<Node> next, Node* prev);
         Node(Node* node);
         ~Node() = default;
@@ -35,6 +36,16 @@ class LinkedList {
         LinkedList();
         LinkedList(std::vector<size_t> list);
         ~LinkedList() = default;
+
+        /**
+         * @brief Move constructor operator
+         */
+        LinkedList(LinkedList&& other) noexcept;
+
+        /**
+         * @brief Move assignment operator
+         */
+        LinkedList& operator=(LinkedList&& other) noexcept;
 
         /**
          * @brief Check if the linked list is empty
@@ -65,6 +76,13 @@ class LinkedList {
         void push_front(size_t value);
 
         /**
+         * @brief Add new node at the beginning of the list
+         * @see push.cpp
+         * @param new_node the node we want to add
+         */
+        void push_front(std::unique_ptr<Node> new_node);
+
+        /**
          * @brief Add new element at the end of the list
          * @see push.cpp
          * @param value the value we want to add
@@ -72,7 +90,7 @@ class LinkedList {
         void push_back(size_t value);
     
         /**
-         * @brief Add new element at the end of the list
+         * @brief Add new node at the end of the list
          * @see push.cpp
          * @param new_node the node we want to add
          */

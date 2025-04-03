@@ -26,3 +26,36 @@ TEST_F(LinkedListInitTest, T_04_InitFromMultipleElementsVector) {
     LinkedList list(input);
     test_linked_list_integrity(list, input);
 }
+
+TEST_F(LinkedListInitTest, T_05_MoveConstructor) {
+    LinkedList original({1, 2, 3});
+    LinkedList moved(std::move(original));
+
+    test_linked_list_integrity(moved, {1, 2, 3});
+
+    EXPECT_TRUE(original.empty());
+    EXPECT_EQ(original.size, 0);
+    EXPECT_EQ(original.first, nullptr);
+    EXPECT_EQ(original.last, nullptr);
+}
+
+TEST_F(LinkedListInitTest, T_06_MoveAssignmentOperator) {
+    LinkedList original({4, 5, 6});
+    LinkedList moved;
+
+    moved = std::move(original);
+    test_linked_list_integrity(moved, {4, 5, 6});
+
+    EXPECT_TRUE(original.empty());
+    EXPECT_EQ(original.size, 0);
+    EXPECT_EQ(original.first, nullptr);
+    EXPECT_EQ(original.last, nullptr);
+}
+
+TEST_F(LinkedListInitTest, T_07_SelfMoveAssignmentDoesNothing) {
+    LinkedList list({7, 8, 9});
+    LinkedList& ref = list;
+
+    list = std::move(ref);  // simulate self-move
+    test_linked_list_integrity(list, {7, 8, 9}); // should remain unchanged
+}
