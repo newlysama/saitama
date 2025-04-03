@@ -87,6 +87,8 @@ std::tuple<LinkedList, LinkedList, LinkedList> LinkedListAlgorithm::split_around
         return std::make_tuple(std::move(list), std::move(pivot), std::move(right));    
     }
 
+    auto right_last = list.last;
+
     left.first = std::move(list.first);
     auto current = left.first.get();
     size_t i = 0;
@@ -116,8 +118,9 @@ std::tuple<LinkedList, LinkedList, LinkedList> LinkedListAlgorithm::split_around
 
     pivot.last = pivot.first.get();
 
-    if (right.size > 0)
-        right.last = right.get(right.size - 1);
+    if (right.size > 0) {
+        right.last = right_last;
+    }
 
     return std::make_tuple(std::move(left), std::move(pivot), std::move(right));
 }

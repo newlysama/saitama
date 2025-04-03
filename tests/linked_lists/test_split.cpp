@@ -80,7 +80,7 @@ TEST_F(LinkedListSplitTest, T10_SplitThenMergeRestoresSortedList) {
 
 #endif
 
-#ifdef SPLIT_AOROUND_PIVOT
+#ifdef SPLIT_AROUND_PIVOT
 
 /* ================= SPLIT AROUND PIVOT ================= */
 

@@ -45,20 +45,21 @@ size_t LinkedListAlgorithm::partition_lomuto(LinkedList& list) {
     auto node_j = list.first.get();
 
     for (j = 0; j < list.size - 1; ++j) {
+        check_access_nullptr(node_j, "partition_lomuto()", j);
+
         if (node_j->value < pivot_value) {
-            check_access_nullptr(node_i, "LinkedList::partition_lomuto()", i);
+            check_access_nullptr(node_i, "partition_lomuto()", i);
             std::swap(node_i->value, node_j->value);
 
             node_i = node_i->next.get();
             ++i;
         }
 
-        check_access_nullptr(node_j, "LinkedList::partition_lomuto()", j);
+        check_access_nullptr(node_j, "partition_lomuto()", j);
         node_j = node_j->next.get();
     }
 
-    check_access_nullptr(node_i, "LinkedList::partition_lomuto()", i);
-    check_access_nullptr(node_j, "LinkedList::partition_lomuto()", j);
+    check_access_nullptr(node_i, "partition_lomuto()", i);
 
     std::swap(node_i->value, node_j->value);
     return i;
@@ -96,8 +97,8 @@ size_t LinkedListAlgorithm::partition_hoare(LinkedList& list) {
 
         if (i >= j) return j;
 
-        check_access_nullptr(node_i, "LinkedList::partition_hoare()", i);
-        check_access_nullptr(node_j, "LinkedList::partition_hoare()", j);
+        check_access_nullptr(node_i, "partition_hoare()", i);
+        check_access_nullptr(node_j, "partition_hoare()", j);
 
         std::swap(node_i->value, node_j->value);
 

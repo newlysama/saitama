@@ -17,8 +17,8 @@ void quick_sort_lomuto(LinkedList& list) {
     auto pivot = std::get<1>(std::move(splited));
     auto right = std::get<2>(std::move(splited));
 
-    quick_sort_lomuto(left);
-    quick_sort_lomuto(right);
+    if (left.size > 1) quick_sort_lomuto(left);
+    if (right.size > 1) quick_sort_lomuto(right);
 
     concat(left, pivot);
     concat(left, right);
@@ -38,8 +38,8 @@ void quick_sort_hoare(LinkedList& list) {
     auto left = std::get<0>(std::move(splited));
     auto right = std::get<1>(std::move(splited));
 
-    quick_sort_hoare(left);
-    quick_sort_hoare(right);
+    if (left.size > 1) quick_sort_hoare(left);
+    if (right.size > 1) quick_sort_hoare(right);
 
     concat(left, right);
 
