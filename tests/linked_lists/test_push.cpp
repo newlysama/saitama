@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
 #include <test_utils.hh>
+#include "test_selector.hh" 
+
+#ifdef PUSH
 
 class LinkedListPushTest : public ::testing::Test {};
 
@@ -94,3 +97,5 @@ TEST_F(LinkedListPushTest, T10_PushBackUniquePtrThrowsOnNullptr) {
 
     EXPECT_THROW(list.push_back(std::move(null_node)), std::invalid_argument);
 }
+
+#endif

@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
 #include <test_utils.hh>
-#include <stdexcept>
-#include <sstream>
+#include "test_selector.hh" 
+
+#ifdef GET
 
 class LinkedListGetTest : public ::testing::Test {
 protected:
@@ -83,3 +84,5 @@ TEST_F(LinkedListGetTest, T10_GetOnSingleElementList) {
     EXPECT_EQ(node->next, nullptr);
     EXPECT_EQ(node->prev, nullptr);
 }
+
+#endif

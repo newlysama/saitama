@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
 #include <test_utils.hh>
+#include "test_selector.hh" 
+
+#ifdef SWAP
 
 class LinkedListSwapValuesTest : public ::testing::Test {};
 
@@ -63,3 +66,5 @@ TEST_F(LinkedListSwapValuesTest, T09_SwapTwiceRestoresList) {
     list.swap_values(2, 0);
     test_linked_list_integrity(list, {7, 8, 9});
 }
+
+#endif

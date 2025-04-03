@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
 #include <test_utils.hh>
+#include "test_selector.hh" 
+
+#ifdef INIT
 
 class LinkedListInitTest : public ::testing::Test {};
 
@@ -59,3 +62,5 @@ TEST_F(LinkedListInitTest, T_07_SelfMoveAssignmentDoesNothing) {
     list = std::move(ref);  // simulate self-move
     test_linked_list_integrity(list, {7, 8, 9}); // should remain unchanged
 }
+
+#endif

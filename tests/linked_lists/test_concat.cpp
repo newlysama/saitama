@@ -2,8 +2,11 @@
 #include <linked_lists/linked_lists.hh>
 #include <linked_lists/linked_lists_algorithms.hh>
 #include <test_utils.hh>
+#include "test_selector.hh" 
 
 using namespace LinkedListAlgorithm;
+
+#ifdef CONCAT
 
 class LinkedListConcatTest : public ::testing::Test {};
 
@@ -58,3 +61,5 @@ TEST_F(LinkedListConcatTest, T06_ForceCorruption) {
         concat(left, right);
     }, std::logic_error);
 }
+
+#endif

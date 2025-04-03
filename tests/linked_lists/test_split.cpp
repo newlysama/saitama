@@ -2,10 +2,13 @@
 #include <linked_lists/linked_lists.hh>
 #include <linked_lists/linked_lists_algorithms.hh>
 #include <test_utils.hh>
+#include "test_selector.hh" 
 
 using namespace LinkedListAlgorithm;
 
 class LinkedListSplitTest : public ::testing::Test {};
+
+#ifdef SPLIT
 
 /* ======================= SPLIT ======================= */
 
@@ -75,6 +78,10 @@ TEST_F(LinkedListSplitTest, T10_SplitThenMergeRestoresSortedList) {
     test_linked_list_integrity(left, {1, 3, 5, 7});
 }
 
+#endif
+
+#ifdef SPLIT_AOROUND_PIVOT
+
 /* ================= SPLIT AROUND PIVOT ================= */
 
 TEST_F(LinkedListSplitTest, T11_SplitAroundPivotThrowsOnEmpty) {
@@ -141,3 +148,5 @@ TEST_F(LinkedListSplitTest, T19_SplitAroundPivotThenMergeRestoresSortedList) {
     merge(left, right);
     test_linked_list_integrity(left, {1, 4, 6, 8});
 }
+
+#endif

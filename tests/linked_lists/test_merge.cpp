@@ -2,8 +2,11 @@
 #include <linked_lists/linked_lists.hh>
 #include <linked_lists/linked_lists_algorithms.hh>
 #include <test_utils.hh>
+#include "test_selector.hh" 
 
 using namespace LinkedListAlgorithm;
+
+#ifdef MERGE
 
 class LinkedListMergeTest : public ::testing::Test {
 protected:
@@ -100,3 +103,5 @@ TEST_F(LinkedListMergeTest, T12_LargeLists) {
     std::fill(expected.begin() + 500, expected.end(), 2);
     test_linked_list_integrity(left, expected);
 }
+
+#endif

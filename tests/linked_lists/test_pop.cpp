@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include <linked_lists/linked_lists.hh>
 #include <test_utils.hh>
+#include "test_selector.hh" 
+
+#ifdef POP
 
 class LinkedListPopTest : public ::testing::Test {};
 
@@ -75,3 +78,5 @@ TEST_F(LinkedListPopTest, T_07_PopBackOnMultipleElementList) {
 
     test_linked_list_integrity(list, {5, 10});
 }
+
+#endif
