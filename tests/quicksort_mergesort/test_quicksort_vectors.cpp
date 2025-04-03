@@ -4,9 +4,9 @@
 #include <test_utils.hh>
 #include "test_selector.hh"
 
-#ifdef QUICK_SORT_VECTORS
-
 class VectorsQuickSortTest : public ::testing::Test {};
+
+#ifdef QUICK_SORT_LOMUTO_VECTORS
 
 /*
  * ======================== quick_sort_lomuto ========================
@@ -42,6 +42,10 @@ TEST_F(VectorsQuickSortTest, T05_Lomuto_ReverseSorted) {
     quick_sort_lomuto(list);
     EXPECT_EQ(list, std::vector<size_t>({1, 2, 3, 4, 5}));
 }
+
+#endif
+
+#ifdef QUICK_SORT_HOARE_VECTORS
 
 /*
  * ======================== quick_sort_hoare ========================
