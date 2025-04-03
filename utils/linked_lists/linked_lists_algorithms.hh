@@ -3,7 +3,7 @@
 #include "linked_lists.hh"
 
 /**
- * @brief Class implemeting various list algorithm, applied to our linked lists
+ * @brief Namespace implemeting various list algorithms applied to our linked lists
  * @details Theese implementations are all in-place, we don't need to use unique pointers
  *          of LinkedList since that as soon as we move list->first, list is deleted.
  */
@@ -43,7 +43,7 @@ namespace LinkedListAlgorithm {
          * @brief Concat two linked lists in-place
          * @see concat.cpp
          * @param left list that will 'receive' the other
-         * @param right list to concat to left (is deleted)
+         * @param right list to concat to left
          */
         void concat(LinkedList& left, LinkedList& right);
 

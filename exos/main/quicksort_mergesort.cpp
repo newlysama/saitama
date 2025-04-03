@@ -1,3 +1,9 @@
+/**
+ * @brief Implements our quick sort and merge sort algorithms benchmarking.
+ * You can chose the list sizes you want and the max value to use for the benchmark.
+ */
+
+
 #include <benchmark/benchmark.h>
 #include <vector>
 #include <algorithm>
@@ -11,7 +17,7 @@
 #include <quicksort_mergesort/benchmark_selector.hh>
 #include <logger/logger.hh>
 
-constexpr size_t SIZE = 50'000;
+constexpr size_t SIZE = 100'000;
 constexpr size_t MAX_VAL = 1'000'000;
 
 std::vector<size_t> generate_random_vector(size_t size, size_t min = 0, size_t max = MAX_VAL) {
