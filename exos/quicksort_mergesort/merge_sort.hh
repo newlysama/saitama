@@ -15,9 +15,9 @@
 void merge_sort(LinkedList& list);
 
 /**
- * @brief Merge sort algorithm applied to vectors
- * 
- * @param list 
- * @return std::vector<std::size_t> 
+ * @brief Merge sort algorithm applied to vectors 
+ * @param list the list we want to sort
+ * @return the new sorted list
+ * @todo Implement merge_sort as in-place
  */
 std::vector<std::size_t> merge_sort(std::vector<size_t> list);
