@@ -8,15 +8,15 @@
  */
 
 #define RANDOM_LISTS
-// #define SORTED_LISTS
-// #define REVERSED_LISTS
+#define SORTED_LISTS
+#define REVERSED_LISTS
 
 /*
  *   Tested data structures
  */
 
 #define LINKED_LISTS
-// #define VECTORS
+#define VECTORS
 
 /*
  *   Tested sorting algorithm

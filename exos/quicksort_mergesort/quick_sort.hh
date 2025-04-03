@@ -1,6 +1,7 @@
 #pragma once
 
 #include <linked_lists/linked_lists.hh>
+#include <linked_lists/linked_lists_algorithms.hh>
 #include <vector_utils/vector_utils.hh>
 #include <logger/logger.hh>
 

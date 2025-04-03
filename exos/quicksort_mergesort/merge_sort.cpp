@@ -1,24 +1,23 @@
 #include "merge_sort.hh"
 
-/*
- *  ============================= LINKED LISTS =============================
- */
-
-std::unique_ptr<LinkedList> merge_sort(std::unique_ptr<LinkedList> list) {
-    if (list->size <= 1) {
-        return list;
+void merge_sort(LinkedList& list) {
+    if (list.size <= 1) {
+        return;
     }
 
-    auto splited = LinkedList::split(std::move(list));
-    auto left = std::move(std::get<0>(splited));
-    auto right = std::move(std::get<1>(splited));
+    auto splited = LinkedListAlgorithm::split(list);
+    auto left = std::get<0>(std::move(splited));
+    auto right = std::get<1>(std::move(splited));
 
-    return LinkedList::merge(merge_sort(std::move(left)), merge_sort(std::move(right)));
+    merge_sort(left);
+    merge_sort(right);
+
+    LinkedListAlgorithm::merge(left, right);
+
+    // Regive ownership to list, since it's been transfered to left
+    list = std::move(left);
 }
 
-/*
- *  ============================= VECTORS =============================
- */
 
 std::vector<std::size_t> merge_sort(std::vector<size_t> list) {
     if (list.size() <= 1) {

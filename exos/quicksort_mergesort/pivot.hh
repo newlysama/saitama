@@ -1,7 +1,8 @@
 #pragma once
 
-/*
- *  Chose which pivot strategy to use for quicksort
+/**
+ * @brief Chose which pivot strategy to use for quicksort
+ * 
  */
 
  #define RANDOM 1
