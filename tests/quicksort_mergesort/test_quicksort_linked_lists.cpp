@@ -2,6 +2,7 @@
 #include <linked_lists/linked_lists.hh>
 #include <quicksort_mergesort/quick_sort.hh>
 #include <test_utils.hh>
+#include "test_selector.hh"
 
 class LinkedListQuickSortTest : public ::testing::Test {};
 

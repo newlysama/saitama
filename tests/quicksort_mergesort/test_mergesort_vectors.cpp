@@ -2,6 +2,7 @@
 #include <vector_utils/vector_utils.hh>
 #include <quicksort_mergesort/merge_sort.hh>
 #include <test_utils.hh>
+#include "test_selector.hh"
 
 class VectorsMergeSortTest : public ::testing::Test {};
 
