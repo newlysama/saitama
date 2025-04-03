@@ -4,3 +4,8 @@ bin/
 
 # Trash files
 .vscode/
+
+# We don't want that
+pivot.hh
+config.mk
+Makefile
