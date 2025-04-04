@@ -20,18 +20,18 @@ endif
 # ================================================================
 
 # EXERCISE
-EXO_QUICKSORT_MERGESORT		  := 1
+EXO_QUICKSORT_MERGESORT			:= 1
 
 # BENCHMARK
-BENCHMARK_QUICKSORT_MERGESORT := 1
+BENCHMARK_QUICKSORT_MERGESORT	:= 1
 
 # TESTS
 # Test Utils
-TEST_LINKED_LISTS			  := 1
-TEST_VECTOR_UTILS             := 1
+TEST_LINKED_LISTS				:= 1
+TEST_VECTOR_UTILS				:= 1
 
 # Test Exercises
-TEST_QUICKSORT_MERGESORT	  := 1
+TEST_QUICKSORT_MERGESORT		:= 1
 
 
 # Always include logger
@@ -45,9 +45,9 @@ UTILS_SRC += $(wildcard utils/logger/*.cpp)
 ifeq ($(EXO_ON),1)
 
 	ifeq ($(EXO_QUICKSORT_MERGESORT),1)
-		EXO_SRC   += exos/mains/quicksort_mergesort.cpp
-		EXO_SRC   += $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC += $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/tools/*.cpp)
+		EXO_SRC		+= exos/mains/quicksort_mergesort.cpp
+		EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
+		UTILS_SRC	+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/tools/*.cpp)
 	endif
 
 endif
@@ -59,9 +59,9 @@ endif
 ifeq ($(BENCHMARK_ON),1)
 
 	ifeq ($(BENCHMARK_QUICKSORT_MERGESORT),1)
-		BENCHMARK_SRC += $(wildcard benchmarks/quicksort_mergesort/*.cpp)
-		EXO_SRC		  += $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC 	  += $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/tools/*.cpp)
+		BENCHMARK_SRC	+= $(wildcard benchmarks/quicksort_mergesort/*.cpp)
+		EXO_SRC			+= $(wildcard exos/quicksort_mergesort/*.cpp)
+		UTILS_SRC		+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/tools/*.cpp)
 	endif
 
 endif
@@ -73,21 +73,21 @@ endif
 ifeq ($(TEST_ON),1)
 
 	ifeq ($(TEST_LINKED_LISTS),1)
-		TEST_SRC        += tests/test_utils.cpp  
-		TEST_SRC 		+= $(wildcard tests/linked_lists/*.cpp)
-		UTILS_SRC 		+= $(wildcard utils/linked_lists/*.cpp)
+		TEST_SRC	+= tests/test_utils.cpp  
+		TEST_SRC	+= $(wildcard tests/linked_lists/*.cpp)
+		UTILS_SRC	+= $(wildcard utils/linked_lists/*.cpp)
 	endif
 
 	ifeq ($(TEST_VECTOR_UTILS),1)
-		TEST_SRC 		+= $(wildcard tests/vector_utils/*.cpp)
-		UTILS_SRC 		+= $(wildcard utils/vector_utils/*.cpp)
+		TEST_SRC	+= $(wildcard tests/vector_utils/*.cpp)
+		UTILS_SRC	+= $(wildcard utils/vector_utils/*.cpp)
 	endif
 
 	ifeq ($(TEST_QUICKSORT_MERGESORT),1)
-		TEST_SRC        += tests/test_utils.cpp  
-		TEST_SRC 		+= $(wildcard tests/quicksort_mergesort/*.cpp)
-		EXO_SRC 		+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC 		+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp)
+		TEST_SRC	+= tests/test_utils.cpp  
+		TEST_SRC	+= $(wildcard tests/quicksort_mergesort/*.cpp)
+		EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
+		UTILS_SRC	+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp)
 	endif
 
 endif

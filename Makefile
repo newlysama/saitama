@@ -4,9 +4,9 @@
 
 # Default mode : EXO
 
-EXO_ON ?= 1
-BENCHMARK_ON ?= 0
-TEST_ON ?= 0
+EXO_ON			?= 1
+BENCHMARK_ON	?= 0
+TEST_ON			?= 0
 
 ifeq ($(MAKECMDGOALS),test)
 	EXO_ON := 0
@@ -27,12 +27,12 @@ export TEST_ON
 #         COMPILER
 # =========================
 
-CXX       = g++
-CXXFLAGS += -std=c++17 -Wall -Wextra -Werror -pedantic
-CXXFLAGS += -Wconversion -Wcast-align -Wunused -Wshadow
-CXXFLAGS += -Wold-style-cast -Wpointer-arith
-CXXFLAGS += -fsanitize=address
-CXXFLAGS += -I.
+CXX			= g++
+CXXFLAGS 	+= -std=c++17 -Wall -Wextra -Werror -pedantic
+CXXFLAGS 	+= -Wconversion -Wcast-align -Wunused -Wshadow
+CXXFLAGS 	+= -Wold-style-cast -Wpointer-arith
+CXXFLAGS 	+= -fsanitize=address
+CXXFLAGS 	+= -I.
 
 # =========================
 #        FOLDERS
@@ -56,23 +56,23 @@ include config.mk
 #  REMOVE DUPLICATES
 # =========================
 
-EXO_SRC   	  := $(sort $(EXO_SRC))
-BENCHMARK_SRC := $(sort $(BENCHMARK_SRC))
-UTILS_SRC 	  := $(sort $(UTILS_SRC))
-TEST_SRC  	  := $(sort $(TEST_SRC))
+EXO_SRC			:= $(sort $(EXO_SRC))
+BENCHMARK_SRC	:= $(sort $(BENCHMARK_SRC))
+UTILS_SRC		:= $(sort $(UTILS_SRC))
+TEST_SRC		:= $(sort $(TEST_SRC))
 
 # =========================
 #     OBJECTS & BINARY
 # =========================
 
-OBJ_EXO         = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(EXO_SRC))
-OBJ_BENCHMARK   = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(BENCHMARK_SRC))
-OBJ_UTILS       = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(UTILS_SRC))
-OBJ_TESTS       = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(TEST_SRC))
+OBJ_EXO			= $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(EXO_SRC))
+OBJ_BENCHMARK	= $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(BENCHMARK_SRC))
+OBJ_UTILS		= $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(UTILS_SRC))
+OBJ_TESTS		= $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(TEST_SRC))
 
-EXE_NAME       = $(BIN_DIR)/main
-BENCHMARK_NAME = $(BIN_DIR)/benchmark
-TEST_NAME      = $(BIN_DIR)/test_runner
+EXE_NAME		= $(BIN_DIR)/main
+BENCHMARK_NAME	= $(BIN_DIR)/benchmark
+TEST_NAME		= $(BIN_DIR)/test_runner
 
 # =========================
 #         TARGETS
