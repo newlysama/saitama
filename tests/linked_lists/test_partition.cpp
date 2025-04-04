@@ -46,6 +46,8 @@ protected:
     }
 };
 
+#if PIVOT != RANDOM // Since random pivot is unpredictable
+
 #ifdef PARTITION_LOMUTO
 
 /*
@@ -131,5 +133,7 @@ TEST_F(LinkedListPartitionTest, T12_Hoare_TwoElementsUnsorted) {
     partition_hoare(list);
     test_linked_list_integrity(list, {1, 2});
 }
+
+#endif
 
 #endif

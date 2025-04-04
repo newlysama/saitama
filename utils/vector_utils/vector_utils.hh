@@ -6,6 +6,7 @@
 #include <exception>
 #include <numeric>
 #include <iostream>
+#include <tuple>
 
 /**
 * @brief Namespace implementing various vector algorithms
