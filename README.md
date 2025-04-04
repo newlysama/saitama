@@ -7,38 +7,44 @@ manipulating complex algorithms, structures, frameworks, etc...
 
 New features / optimizations / code cleaning should be added daily.  
 
+
 ## __II - STRUCTURE__
 
 ### This projects is structured like this :
 
 **- Makefile :** build the project.  
-**- config.mk :** configuration file for building (included in Makefile)  
-**- exos/ :** src folder. Contains exercises implementations (`exercisesname/`), and benchmarks for perf testing (`main/`).  
-**- utils/ :** contains all necessary utilities for `exos/` to run properly. This includes data structures implementation, utility methods, etc...  
-**- tests/ :** test folder (no shit)  
+**- config.mk :** configuration file for building (included in `Makefile`).  
+**- exos/ :** src folder. Contains exercises implementations and main files (`mains/`).  
+**- benchmark/ :** benchmark folder. Contains all the necessaries to benchmark our algorithms implemented in `exos/`.   
+**- utils/ :** contains various utility data structures and algorithms implementations.   
+**- tests/ :** test folder.   
 
-## __II - BUILDING__
 
-### 1 - This project uses `make` to build. The Makefile defines the following rules :
+## __II - BUILDING AND RUNNING__
 
-**- make :** Default rule, build the exercises  
-**- make test :** Build tests   
-**- make benchmark :** Build benchmarks   
-**- make run :** Run all built binaries  
-**- make run-benchmark :** Run exercise executable forcing certain options  
-
-### 2 - The `config.mk` :
+### 1 - The `config.mk` :
 
 This file allows intelligent building. It defines sources for the Makefile to run.  
 To define a source to build, simply set the according maccros to 1.  
 This will get all the needed files for building and add them to EXO_SRC, UTILS_SRC, BENCHARK_SRC or TEST_SRC maccros.   
 
-Building modes (EXO, TEST or BENCHMARK) maccros in config.mk are set depeing on the make rule called.   
+Building modes maccros in config.mk/Makefile are set depending on the make rule called.   
+
+
+### 2 - The `Makefile` :
+
+**- make :** Default rule, build the exercises (set EXO_ON to 1)   
+**- make test :** Build tests (set TEST_ON to 1)   
+**- make benchmark :** Build benchmarks (set BENCHMARK_ON to 1)   
+**- make run :** Run all built binaries   
+**- make run-benchmark :** Run benchmark executable forcing certain options   
+
 
 ### 3 - Build folders :
 
 **- build/ :** Object files  
 **- bin/ :** Binaries  
+
 
 ### 4 - Depedencises
 
