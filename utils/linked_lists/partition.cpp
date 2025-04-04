@@ -2,6 +2,7 @@
 
 #include "linked_lists.hh"
 #include "linked_lists_algorithms.hh"
+#include "exos/quicksort_mergesort/pivot.hh"
 
 /**
  * @brief Chose which pivot strategy to use, depending on the defined maccros in 'exos/quicksort_mergesort/pivot.hh'
@@ -9,7 +10,7 @@
  * @param high 
  * @return size_t 
  */
-size_t chose_pivot(size_t low, size_t high) {
+static size_t chose_pivot(size_t low, size_t high) {
     #if PIVOT == RANDOM
         return low + rand() % (high - low + 1);
     #elif PIVOT == FIRST

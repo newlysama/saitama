@@ -1,6 +1,7 @@
 #include "quick_sort.hh"
 
 using namespace LinkedListAlgorithm;
+using namespace VectorUtils;
 
 /*
  *  ============================= LINKED LISTS =============================
@@ -58,7 +59,7 @@ void _quick_sort_lomuto(std::vector<size_t>& list, size_t low, size_t high) {
         return;
     }
 
-    size_t pivot_index = VectorUtils::partition_lomuto(list, low, high);
+    size_t pivot_index = partition_lomuto(list, low, high);
 
     if (pivot_index > 0)
         _quick_sort_lomuto(list, low, pivot_index - 1);
@@ -75,7 +76,7 @@ void _quick_sort_hoare(std::vector<size_t>& list, size_t low, size_t high) {
     if (list.size() <= 1) return;
 
     if (low < high) {
-        size_t pivot_index = VectorUtils::partition_hoare(list, low, high);
+        size_t pivot_index = partition_hoare(list, low, high);
 
         _quick_sort_hoare(list, low, pivot_index);
         _quick_sort_hoare(list, pivot_index + 1, high);

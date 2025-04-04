@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include <vector_utils/vector_utils.hh>
-#include <quicksort_mergesort/merge_sort.hh>
-#include <test_utils.hh>
+
 #include "test_selector.hh"
+#include "utils/vector_utils/vector_utils.hh"
+#include "exos/quicksort_mergesort/merge_sort.hh"
 
 #ifdef MERGE_SORT_VECTORS
 

@@ -2,9 +2,9 @@
 
 #include <exception>
 
-#include <linked_lists/linked_lists.hh>
-#include <linked_lists/linked_lists_algorithms.hh>
-#include <vector_utils/vector_utils.hh>
+#include "utils/linked_lists/linked_lists.hh"
+#include "utils/linked_lists/linked_lists_algorithms.hh"
+#include "utils/vector_utils/vector_utils.hh"
 
 /**
  * @brief Merge sort algorithm applied to linked lists

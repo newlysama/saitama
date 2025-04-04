@@ -1,9 +1,10 @@
 #include <gtest/gtest.h>
-#include <linked_lists/linked_lists.hh>
-#include <linked_lists/linked_lists_algorithms.hh>
-#include <quicksort_mergesort/pivot.hh>
-#include <test_utils.hh>
-#include "test_selector.hh" 
+
+#include "test_selector.hh"
+#include "tests/test_utils.hh" 
+#include "utils/linked_lists/linked_lists.hh"
+#include "utils/linked_lists/linked_lists_algorithms.hh"
+#include "exos/quicksort_mergesort/pivot.hh"
 
 using namespace LinkedListAlgorithm;
 

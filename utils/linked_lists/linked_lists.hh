@@ -8,8 +8,8 @@
 #include <tuple>
 #include <optional>
 #include <iostream>
-#include <logger/logger.hh>
-#include <quicksort_mergesort/pivot.hh>
+
+#include "utils/logger/logger.hh"
 
 class Node {
     public:

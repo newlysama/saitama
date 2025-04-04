@@ -7,6 +7,7 @@
  * the elements we want in it, but we don't have any copy constructor for out linked lists (and we don't want some).
  */
 
+
 std::tuple<LinkedList, LinkedList> LinkedListAlgorithm::split(LinkedList& list, std::optional<size_t> split_index) {
     if (list.empty()) {
         throw std::invalid_argument("LinkedListAlgorithm::split() : cannot split empty list.");

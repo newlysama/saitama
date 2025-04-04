@@ -1,6 +1,7 @@
 #include "merge_sort.hh"
 
 using namespace LinkedListAlgorithm;
+using namespace VectorUtils;
 
 void merge_sort(LinkedList& list) {
     if (list.size <= 1) {
@@ -26,9 +27,9 @@ std::vector<std::size_t> merge_sort(std::vector<size_t> list) {
         return list;
     }
 
-    auto splited = VectorUtils::split(list);
+    auto splited = split(list);
     auto left = std::get<0>(splited);
     auto right = std::get<1>(splited);
 
-    return VectorUtils::merge(merge_sort(left), merge_sort(right));
+    return merge(merge_sort(left), merge_sort(right));
 }

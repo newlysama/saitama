@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
-#include <linked_lists/linked_lists.hh>
-#include <test_utils.hh>
-#include "test_selector.hh" 
+
+#include "test_selector.hh"
+#include "tests/test_utils.hh" 
+#include "utils/linked_lists/linked_lists.hh"
 
 #ifdef POP
 

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+
 #include "color.hh"
 
 class Logger {

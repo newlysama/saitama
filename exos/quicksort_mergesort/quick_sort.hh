@@ -1,14 +1,15 @@
-/**
- * @brief In linked list algorithms, we prefer split the split the lists before
- * recurisve call, as this gives direct access to low and high values, used in partition algorithms.
- */
-
 #pragma once
 
-#include <linked_lists/linked_lists.hh>
-#include <linked_lists/linked_lists_algorithms.hh>
-#include <vector_utils/vector_utils.hh>
-#include <logger/logger.hh>
+/**
+ * @brief In linked list quicksort algorithms, we prefer split the lists before
+ * recurisve call, as this gives direct access to low and high indexes, used in partition algorithms.
+ */
+
+#include <exception>
+
+#include "utils/linked_lists/linked_lists.hh"
+#include "utils/linked_lists/linked_lists_algorithms.hh"
+#include "utils/vector_utils/vector_utils.hh"
 
 /**
  * @brief Quick sort algorithm applied to linked lists using lomuto's partition scheme
