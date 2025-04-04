@@ -10,7 +10,7 @@ New features / optimizations / code cleaning should be added daily.
 
 ## __II - STRUCTURE__
 
-### This projects is structured like this :
+### This projects is structured ass followed :
 
 **- Makefile :** build the project.  
 **- config.mk :** configuration file for building (included in `Makefile`).  
@@ -39,7 +39,7 @@ Building modes maccros in config.mk/Makefile are set depending on the make rule 
 **- make run :** Run all built binaries   
 **- make run-benchmark :** Run benchmark executable forcing certain options   
 
-### 3 - The Dockerfile
+### 3 - The `Dockerfile` :
 
 A Dockerfile is also provided. Just build and run the image, all the depedencies will be installed, and   
 you should be able to run everything properly.
