@@ -4,9 +4,3 @@ bin/
 
 # Trash files
 .vscode/
-
-# We don't want that
-pivot.hh
-test_selector.hh
-config.mk
-Makefile
