@@ -47,13 +47,13 @@ you should be able to run everything properly.
 **[SPOILER ALERT]** It only works in interactive mode (use -it when running the container).   
 
 
-### 3 - Build folders :
+### 4 - Build folders :
 
 **- build/ :** Object files  
 **- bin/ :** Binaries  
 
 
-### 4 - Depedencises
+### 5 - Depedencises
 
 This project requires several depedencies to build :  
 
