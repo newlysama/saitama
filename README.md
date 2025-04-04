@@ -39,6 +39,13 @@ Building modes maccros in config.mk/Makefile are set depending on the make rule 
 **- make run :** Run all built binaries   
 **- make run-benchmark :** Run benchmark executable forcing certain options   
 
+### 3 - The Dockerfile
+
+A Dockerfile is also provided. Just build and run the image, all the depedencies will be installed, and   
+you should be able to run everything properly.
+
+**[SPOILER ALERT]** It only works in interactive mode (use -it when running the container).   
+
 
 ### 3 - Build folders :
 
