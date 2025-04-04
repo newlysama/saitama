@@ -22,18 +22,18 @@ New features / optimizations / code cleaning should be added daily.
 ### 1 - This project uses `make` to build. The Makefile defines the following rules :
 
 **- make :** Default rule, build the exercises  
-**- make test :** Build tests
-**- make benchmark :** Build benchmarks
+**- make test :** Build tests   
+**- make benchmark :** Build benchmarks   
 **- make run :** Run all built binaries  
 **- make run-benchmark :** Run exercise executable forcing certain options  
 
 ### 2 - The `config.mk` :
 
 This file allows intelligent building. It defines sources for the Makefile to run.  
-To define a source to build, simply set the according maccros on top of the file to 1.  
-This will get all the needed files for building and add them to EXO_SRC, UTILS_SRC or TEST_SRC.  
+To define a source to build, simply set the according maccros to 1.  
+This will get all the needed files for building and add them to EXO_SRC, UTILS_SRC, BENCHARK_SRC or TEST_SRC maccros.   
 
-Building modes (exercise, test or benchmarks) maccros in config.mk are set depeing on the make rule called.
+Building modes (EXO, TEST or BENCHMARK) maccros in config.mk are set depeing on the make rule called.   
 
 ### 3 - Build folders :
 
