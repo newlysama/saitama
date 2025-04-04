@@ -55,7 +55,7 @@ you should be able to run everything properly.
 
 ### 5 - Dependencises
 
-This project requires several depedencies to build :  
+This project requires several depedencies to build and run :  
 
 **- Google Benchmark :** Used to test our implementations' performance on large/complex data structures. Refs : [Github](https://github.com/google/benchmark)  
 **- Google Tests :** For testing (^^). Refs : [Github](https://github.com/google/googletest)  
