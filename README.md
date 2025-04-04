@@ -53,7 +53,7 @@ you should be able to run everything properly.
 **- bin/ :** Binaries  
 
 
-### 5 - Dependencises
+### 5 - Dependencises :
 
 This project requires several depedencies to build and run :  
 
