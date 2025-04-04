@@ -130,4 +130,4 @@ run-benchmark:
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
 
-.PHONY: all test clean run
+.PHONY: all benchmark test clean run
