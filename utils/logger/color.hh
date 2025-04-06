@@ -1,3 +1,4 @@
+#define BOLD    "\033[1m"
 #define RED     "\033[1m\033[31m"      /*  Red */
 #define GREEN   "\033[1m\033[32m"      /*  Green */
 #define YELLOW  "\033[1m\033[33m"      /*  Yellow */
