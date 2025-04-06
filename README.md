@@ -11,11 +11,11 @@ New features / optimizations / code cleaning should be added daily.  
 ### This projects is structured ass followed :
 
 **- Makefile :** build the project.   
-**- config.mk :** configuration file for building (included in `Makefile`).   
-**- exos/ :** src folder. Contains exercises implementations and main files (`mains/`).   
-**- benchmark/ :** benchmark folder. Contains all the necessaries to benchmark our algorithms implemented in `exos/`.   
-**- utils/ :** contains various utility data structures and algorithms implementations.   
-**- tests/ :** test folder.   
+**- config.mk :** configuration file for building (included in `Makefile`).<br>
+**- exos/ :** src folder. Contains exercises implementations and main files (`mains/`).<br>
+**- benchmark/ :** benchmark folder. Contains all the necessaries to benchmark our algorithms implemented in `exos/`.<br>
+**- utils/ :** contains various utility data structures and algorithms implementations.<br>
+**- tests/ :** test folder.<br>
 
 ## ▶️ BUILDING AND RUNNING
 
