@@ -38,7 +38,7 @@ BM_LinkedListQuickSortLomuto_Reverse      0.994 s         0.955 s             1
 BM_LinkedListQuickSortHoare_Reverse       0.481 s         0.462 s             2
 ```
 
-### ▶️ Quicksort in linked lists, mid pivot strategy :
+### ▶️ Quicksort on linked lists, mid pivot strategy :
 
 ```text
 -------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ BM_LinkedListQuickSortLomuto_Reverse      0.766 s         0.736 s             1
 BM_LinkedListQuickSortHoare_Reverse       0.267 s         0.257 s             2
 ```
 
-### ▶️ Quicksort in vectors, random pivot strategy :
+### ▶️ Quicksort on vectors, random pivot strategy :
 
 ```text
 --------------------------------------------------------------------------
@@ -65,7 +65,7 @@ BM_VectorQuickSortHoare_Sorted       0.009 s         0.008 s            85
 BM_VectorMergeSort_Reverse           0.552 s         0.530 s             1
 ```
 
-### ▶️ Quicksort in vectors, mid pivot strategy :
+### ▶️ Quicksort on vectors, mid pivot strategy :
 
 ```text
 --------------------------------------------------------------------------
