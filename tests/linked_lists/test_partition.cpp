@@ -39,9 +39,6 @@ protected:
 
             expected_unsorted_hoare = {2, 3, 1, 4, 5};
             expected_reversed_hoare = {1, 2, 5, 4, 3};
-
-        #else
-            throw std::invalid_argument("Unsupported pivot strategy for partition testing.");
         #endif
     }
 };
