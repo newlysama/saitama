@@ -2,7 +2,7 @@
 
 ## ▶️ PURPOSE
 
-No purpose, at least for you ^^ This is just a simple training project. My goal is to improve my C++ skills by  manipulating complex algorithms, structures, frameworks, etc... This project is meant to be quant trading oriented, so I mean to use quant trading specific features.<br>
+No purpose, at least for you ^^ This is just a simple training project. My goal is to improve my C++ skills by manipulating complex algorithms, structures, frameworks, etc... This project is meant to be quant trading oriented, so I mean to use quant trading specific features.<br>
 
 New features / optimizations / code cleaning should be added daily.
 
@@ -49,5 +49,5 @@ you should be able to run everything properly.<br>
 ### 🚩 Dependencises :
 
 This project requires several depedencies to build and run :<br>
-**- Google Benchmark :** Used to test our implementations' performance on large/complex data structures. Refs : [Github](https://github.com/google/benchmark)<br>
-**- Google Tests :** For testing (^^). Refs : [Github](https://github.com/google/googletest)<br>
+**- Google Benchmark :** [Github](https://github.com/google/benchmark)<br>
+**- Google Tests :** [Github](https://github.com/google/googletest)<br>
