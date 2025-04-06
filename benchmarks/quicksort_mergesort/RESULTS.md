@@ -1,79 +1,39 @@
 # 🚩 **BENCHMARK RESULTS**</br>
 
-## Benchmark result for quicksort and mergesort algorithms, tested on 50k sized lists</br>
+## Benchmark result for quicksort and mergesort algorithms, tested on 500k sized lists</br>
 
-### ▶️ Mergesort on linked lists :
+### ▶️ Mergesort :
 
 ```text
--------------------------------------------------------------------------
-Benchmark                               Time             CPU   Iterations
--------------------------------------------------------------------------
-BM_LinkedListMergeSort_Random       0.313 s         0.301 s             2
-BM_LinkedListMergeSort_Sorted       0.396 s         0.381 s             2
-BM_LinkedListMergeSort_Reverse      0.283 s         0.272 s             2
+Algo                List Sorting        LinkedList          Vector
+--------------------------------------------------------------------------------
+MergeSort           Random              4.495 s             23.551 s
+MergeSort           Reverse             5.782 s             53.355 s
+MergeSort           Sorted              6.857 s             38.106 s
 ```
 
-### ▶️ Mergesort on vectors :
+### ▶️ Quicksort random pivot :
 
 ```text
----------------------------------------------------------------------
-Benchmark                           Time             CPU   Iterations
----------------------------------------------------------------------
-BM_VectorMergeSort_Random       0.559 s         0.538 s             1
-BM_VectorMergeSort_Sorted       0.698 s         0.671 s             1
-BM_VectorMergeSort_Reverse      0.870 s         0.837 s             1
+Algo                List Sorting        LinkedList          Vector
+--------------------------------------------------------------------------------
+QuickSortHoare      Random              26.533 s            0.813 s
+QuickSortHoare      Reverse             32.966 s            0.735 s
+QuickSortHoare      Sorted              29.024 s            0.712 s
+QuickSortLomuto     Random              29.942 s            0.874 s
+QuickSortLomuto     Reverse             38.411 s            0.702 s
+QuickSortLomuto     Sorted              33.809 s            0.657 s
 ```
 
-### ▶️ Quicksort on linked lists, random pivot strategy :
+### ▶️ Quicksort mid pivot :
 
 ```text
--------------------------------------------------------------------------------
-Benchmark                                     Time             CPU   Iterations
--------------------------------------------------------------------------------
-BM_LinkedListQuickSortLomuto_Random       0.866 s         0.832 s             1
-BM_LinkedListQuickSortHoare_Random        0.444 s         0.426 s             2
-BM_LinkedListQuickSortLomuto_Sorted       0.964 s         0.926 s             1
-BM_LinkedListQuickSortHoare_Sorted        0.413 s         0.397 s             2
-BM_LinkedListQuickSortLomuto_Reverse      0.994 s         0.955 s             1
-BM_LinkedListQuickSortHoare_Reverse       0.481 s         0.462 s             2
-```
-
-### ▶️ Quicksort on linked lists, mid pivot strategy :
-
-```text
--------------------------------------------------------------------------------
-Benchmark                                     Time             CPU   Iterations
--------------------------------------------------------------------------------
-BM_LinkedListQuickSortLomuto_Random       0.903 s         0.865 s             1
-BM_LinkedListQuickSortHoare_Random        0.491 s         0.472 s             2
-BM_LinkedListQuickSortLomuto_Sorted       0.729 s         0.700 s             1
-BM_LinkedListQuickSortHoare_Sorted        0.263 s         0.252 s             2
-BM_LinkedListQuickSortLomuto_Reverse      0.766 s         0.736 s             1
-BM_LinkedListQuickSortHoare_Reverse       0.267 s         0.257 s             2
-```
-
-### ▶️ Quicksort on vectors, random pivot strategy :
-
-```text
---------------------------------------------------------------------------
-Benchmark                                Time             CPU   Iterations
---------------------------------------------------------------------------
-BM_VectorQuickSortLomuto_Random      0.018 s         0.018 s            39
-BM_VectorQuickSortHoare_Random       0.015 s         0.015 s            47
-BM_VectorQuickSortLomuto_Sorted      0.015 s         0.014 s            49
-BM_VectorQuickSortHoare_Sorted       0.009 s         0.008 s            85
-BM_VectorMergeSort_Reverse           0.552 s         0.530 s             1
-```
-
-### ▶️ Quicksort on vectors, mid pivot strategy :
-
-```text
---------------------------------------------------------------------------
-Benchmark                                Time             CPU   Iterations
---------------------------------------------------------------------------
-BM_VectorQuickSortLomuto_Random      0.018 s         0.017 s            41
-BM_VectorQuickSortHoare_Random       0.014 s         0.013 s            52
-BM_VectorQuickSortLomuto_Sorted      0.010 s         0.010 s            71
-BM_VectorQuickSortHoare_Sorted       0.005 s         0.005 s           134
-BM_VectorMergeSort_Reverse           0.556 s         0.534 s             1
+Algo                List Sorting        LinkedList          Vector
+--------------------------------------------------------------------------------
+QuickSortHoare      Random              27.380 s            0.876 s
+QuickSortHoare      Reverse             30.905 s            0.673 s
+QuickSortHoare      Sorted              27.651 s            0.762 s
+QuickSortLomuto     Random              29.847 s            0.865 s
+QuickSortLomuto     Reverse             33.080 s            0.690 s
+QuickSortLomuto     Sorted              26.054 s            0.729 s
 ```

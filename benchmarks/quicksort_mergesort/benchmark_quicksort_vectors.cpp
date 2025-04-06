@@ -4,53 +4,63 @@
 #ifdef VECTORS
 
 #ifdef RANDOM_LISTS
-static void BM_VectorQuickSortLomuto_Random(benchmark::State& state) {
+static void BM_Vector_QuickSortLomuto_Random(benchmark::State& state) {
     for (auto _ : state) {
         auto vector = generate_random_vector(SIZE, MAX_VAL);
         quick_sort_lomuto(vector);
         benchmark::DoNotOptimize(vector);
     }
 }
-BENCHMARK(BM_VectorQuickSortLomuto_Random);
+BENCHMARK(BM_Vector_QuickSortLomuto_Random);
 
-static void BM_VectorQuickSortHoare_Random(benchmark::State& state) {
+static void BM_Vector_QuickSortHoare_Random(benchmark::State& state) {
     for (auto _ : state) {
         auto vector = generate_random_vector(SIZE, MAX_VAL);
         quick_sort_hoare(vector);
         benchmark::DoNotOptimize(vector);
     }
 }
-BENCHMARK(BM_VectorQuickSortHoare_Random);
+BENCHMARK(BM_Vector_QuickSortHoare_Random);
 #endif // RANDOM_LISTS
 
 #ifdef SORTED_LISTS
-static void BM_VectorQuickSortLomuto_Sorted(benchmark::State& state) {
+static void BM_Vector_QuickSortLomuto_Sorted(benchmark::State& state) {
     for (auto _ : state) {
         auto vector = generate_sorted_vector(SIZE);
         quick_sort_lomuto(vector);
         benchmark::DoNotOptimize(vector);
     }
 }
-BENCHMARK(BM_VectorQuickSortLomuto_Sorted);
+BENCHMARK(BM_Vector_QuickSortLomuto_Sorted);
 
-static void BM_VectorQuickSortHoare_Sorted(benchmark::State& state) {
+static void BM_Vector_QuickSortHoare_Sorted(benchmark::State& state) {
     for (auto _ : state) {
         auto vector = generate_sorted_vector(SIZE);
         quick_sort_hoare(vector);
         benchmark::DoNotOptimize(vector);
     }
 }
-BENCHMARK(BM_VectorQuickSortHoare_Sorted);
+BENCHMARK(BM_Vector_QuickSortHoare_Sorted);
 #endif // SORTED_LISTS
 
 #ifdef REVERSED_LISTS
-static void BM_VectorMergeSort_Reverse(benchmark::State& state) {
+static void BM_Vector_QuickSortLomuto_Reverse(benchmark::State& state) {
     for (auto _ : state) {
         auto vector = generated_reverse_sorted_vector(SIZE);
-        benchmark::DoNotOptimize(merge_sort(vector));
+        quick_sort_lomuto(vector);
+        benchmark::DoNotOptimize(vector);
     }
 }
-BENCHMARK(BM_VectorMergeSort_Reverse);
+BENCHMARK(BM_Vector_QuickSortLomuto_Reverse);
+
+static void BM_Vector_QuickSortHoare_Reverse(benchmark::State& state) {
+    for (auto _ : state) {
+        auto vector = generated_reverse_sorted_vector(SIZE);
+        quick_sort_hoare(vector);
+        benchmark::DoNotOptimize(vector);
+    }
+}
+BENCHMARK(BM_Vector_QuickSortHoare_Reverse);
 #endif // REVERSED_LISTS
 
 #endif // VECTORS

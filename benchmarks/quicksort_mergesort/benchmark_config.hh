@@ -17,7 +17,7 @@
 
 using namespace Generator;
 
-constexpr size_t SIZE = 10'000;
+constexpr size_t SIZE = 500'000;
 constexpr size_t MAX_VAL = 1'000'000;
  
 
