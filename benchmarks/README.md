@@ -7,3 +7,5 @@ benchmark to run. This includes a benchmark selection (define or undefine the co
 some parameters setting, such as the size of the data structures we use, etc...</br>
 
 ▶️ Not all our features should be benchmarked, since some of them do not lend themself to it.
+
+▶️ In each benchmark folder, you'll find my own benchmark results (runned on my PC ofcourse, so value it as it is 🤡)
