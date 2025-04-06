@@ -8,4 +8,4 @@ some parameters setting, such as the size of the data structures we use, etc...<
 
 ▶️ Not all our features should be benchmarked, since some of them do not lend themself to it.
 
-▶️ In each benchmark folder, you'll find my own benchmark results (runned on my PC ofcourse, so value it as it is 🤡)
+▶️ In each benchmark folder, you'll find my own benchmark results (runned on my PC of course, so value it as it is 🤡)
