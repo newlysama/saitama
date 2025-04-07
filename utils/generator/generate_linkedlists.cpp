@@ -5,7 +5,7 @@ LinkedList Generator::generate_random_linked_list(size_t size, size_t max) {
     std::mt19937_64 gen(rd());
     std::uniform_int_distribution<size_t> distrib(0, max);
 
-    LinkedList list;
+    LinkedList list(sizeof(Node) * size + sizeof(LinkedList));
     for (size_t i = 0; i < size; ++i) {
         list.push_back(distrib(gen));
     }
@@ -13,7 +13,7 @@ LinkedList Generator::generate_random_linked_list(size_t size, size_t max) {
 }
 
 LinkedList Generator::generate_sorted_linked_list(size_t size) {
-    LinkedList list;
+    LinkedList list(sizeof(Node) * size + sizeof(LinkedList));
     for (size_t i = 0; i < size; ++i) {
         list.push_back(i);
     }
@@ -21,7 +21,7 @@ LinkedList Generator::generate_sorted_linked_list(size_t size) {
 }
 
 LinkedList Generator::generate_reverse_sorted_linked_list(size_t size) {
-    LinkedList list;
+    LinkedList list(sizeof(Node) * size + sizeof(LinkedList));
     for (size_t i = size; i > 0; --i) {
         list.push_back(i - 1);
     }
