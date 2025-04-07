@@ -47,7 +47,7 @@ ifeq ($(EXO_ON),1)
 	ifeq ($(EXO_QUICKSORT_MERGESORT),1)
 		EXO_SRC		+= exos/mains/quicksort_mergesort.cpp
 		EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC	+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/tools/*.cpp)
+		UTILS_SRC	+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
 	endif
 
 endif
@@ -61,7 +61,7 @@ ifeq ($(BENCHMARK_ON),1)
 	ifeq ($(BENCHMARK_QUICKSORT_MERGESORT),1)
 		BENCHMARK_SRC	+= benchmarks/quicksort_mergesort/benchmark_runner.cpp
 		EXO_SRC			+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC		+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/tools/*.cpp)
+		UTILS_SRC		+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
 	endif
 
 endif
