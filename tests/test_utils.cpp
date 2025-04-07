@@ -1,6 +1,6 @@
 #include "test_utils.hh"
 
-void test_linked_list_integrity(LinkedList& list, const std::vector<size_t>& values) {
+void TestUtils::test_linked_list_integrity(LinkedList& list, const std::vector<size_t>& values) {
     EXPECT_EQ(list.size, values.size());
 
     if (values.empty()) {
@@ -12,7 +12,7 @@ void test_linked_list_integrity(LinkedList& list, const std::vector<size_t>& val
     EXPECT_EQ(list.first->prev, nullptr);
     EXPECT_EQ(list.last->next, nullptr);
 
-    Node* current = list.first.get();
+    Node* current = list.first;
     Node* prev = nullptr;
 
     for (size_t i = 0; i < values.size(); ++i) {
@@ -28,7 +28,7 @@ void test_linked_list_integrity(LinkedList& list, const std::vector<size_t>& val
         }
 
         prev = current;
-        current = current->next.get();
+        current = current->next;
     }
 
     EXPECT_EQ(prev, list.last) << "Last pointer incorrect";

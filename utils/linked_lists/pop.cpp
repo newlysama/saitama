@@ -1,51 +1,56 @@
 #include "linked_lists.hh"
 
-std::unique_ptr<Node> LinkedList::pop_front() {
+
+Node* LinkedList::pop_front() {
     if (this->empty()) {
         throw std::invalid_argument("LinkedList::pop_front() : cannot pop on empty list.");
     }
 
-    auto res = std::move(this->first);
-
-    this->first = std::move(res->next);
-    res->next = nullptr;
-
-    this->size--;
-
-    if (this->empty()) {
-        this->last = nullptr;
-    } else {
-        this->first->prev = nullptr;
-    }
-
-    return res;
+    return pop_node(this->first);
 }
 
-std::unique_ptr<Node> LinkedList::pop_back() {
-    std::unique_ptr<Node> res;
-
+Node* LinkedList::pop_back() {
     if (this->empty()) {
         throw std::invalid_argument("LinkedList::pop_back() : cannot pop on empty list.");
-    } else if (this->last == nullptr) {
-        throw std::logic_error("LinkedList::pop_back() : trying to pop nullptr.");
     }
 
-    else if (this->size == 1) {
-        res = std::move(this->first);
-        this->size--;
-        this->last = nullptr;
-
-        return res;
+    if (!this->last) {
+        throw std::logic_error("LinkedList::pop_back() : last is nullptr.");
     }
 
-    res = std::make_unique<Node>(this->last);
+    return pop_node(this->last);
+}
 
-    check_access_nullptr(res->prev, "pop_back()");
 
-    this->last = res->prev;
-    res->prev->next = nullptr;
-    res->prev = nullptr;
+Node* LinkedList::pop_node(Node* node) {
+    // Update first/last if needed
+    if (node == this->first) {
+        this->first = node->next;
+    }
+
+    if (node == this->last) {
+        this->last = node->prev;
+    }
+
+    // Rebind neighbors
+    if (node->prev) {
+        node->prev->next = node->next;
+    }
+
+    if (node->next) {
+        node->next->prev = node->prev;
+    }
+
+    // Unlink the node
+    node->next = nullptr;
+    node->prev = nullptr;
+
     this->size--;
 
-    return res;
+    if (this->empty()) {
+        this->first = nullptr;
+        this->last = nullptr;
+    }
+
+    return node;
 }

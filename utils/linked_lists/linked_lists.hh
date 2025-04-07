@@ -1,7 +1,6 @@
 #pragma once
 
-#include <cuchar>
-#include <memory>
+#include <cstddef>
 #include <exception>
 #include <sstream>
 #include <vector>
@@ -10,32 +9,70 @@
 #include <iostream>
 
 #include "utils/logger/logger.hh"
+#include "utils/memory_manager/memory_manager.hh"
+#include "utils/checker/checker.hh"
 
 class Node {
     public:
         size_t value;
-        std::unique_ptr<Node> next;
-        Node *prev; /* Can't make this unique_ptr since it would transfer ownership */
+        Node* next;
+        Node* prev;
 
-        Node(size_t value);
-        Node(size_t value, std::unique_ptr<Node> next, Node* prev);
-        Node(Node* node);
+        Node(size_t value) noexcept;
+        Node(size_t value, Node* next, Node* prev) noexcept;
+        // Node(Node* node);
         ~Node() = default;
+
+        /**
+         * @brief Constructs a Node using placement new into pre-allocated memory resource
+         * @see tools.cpp
+         * @param resource Pointer to the memory resource.
+         * @param value Value to initialize the Node with.
+         * @return Pointer to the newly created Node.
+         */
+        static Node* create(std::pmr::memory_resource* resource, size_t value) noexcept;
 };
 
 /**
  * @brief Doubly-linked list implementation for size_t values
- *        Provides typical list methods (print, get, push, pop, etc...)
+ * Provides typical list methods (print, get, push, pop, etc...)
+ * Uses utils/memory_manager/ for custom memory managment
  */
 class LinkedList {
     public:
-        std::unique_ptr<Node> first;
-        Node *last; /* Can't make this unique_ptr since it would transfer ownership */
+        Node* first;
+        Node* last;
         size_t size;
+
+        // Arena pool for our nodes
+        std::shared_ptr<std::pmr::memory_resource> arena;
     
-        LinkedList();
-        LinkedList(std::vector<size_t> list);
-        ~LinkedList() = default;
+        /**
+         * @brief Create new list with specified arena size
+         * @param arena_size size of the arena
+         */
+        LinkedList(std::size_t arena_size);
+
+        /**
+         * @brief Create new list from a vector + with specified arena size
+         * @param list the vector to use
+         * @param arena_size size of the arena
+         */
+        LinkedList(std::vector<size_t> list, std::size_t arena_size);
+
+        /**
+         * @brief Copy arena constructor
+         * Create a new list that uses an already existing arena
+         * @param shared_arena the arena we want to share
+         */
+        LinkedList(std::shared_ptr<std::pmr::memory_resource> shared_arena);
+
+        /**
+         * @brief Vector + copy arena constructor
+         * @param list the vector used to construct the list
+         * @param shared_arena the arena to share
+         */
+        LinkedList(std::vector<size_t> list, std::shared_ptr<std::pmr::memory_resource> shared_arena);
 
         /**
          * @brief Move constructor operator
@@ -48,11 +85,16 @@ class LinkedList {
         LinkedList& operator=(LinkedList&& other) noexcept;
 
         /**
+         * @brief Default destructor
+         */
+        ~LinkedList() = default;
+
+        /**
          * @brief Check if the linked list is empty
          * @see tools.cpp
          * @return bool
          */
-        bool empty();
+        bool empty() noexcept;
 
         /**
          * @brief Print the linked list. Format : [ elt, elt, elt ]
@@ -66,7 +108,12 @@ class LinkedList {
          * @param index the requested node index
          * @return the requested node 
          */
-        Node *get(size_t index);
+        Node* get(size_t index);
+
+        /**
+         * @brief clear the list
+         */
+        void clear();
 
         /**
          * @brief Add new element at the beginning of the list
@@ -80,7 +127,7 @@ class LinkedList {
          * @see push.cpp
          * @param new_node the node we want to add
          */
-        void push_front(std::unique_ptr<Node> new_node);
+        void push_front(Node* new_node);
 
         /**
          * @brief Add new element at the end of the list
@@ -94,21 +141,21 @@ class LinkedList {
          * @see push.cpp
          * @param new_node the node we want to add
          */
-        void push_back(std::unique_ptr<Node> new_node);
+        void push_back(Node* new_node);
 
         /**
          * @brief Remove first element of the list
          * @see pop.cpp
          * @return the popped node
          */
-        std::unique_ptr<Node> pop_front();
+        Node* pop_front();
 
         /**
          * @brief Remove last element of the list
          * @see pop.cpp
          * @return the popped node
          */
-        std::unique_ptr<Node> pop_back();
+        Node* pop_back();
 
         /**
          * @brief Swap values of two nodes by index (nodes themselves are not moved)
@@ -117,22 +164,26 @@ class LinkedList {
          * @param j index of the second node
          */
         void swap_values(size_t i, size_t j);
+    
+    private:
+        /**
+         * @brief Function factoring code for both puck_front() methods
+         * @see push.cpp
+         * @param new_node the new node to insert
+         */
+        void insert_node_at_front(Node* new_node);
+
+        /**
+         * @brief Function factoring code for both puck_back() methods
+         * @see push.cpp
+         * @param new_node the new node to insert
+         */
+        void insert_node_at_back(Node* new_node);
+
+        /**
+         * @brief Function factoring code for pop() methods
+         * @see pop.cpp
+         * @param new_node the new node to pop
+         */
+        Node* pop_node(Node* node);
 };
-
-/**
- * @brief Check if a given node is nullptr
- * @see tools.cpp
- * @param node the node to check
- * @param function the function in which it's called
- * @param index index of the node in the list
- */
-void check_access_nullptr(Node* node, const std::string& function, std::optional<size_t> index = std::nullopt);
-
-/**
- * @brief Check that index is not out of bounds (here list->size)
- * @see tools.cpp
- * @param function the function which calls it
- * @param index the tested index
- * @param list_size size of the tested list
- */
-void check_index(const std::string& function, size_t index, size_t list_size);

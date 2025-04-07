@@ -1,5 +1,11 @@
 #pragma once
 
+#include <gtest/gtest.h>
+#include "tests/test_utils.hh" 
+#include "utils/linked_lists/linked_lists.hh"
+#include "utils/linked_lists/linked_lists_algorithms.hh"
+#include "exos/quicksort_mergesort/pivot.hh"
+
 /**
  * @brief Select which test you want to launch
  *        Simply comment/uncomment the maccros 

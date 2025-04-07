@@ -4,8 +4,6 @@
 
 /**
  * @brief Namespace implemeting various list algorithms applied to our linked lists
- * @details Theese implementations are all in-place, we don't need to use unique pointers
- *          of LinkedList since that as soon as we move list->first, list is deleted.
  */
 namespace LinkedListAlgorithm {
 
