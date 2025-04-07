@@ -1,4 +1,4 @@
-#include "utils/tools/generator.hh"
+#include "utils/generator/generator.hh"
 #include "utils/linked_lists/linked_lists.hh"
 #include "utils/vector_utils/vector_utils.hh"
 #include "utils/logger/logger.hh"
@@ -14,7 +14,7 @@ constexpr size_t MAX_VAL = 100;
 
 int main() {
     std::vector<size_t> vector_random;
-    LinkedList linked_list_random;
+    LinkedList linked_list_random(sizeof(Node) * SIZE + sizeof(LinkedList));
 
     // =========================================================
     //       			     VECTORS
