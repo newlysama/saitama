@@ -1,8 +1,6 @@
-#include <gtest/gtest.h>
+#include "test_config.hh"
 
-#include "test_selector.hh"
-#include "utils/vector_utils/vector_utils.hh"
-#include "exos/quicksort_mergesort/quick_sort.hh"
+using namespace TestUtils;
 
 class VectorsQuickSortTest : public ::testing::Test {};
 

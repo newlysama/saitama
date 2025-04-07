@@ -3,6 +3,7 @@
 /**
  * @brief In linked list quicksort algorithms, we prefer split the lists before
  * recurisve call, as this gives direct access to low and high indexes, used in partition algorithms.
+ * This version is not more memory consuming, since that we have a pre-allocated buffer.
  */
 
 #include <exception>
