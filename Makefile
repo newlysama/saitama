@@ -123,6 +123,10 @@ run:
 		fi; \
 	done
 
+# Force seconds as benchmark time unit
+run-benchmark:
+	./bin/benchmark --benchmark_format=console --benchmark_time_unit=s
+
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
 
