@@ -14,7 +14,7 @@ constexpr size_t MAX_VAL = 100;
 
 int main() {
     std::vector<size_t> vector_random;
-    LinkedList linked_list_random(sizeof(Node) * SIZE + sizeof(LinkedList));
+    LinkedList linked_list_random(sizeof(Node) * SIZE);
 
     // =========================================================
     //       			     VECTORS
