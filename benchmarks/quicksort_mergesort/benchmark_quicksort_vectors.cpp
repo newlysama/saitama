@@ -1,10 +1,17 @@
 #include "benchmark_config.hh"
 
+using namespace Generator;
+
 #ifdef QUICK_SORT
 #ifdef VECTORS
 
 #ifdef RANDOM_LISTS
 static void BM_Vector_QuickSortLomuto_Random(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_Vector_QuickSortLomuto_Random...\n");
+    #endif
+
     for (auto _ : state) {
         auto vector = generate_random_vector(SIZE, MAX_VAL);
         quick_sort_lomuto(vector);
@@ -14,6 +21,11 @@ static void BM_Vector_QuickSortLomuto_Random(benchmark::State& state) {
 BENCHMARK(BM_Vector_QuickSortLomuto_Random);
 
 static void BM_Vector_QuickSortHoare_Random(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_Vector_QuickSortHoare_Random...\n");
+    #endif
+
     for (auto _ : state) {
         auto vector = generate_random_vector(SIZE, MAX_VAL);
         quick_sort_hoare(vector);
@@ -25,6 +37,11 @@ BENCHMARK(BM_Vector_QuickSortHoare_Random);
 
 #ifdef SORTED_LISTS
 static void BM_Vector_QuickSortLomuto_Sorted(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_Vector_QuickSortLomuto_Sorted...\n");
+    #endif
+
     for (auto _ : state) {
         auto vector = generate_sorted_vector(SIZE);
         quick_sort_lomuto(vector);
@@ -34,6 +51,11 @@ static void BM_Vector_QuickSortLomuto_Sorted(benchmark::State& state) {
 BENCHMARK(BM_Vector_QuickSortLomuto_Sorted);
 
 static void BM_Vector_QuickSortHoare_Sorted(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_Vector_QuickSortHoare_Sorted...\n");
+    #endif
+
     for (auto _ : state) {
         auto vector = generate_sorted_vector(SIZE);
         quick_sort_hoare(vector);
@@ -45,6 +67,11 @@ BENCHMARK(BM_Vector_QuickSortHoare_Sorted);
 
 #ifdef REVERSED_LISTS
 static void BM_Vector_QuickSortLomuto_Reverse(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_Vector_QuickSortLomuto_Reverse...\n");
+    #endif
+
     for (auto _ : state) {
         auto vector = generated_reverse_sorted_vector(SIZE);
         quick_sort_lomuto(vector);
@@ -54,6 +81,11 @@ static void BM_Vector_QuickSortLomuto_Reverse(benchmark::State& state) {
 BENCHMARK(BM_Vector_QuickSortLomuto_Reverse);
 
 static void BM_Vector_QuickSortHoare_Reverse(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: M_Vector_QuickSortHoare_Reverse...\n");
+    #endif
+
     for (auto _ : state) {
         auto vector = generated_reverse_sorted_vector(SIZE);
         quick_sort_hoare(vector);

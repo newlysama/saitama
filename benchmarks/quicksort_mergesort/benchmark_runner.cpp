@@ -9,7 +9,14 @@
 
 int main(int argc, char** argv) {
     benchmark::Initialize(&argc, argv);
-    GenericGroupingReporter reporter;
-    benchmark::RunSpecifiedBenchmarks(&reporter);
-    reporter.Finalize();
+
+    #ifdef USE_CUSTOM_REPORTER
+        GenericGroupingReporter reporter;
+        benchmark::RunSpecifiedBenchmarks(&reporter);
+        reporter.Finalize();
+    #else
+        benchmark::RunSpecifiedBenchmarks();
+    #endif
+
+    return 0;
 }

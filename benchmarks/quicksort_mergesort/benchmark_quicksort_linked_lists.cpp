@@ -1,10 +1,16 @@
 #include "benchmark_config.hh"
 
+using namespace Generator;
+
 #ifdef QUICK_SORT
 #ifdef LINKED_LISTS
 
 #ifdef RANDOM_LISTS
 static void BM_LinkedList_QuickSortLomuto_Random(benchmark::State& state) {
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_LinkedList_QuickSortLomuto_Random...\n");
+    #endif
+
     for (auto _ : state) {
         auto list = generate_random_linked_list(SIZE, MAX_VAL);
         quick_sort_lomuto(list);
@@ -14,6 +20,11 @@ static void BM_LinkedList_QuickSortLomuto_Random(benchmark::State& state) {
 BENCHMARK(BM_LinkedList_QuickSortLomuto_Random);
 
 static void BM_LinkedList_QuickSortHoare_Random(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_LinkedList_QuickSortHoare_Random...\n");
+    #endif
+
     for (auto _ : state) {
         auto list = generate_random_linked_list(SIZE, MAX_VAL);
         quick_sort_hoare(list);
@@ -25,6 +36,11 @@ BENCHMARK(BM_LinkedList_QuickSortHoare_Random);
 
 #ifdef SORTED_LISTS
 static void BM_LinkedList_QuickSortLomuto_Sorted(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_LinkedList_QuickSortLomuto_Sorted...\n");
+    #endif
+
     for (auto _ : state) {
         auto list = generate_sorted_linked_list(SIZE);
         quick_sort_lomuto(list);
@@ -34,6 +50,11 @@ static void BM_LinkedList_QuickSortLomuto_Sorted(benchmark::State& state) {
 BENCHMARK(BM_LinkedList_QuickSortLomuto_Sorted);
 
 static void BM_LinkedList_QuickSortHoare_Sorted(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_LinkedList_QuickSortHoare_Sorted...\n");
+    #endif
+
     for (auto _ : state) {
         auto list = generate_sorted_linked_list(SIZE);
         quick_sort_hoare(list);
@@ -45,6 +66,11 @@ BENCHMARK(BM_LinkedList_QuickSortHoare_Sorted);
 
 #ifdef REVERSED_LISTS
 static void BM_LinkedList_QuickSortLomuto_Reverse(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_LinkedList_QuickSortLomuto_Reverse...\n");
+    #endif
+
     for (auto _ : state) {
         auto list = generate_reverse_sorted_linked_list(SIZE);
         quick_sort_lomuto(list);
@@ -54,6 +80,11 @@ static void BM_LinkedList_QuickSortLomuto_Reverse(benchmark::State& state) {
 BENCHMARK(BM_LinkedList_QuickSortLomuto_Reverse);
 
 static void BM_LinkedList_QuickSortHoare_Reverse(benchmark::State& state) {
+
+    #ifdef USE_CUSTOM_REPORTER 
+        Logger::status("Running: BM_LinkedList_QuickSortHoare_Reverse...\n");
+    #endif
+    
     for (auto _ : state) {
         auto list = generate_reverse_sorted_linked_list(SIZE);
         quick_sort_hoare(list);

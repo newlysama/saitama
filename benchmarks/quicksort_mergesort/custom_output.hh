@@ -12,6 +12,10 @@
 
 #include "utils/logger/color.hh"
 
+/**
+ * @brief Custom output class for the quicksort and mergesort algorithms benchmarks.
+ * Modify the output so we can compare values to each other easier
+ */
 class GenericGroupingReporter : public benchmark::ConsoleReporter {
 public:
     using benchmark::ConsoleReporter::ConsoleReporter;
