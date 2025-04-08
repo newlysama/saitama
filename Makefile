@@ -11,6 +11,8 @@ TEST_ON			?= 0
 ifeq ($(MAKECMDGOALS),test)
 	EXO_ON := 0
 	TEST_ON := 1
+#	Only use fsanitize in tests, since this options drastically reduces perfs.
+	CXXFLAGS += -fsanitize=address
 endif
 
 ifeq ($(MAKECMDGOALS),benchmark)
@@ -31,7 +33,6 @@ CXX			= g++
 CXXFLAGS 	+= -std=c++17 -Wall -Wextra -Werror -pedantic
 CXXFLAGS 	+= -Wconversion -Wcast-align -Wunused -Wshadow
 CXXFLAGS 	+= -Wold-style-cast -Wpointer-arith
-CXXFLAGS 	+= -fsanitize=address
 CXXFLAGS 	+= -I.
 
 # =========================
@@ -94,7 +95,7 @@ $(EXE_NAME): $(OBJ_EXO) $(OBJ_UTILS)
 
 $(BENCHMARK_NAME): $(OBJ_BENCHMARK) $(OBJ_EXO) $(OBJ_UTILS)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) -O2 -lbenchmark -lpthread $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ -O2 -lbenchmark -lpthread -o $@
 
 $(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
 	@mkdir -p $(BIN_DIR)
@@ -126,6 +127,9 @@ run:
 # Force seconds as benchmark time unit
 run-benchmark:
 	./bin/benchmark --benchmark_format=console --benchmark_time_unit=s
+
+valgrind-benchmark:
+	valgrind --tool=massif ./$(BENCHMARK_NAME) --benchmark_format=console --benchmark_time_unit=s
 
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
