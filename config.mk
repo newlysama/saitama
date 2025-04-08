@@ -33,6 +33,13 @@ TEST_VECTOR_UTILS				:= 1
 # Test Exercises
 TEST_QUICKSORT_MERGESORT		:= 1
 
+# ================================================================
+#       			    LINK LIBS/INCLUDES
+# ================================================================
+
+CXXFLAGS += -Iexternal/include
+LDFLAGS  += -Lexternal/lib -ltbb -ltbbmalloc
+
 
 # Always include logger
 UTILS_SRC += $(wildcard utils/logger/*.cpp)
@@ -57,6 +64,8 @@ endif
 # ================================================================
 
 ifeq ($(BENCHMARK_ON),1)
+	CXXFLAGS += -O2
+	LDFLAGS  += -lbenchmark -lbenchmark_main -lpthread
 
 	ifeq ($(BENCHMARK_QUICKSORT_MERGESORT),1)
 		BENCHMARK_SRC	+= benchmarks/quicksort_mergesort/benchmark_runner.cpp
@@ -73,6 +82,7 @@ endif
 ifeq ($(TEST_ON),1)
 #	Only use fsanitize in tests, since this options drastically reduces perfs.
 	CXXFLAGS += -fsanitize=address
+	LDFLAGS  += -lgtest -lgtest_main -pthread
 
 	ifeq ($(TEST_LINKED_LISTS),1)
 		TEST_SRC	+= tests/test_utils.cpp  

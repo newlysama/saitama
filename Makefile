@@ -29,7 +29,7 @@ export TEST_ON
 
 CXX			= g++
 CXXFLAGS 	+= -std=c++17 -Wall -Wextra -Werror -pedantic
-CXXFLAGS 	+= -Wconversion -Wcast-align -Wunused -Wshadow
+CXXFLAGS 	+= -Wconversion -Wno-sign-compare -Wcast-align -Wunused -Wshadow
 CXXFLAGS 	+= -Wold-style-cast -Wpointer-arith
 CXXFLAGS 	+= -I.
 
@@ -93,11 +93,11 @@ $(EXE_NAME): $(OBJ_EXO) $(OBJ_UTILS)
 
 $(BENCHMARK_NAME): $(OBJ_BENCHMARK) $(OBJ_EXO) $(OBJ_UTILS)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -O2 -lbenchmark -lpthread -o $@
+	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
 
 $(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -lgtest -lgtest_main -pthread -o $@
+	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
 
 # =========================
 #       COMPILE RULE
