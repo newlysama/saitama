@@ -54,7 +54,7 @@ void quick_sort_hoare(LinkedList& list) {
 
 // Lomuto
 
-void _quick_sort_lomuto(std::vector<size_t>& list, size_t low, size_t high) {
+void _quick_sort_lomuto(std::pmr::vector<size_t>& list, size_t low, size_t high) {
 
     if (list.size() <= 1 || low >= high) {
         return;
@@ -67,13 +67,13 @@ void _quick_sort_lomuto(std::vector<size_t>& list, size_t low, size_t high) {
     _quick_sort_lomuto(list, pivot_index + 1, high);
 }
 
-void quick_sort_lomuto(std::vector<size_t>& list) {
+void quick_sort_lomuto(std::pmr::vector<size_t>& list) {
     _quick_sort_lomuto(list, 0, list.size() - 1);
 }
 
 // Hoare
 
-void _quick_sort_hoare(std::vector<size_t>& list, size_t low, size_t high) {
+void _quick_sort_hoare(std::pmr::vector<size_t>& list, size_t low, size_t high) {
     if (list.size() <= 1) return;
 
     if (low < high) {
@@ -84,6 +84,6 @@ void _quick_sort_hoare(std::vector<size_t>& list, size_t low, size_t high) {
     }
 }
 
-void quick_sort_hoare(std::vector<size_t>& list) {
+void quick_sort_hoare(std::pmr::vector<size_t>& list) {
     _quick_sort_hoare(list, 0, list.size() - 1);
 }

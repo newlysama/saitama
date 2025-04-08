@@ -1,10 +1,11 @@
-#include <cuchar>
+#include <cstddef>
 #include <vector>
 #include <random>
 #include <algorithm>
 #include <numeric>
 
 #include "utils/linked_lists/linked_lists.hh"
+#include "utils/memory_manager/memory_manager.hh"
 
 /**
  * @brief Simple namespace that holds generating functions for various data structures
@@ -21,7 +22,16 @@ namespace Generator {
      * @param max max value of the vector
      * @return the generated vector
      */
-    std::vector<size_t> generate_random_vector(size_t size, size_t max);
+    std::pmr::vector<size_t> generate_random_vector(size_t size, size_t max);
+
+    /**
+     * @brief Generate a vector of random number values using existing arena
+     * 
+     * @param size size of the vector
+     * @param max max value of the vector
+     * @return the generated vector
+     */
+    std::pmr::vector<size_t> generate_random_vector(size_t size, size_t max, std::pmr::memory_resource* raw_arena);
     
     /**
      * @brief Generate a vector of sorted number values
@@ -30,7 +40,17 @@ namespace Generator {
      * @param max max value of the vector
      * @return the generated vector
      */
-    std::vector<size_t> generate_sorted_vector(size_t size);
+    std::pmr::vector<size_t> generate_sorted_vector(size_t size);
+
+
+    /**
+     * @brief Generate a vector of sorted number values using existing arena
+     * 
+     * @param size size of the vector
+     * @param max max value of the vector
+     * @return the generated vector
+     */
+    std::pmr::vector<size_t> generate_sorted_vector(size_t size, std::pmr::memory_resource* raw_arena);
     
     /**
      * @brief Generate a vector of reverse sorted number values
@@ -39,7 +59,16 @@ namespace Generator {
      * @param max max value of the vector
      * @return the generated vector
      */
-    std::vector<size_t> generated_reverse_sorted_vector(size_t size);
+    std::pmr::vector<size_t> generated_reverse_sorted_vector(size_t size);
+
+    /**
+     * @brief Generate a vector of reverse sorted number values using existing arena
+     * 
+     * @param size size of the vector
+     * @param max max value of the vector
+     * @return the generated vector
+     */
+    std::pmr::vector<size_t> generated_reverse_sorted_vector(size_t size, std::pmr::memory_resource* raw_arena);
 
     // ===========================================================================
     //       			   LINKED LISTS GENERATORS

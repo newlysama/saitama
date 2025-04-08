@@ -1,6 +1,6 @@
 #include "vector_utils.hh"
 
-void VectorUtils::print(std::vector<size_t> vector) {
+void VectorUtils::print(std::pmr::vector<size_t> vector) {
     size_t i;
     std::cout << "[ ";
 

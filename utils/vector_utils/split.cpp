@@ -1,8 +1,11 @@
 #include "vector_utils.hh"
 
-std::tuple<std::vector<std::size_t>, std::vector<std::size_t>> VectorUtils::split(std::vector<std::size_t> vector) {
-    std::vector<size_t> left;
-    std::vector<size_t> right;
+/**
+ * @brief Use std::move to build tuples. This prevents make_tuple from copying the vector, which would be more time consuming.
+ */
+std::tuple<std::pmr::vector<size_t>, std::pmr::vector<size_t>> VectorUtils::split(std::pmr::vector<size_t> vector) {
+    std::pmr::vector<size_t> left(vector.get_allocator().resource());
+    std::pmr::vector<size_t> right(vector.get_allocator().resource());
 
     if (vector.empty()) {
         throw std::invalid_argument("VectorUtils::split() : cannot split empty vector.");
@@ -10,8 +13,8 @@ std::tuple<std::vector<std::size_t>, std::vector<std::size_t>> VectorUtils::spli
         throw std::invalid_argument("VectorUtils::split() : cannot split vector of size 1.");
     }
 
-    std::size_t split_index = vector.size() / 2;
-    std::size_t i = 0;
+    size_t split_index = vector.size() / 2;
+    size_t i = 0;
 
     while (i < split_index) {
         left.push_back(vector[i]);
@@ -23,5 +26,5 @@ std::tuple<std::vector<std::size_t>, std::vector<std::size_t>> VectorUtils::spli
         i++;
     }
 
-    return std::make_tuple(left, right);
+    return std::make_tuple(std::move(left), std::move(right));
 }

@@ -8,6 +8,8 @@
 #include <iostream>
 #include <tuple>
 
+#include "utils/memory_manager/memory_manager.hh"
+
 /**
 * @brief Namespace implementing various vector algorithms
 */
@@ -17,7 +19,7 @@ namespace VectorUtils {
     * @see tools.cpp
     * @param vector the vector to print
     */
-    void print(std::vector<size_t> vector);
+    void print(std::pmr::vector<size_t> vector);
     
     /**
     * @brief Split a vector in two equal (if even length of course) parts
@@ -25,16 +27,17 @@ namespace VectorUtils {
     * @param vector the vector we want to split
     * @return tuple containing the 2 resulting vectors
     */
-    std::tuple<std::vector<std::size_t>, std::vector<std::size_t>> split(std::vector<std::size_t> vector);
+    std::tuple<std::pmr::vector<size_t>, std::pmr::vector<size_t>> split(std::pmr::vector<size_t> vector);
     
     /**
     * @brief Merge two sorted vectors into one.
     * @see merge.cpp
+    * @details Can't make this one in-place, since it would require to use std::vector::insert(), which is O(n) complexity
     * @param left the first sorted vector
     * @param right the second sorted vector
     * @return the resulting vector
     */
-    std::vector<std::size_t> merge(std::vector<std::size_t> left, std::vector<std::size_t> right);
+    std::pmr::vector<size_t> merge(std::pmr::vector<size_t> left, std::pmr::vector<size_t> right);
     
     /**
     * @brief Lomuto's partition scheme applied to vectors
@@ -44,7 +47,7 @@ namespace VectorUtils {
     * @param high high bound
     * @return the new pivot index
     */
-    size_t partition_lomuto(std::vector<size_t>& vector, size_t low, size_t high);
+    size_t partition_lomuto(std::pmr::vector<size_t>& vector, size_t low, size_t high);
     
     /**
     * @brief Hoare's partition scheme applied to vectors
@@ -54,5 +57,5 @@ namespace VectorUtils {
     * @param high high bound
     * @return the new pivot index
     */
-    size_t partition_hoare(std::vector<size_t>& vector, size_t low, size_t high);
+    size_t partition_hoare(std::pmr::vector<size_t>& vector, size_t low, size_t high);
 };

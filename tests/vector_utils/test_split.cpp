@@ -1,35 +1,58 @@
-#include <gtest/gtest.h>
+#include "test_config.hh"
 
 #include "utils/vector_utils/vector_utils.hh"
 
 using namespace VectorUtils;
 
-class VectorSplitTest : public ::testing::Test {};
+#ifdef SPLIT
 
-/*
- * ======================== Vector Split ========================
- */
+class VectorSplitTest : public ::testing::Test {
+protected:
+    std::shared_ptr<std::pmr::memory_resource> arena;
+
+    void SetUp() override {
+        arena = MemoryManager::instance().create_arena(1024 * 64);
+    }
+
+    void TearDown() override {
+        MemoryManager::instance().release_arena(arena.get());
+    }
+};
 
 TEST_F(VectorSplitTest, T01_SplitThrowsOnEmptyVector) {
-    std::vector<size_t> vec = {};
+    std::pmr::vector<size_t> vec(arena.get());
     EXPECT_THROW(split(vec), std::invalid_argument);
 }
 
 TEST_F(VectorSplitTest, T02_SplitThrowsOnSizeOneVector) {
-    std::vector<size_t> vec = {42};
+    std::pmr::vector<size_t> vec({42}, arena.get());
     EXPECT_THROW(split(vec), std::invalid_argument);
 }
 
 TEST_F(VectorSplitTest, T03_SplitEvenLength) {
-    std::vector<size_t> vec = {10, 20, 30, 40};
+    std::pmr::vector<size_t> vec({10, 20, 30, 40}, arena.get());
     auto [left, right] = split(vec);
-    EXPECT_EQ(left, (std::vector<size_t>{10, 20}));
-    EXPECT_EQ(right, (std::vector<size_t>{30, 40}));
+
+    std::pmr::vector<size_t> expected_left(arena.get());
+    expected_left = {10, 20};
+    std::pmr::vector<size_t> expected_right(arena.get());
+    expected_right = {30, 40};
+
+    EXPECT_EQ(left, expected_left);
+    EXPECT_EQ(right, expected_right);
 }
 
 TEST_F(VectorSplitTest, T04_SplitOddLength) {
-    std::vector<size_t> vec = {1, 2, 3, 4, 5};
+    std::pmr::vector<size_t> vec({1, 2, 3, 4, 5}, arena.get());
     auto [left, right] = split(vec);
-    EXPECT_EQ(left, (std::vector<size_t>{1, 2}));
-    EXPECT_EQ(right, (std::vector<size_t>{3, 4, 5}));
+
+    std::pmr::vector<size_t> expected_left(arena.get());
+    expected_left = {1, 2};
+    std::pmr::vector<size_t> expected_right(arena.get());
+    expected_right = {3, 4, 5};
+
+    EXPECT_EQ(left, expected_left);
+    EXPECT_EQ(right, expected_right);
 }
+
+#endif

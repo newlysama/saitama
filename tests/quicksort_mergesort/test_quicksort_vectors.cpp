@@ -1,8 +1,17 @@
 #include "test_config.hh"
 
-using namespace TestUtils;
+class VectorsQuickSortTest : public ::testing::Test {
+protected:
+    std::shared_ptr<std::pmr::memory_resource> arena;
 
-class VectorsQuickSortTest : public ::testing::Test {};
+    void SetUp() override {
+        arena = MemoryManager::instance().create_arena(1024 * 64);
+    }
+
+    void TearDown() override {
+        MemoryManager::instance().release_arena(arena.get());
+    }
+};
 
 #ifdef QUICK_SORT_LOMUTO_VECTORS
 
@@ -11,34 +20,42 @@ class VectorsQuickSortTest : public ::testing::Test {};
  */
 
 TEST_F(VectorsQuickSortTest, T01_Lomuto_EmptyList) {
-    std::vector<size_t> list = {};
+    std::pmr::vector<size_t> list(arena.get());
     quick_sort_lomuto(list);
-    EXPECT_EQ(list, std::vector<size_t>({}));
+    std::pmr::vector<size_t> expected(arena.get());
+    EXPECT_EQ(list, expected);
 }
 
 TEST_F(VectorsQuickSortTest, T02_Lomuto_SingleElement) {
-    std::vector<size_t> list = {42};
+    std::pmr::vector<size_t> list({42}, arena.get());
     quick_sort_lomuto(list);
-    EXPECT_EQ(list, std::vector<size_t>({42}));
+    std::pmr::vector<size_t> expected(arena.get());
+    expected = {42};
+    EXPECT_EQ(list, expected);
 }
 
 TEST_F(VectorsQuickSortTest, T03_Lomuto_RandomValues) {
-    std::vector<size_t> list = {5, 2, 1, 4, 3};
+    std::pmr::vector<size_t> list({5, 2, 1, 4, 3}, arena.get());
     quick_sort_lomuto(list);
-    EXPECT_EQ(list, std::vector<size_t>({1, 2, 3, 4, 5}));
+    std::pmr::vector<size_t> expected(arena.get());
+    expected = {1, 2, 3, 4, 5};
+    EXPECT_EQ(list, expected);
 }
 
-
 TEST_F(VectorsQuickSortTest, T04_Lomuto_AlreadySorted) {
-    std::vector<size_t> list = {1, 2, 3, 4, 5};
+    std::pmr::vector<size_t> list({1, 2, 3, 4, 5}, arena.get());
     quick_sort_lomuto(list);
-    EXPECT_EQ(list, std::vector<size_t>({1, 2, 3, 4, 5}));
+    std::pmr::vector<size_t> expected(arena.get());
+    expected = {1, 2, 3, 4, 5};
+    EXPECT_EQ(list, expected);
 }
 
 TEST_F(VectorsQuickSortTest, T05_Lomuto_ReverseSorted) {
-    std::vector<size_t> list = {5, 4, 3, 2, 1};
+    std::pmr::vector<size_t> list({5, 4, 3, 2, 1}, arena.get());
     quick_sort_lomuto(list);
-    EXPECT_EQ(list, std::vector<size_t>({1, 2, 3, 4, 5}));
+    std::pmr::vector<size_t> expected(arena.get());
+    expected = {1, 2, 3, 4, 5};
+    EXPECT_EQ(list, expected);
 }
 
 #endif
@@ -50,34 +67,42 @@ TEST_F(VectorsQuickSortTest, T05_Lomuto_ReverseSorted) {
  */
 
 TEST_F(VectorsQuickSortTest, T06_Hoare_EmptyList) {
-    std::vector<size_t> list = {};
+    std::pmr::vector<size_t> list(arena.get());
     quick_sort_hoare(list);
-    EXPECT_EQ(list, std::vector<size_t>({}));
+    std::pmr::vector<size_t> expected(arena.get());
+    EXPECT_EQ(list, expected);
 }
 
 TEST_F(VectorsQuickSortTest, T07_Hoare_SingleElement) {
-    std::vector<size_t> list = {99};
+    std::pmr::vector<size_t> list({99}, arena.get());
     quick_sort_hoare(list);
-    EXPECT_EQ(list, std::vector<size_t>({99}));
+    std::pmr::vector<size_t> expected(arena.get());
+    expected = {99};
+    EXPECT_EQ(list, expected);
 }
 
 TEST_F(VectorsQuickSortTest, T08_Hoare_RandomValues) {
-    std::vector<size_t> list = {5, 2, 1, 4, 3};
+    std::pmr::vector<size_t> list({5, 2, 1, 4, 3}, arena.get());
     quick_sort_hoare(list);
-    EXPECT_EQ(list, std::vector<size_t>({1, 2, 3, 4, 5}));
+    std::pmr::vector<size_t> expected(arena.get());
+    expected = {1, 2, 3, 4, 5};
+    EXPECT_EQ(list, expected);
 }
 
-
 TEST_F(VectorsQuickSortTest, T09_Hoare_AlreadySorted) {
-    std::vector<size_t> list = {10, 20, 30, 40};
+    std::pmr::vector<size_t> list({10, 20, 30, 40}, arena.get());
     quick_sort_hoare(list);
-    EXPECT_EQ(list, std::vector<size_t>({10, 20, 30, 40}));
+    std::pmr::vector<size_t> expected(arena.get());
+    expected = {10, 20, 30, 40};
+    EXPECT_EQ(list, expected);
 }
 
 TEST_F(VectorsQuickSortTest, T10_Hoare_ReverseSorted) {
-    std::vector<size_t> list = {9, 7, 5, 3, 1};
+    std::pmr::vector<size_t> list({9, 7, 5, 3, 1}, arena.get());
     quick_sort_hoare(list);
-    EXPECT_EQ(list, std::vector<size_t>({1, 3, 5, 7, 9}));
+    std::pmr::vector<size_t> expected(arena.get());
+    expected = {1, 3, 5, 7, 9};
+    EXPECT_EQ(list, expected);
 }
 
 #endif

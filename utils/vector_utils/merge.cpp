@@ -1,13 +1,13 @@
 #include "vector_utils.hh"
 
-std::vector<std::size_t> VectorUtils::merge(std::vector<std::size_t> left, std::vector<std::size_t> right) {
+std::pmr::vector<size_t> VectorUtils::merge(std::pmr::vector<size_t> left, std::pmr::vector<size_t> right) {
     if (left.empty()) {
         return right;
     } else if (right.empty()) {
         return left;
     }
 
-    std::vector<std::size_t> res;
+    std::pmr::vector<size_t> res(left.get_allocator().resource());
     size_t i = 0;
     size_t j = 0;
 

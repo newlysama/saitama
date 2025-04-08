@@ -28,10 +28,10 @@ void quick_sort_hoare(LinkedList& list);
  * @brief Quick sort algorithm applied to vectors using lomuto's partition scheme
  * @param list the list we want to sort
  */
-void quick_sort_lomuto(std::vector<size_t>& list);
+void quick_sort_lomuto(std::pmr::vector<size_t>& list);
 
 /**
  * @brief Quick sort algorithm applied to vectors using hoare's partition scheme
  * @param list the list we want to sort
  */
-void quick_sort_hoare(std::vector<size_t>& list);
+void quick_sort_hoare(std::pmr::vector<size_t>& list);

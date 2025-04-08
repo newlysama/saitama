@@ -22,7 +22,7 @@ void merge_sort(LinkedList& list) {
 }
 
 
-std::vector<std::size_t> merge_sort(std::vector<size_t> list) {
+std::pmr::vector<size_t> merge_sort(std::pmr::vector<size_t> list) {
     if (list.size() <= 1) {
         return list;
     }
