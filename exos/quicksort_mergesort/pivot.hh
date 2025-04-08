@@ -11,5 +11,5 @@
  #define MID    4
  
 #ifndef PIVOT
-#define PIVOT MID
+#define PIVOT RANDOM
 #endif
