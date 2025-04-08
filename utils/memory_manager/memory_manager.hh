@@ -82,8 +82,6 @@ class MemoryManager {
         std::shared_ptr<std::pmr::memory_resource> create_arena(std::size_t size) {
             auto arena = std::make_shared<Arena>(size);
             arenas.push_back(arena);
-            std::cout << "[MemoryManager] Arena created at: " << static_cast<void*>(arena->buffer.get())
-            << " size: " << size << " bytes\n";
             return std::shared_ptr<std::pmr::memory_resource>(arena, arena->resource.get());
         }
 
