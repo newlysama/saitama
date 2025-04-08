@@ -11,8 +11,6 @@ TEST_ON			?= 0
 ifeq ($(MAKECMDGOALS),test)
 	EXO_ON := 0
 	TEST_ON := 1
-#	Only use fsanitize in tests, since this options drastically reduces perfs.
-	CXXFLAGS += -fsanitize=address
 endif
 
 ifeq ($(MAKECMDGOALS),benchmark)

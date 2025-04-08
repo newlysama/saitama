@@ -71,6 +71,8 @@ endif
 # ================================================================
 
 ifeq ($(TEST_ON),1)
+#	Only use fsanitize in tests, since this options drastically reduces perfs.
+	CXXFLAGS += -fsanitize=address
 
 	ifeq ($(TEST_LINKED_LISTS),1)
 		TEST_SRC	+= tests/test_utils.cpp  
