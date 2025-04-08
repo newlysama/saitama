@@ -13,8 +13,10 @@ constexpr size_t SIZE = 20;
 constexpr size_t MAX_VAL = 100;
 
 int main() {
+    auto arena = MemoryManager::instance().create_arena(SIZE * sizeof(Node));
+    auto raw_arena = arena.get();
+
     std::vector<size_t> vector_random;
-    LinkedList linked_list_random(sizeof(Node) * SIZE);
 
     // =========================================================
     //       			     VECTORS
@@ -51,7 +53,7 @@ int main() {
     //       			   LINKED LISTS
     // =========================================================
 
-    linked_list_random = generate_random_linked_list(SIZE, MAX_VAL);
+    auto linked_list_random = generate_random_linked_list(SIZE, MAX_VAL, raw_arena);
     Logger::status("Quicksort Lomuto Linked Lists on: ");
     linked_list_random.print();
     quick_sort_lomuto(linked_list_random);
@@ -60,7 +62,7 @@ int main() {
 
     std::cout << "\n";
 
-    linked_list_random = generate_random_linked_list(SIZE, MAX_VAL);
+    linked_list_random = generate_random_linked_list(SIZE, MAX_VAL, raw_arena);
     Logger::status("Quicksort Hoare Linked Lists on:  ");
     linked_list_random.print();
     quick_sort_hoare(linked_list_random);
@@ -69,7 +71,7 @@ int main() {
 
     std::cout << "\n";
 
-    linked_list_random = generate_random_linked_list(SIZE, MAX_VAL);
+    linked_list_random = generate_random_linked_list(SIZE, MAX_VAL, raw_arena);
     Logger::status("Mergesort Linked Lists on:        ");
     linked_list_random.print();
     merge_sort(linked_list_random);

@@ -24,6 +24,7 @@ void quick_sort_lomuto(LinkedList& list) {
     concat(left, pivot);
     concat(left, right);
     
+    // Move left into list, since concat() is made in-place into left
     list = std::move(left);
 }
 

@@ -17,7 +17,7 @@ void merge_sort(LinkedList& list) {
 
     merge(left, right);
 
-    // Regive ownership to list, since it's been transfered to left
+    // Move left into list, since merge() mergers into left
     list = std::move(left);
 }
 
