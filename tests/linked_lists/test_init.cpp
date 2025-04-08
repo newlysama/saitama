@@ -18,30 +18,30 @@ protected:
 };
 
 TEST_F(LinkedListInitTest, T_01_DefaultConstructorCreatesEmptyList) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     test_linked_list_integrity(list, {});
 }
 
 TEST_F(LinkedListInitTest, T_02_InitFromEmptyVectorCreatesEmptyList) {
     std::vector<size_t> input = {};
-    LinkedList list(input, arena);
+    LinkedList list(input, arena.get());
     test_linked_list_integrity(list, input);
 }
 
 TEST_F(LinkedListInitTest, T_03_InitFromSingleElementVector) {
     std::vector<size_t> input = {42};
-    LinkedList list(input, arena);
+    LinkedList list(input, arena.get());
     test_linked_list_integrity(list, input);
 }
 
 TEST_F(LinkedListInitTest, T_04_InitFromMultipleElementsVector) {
     std::vector<size_t> input = {10, 20, 30, 40};
-    LinkedList list(input, arena);
+    LinkedList list(input, arena.get());
     test_linked_list_integrity(list, input);
 }
 
 TEST_F(LinkedListInitTest, T_05_MoveConstructor) {
-    LinkedList original({1, 2, 3}, arena);
+    LinkedList original({1, 2, 3}, arena.get());
     LinkedList moved(std::move(original));
 
     test_linked_list_integrity(moved, {1, 2, 3});
@@ -53,8 +53,8 @@ TEST_F(LinkedListInitTest, T_05_MoveConstructor) {
 }
 
 TEST_F(LinkedListInitTest, T_06_MoveAssignmentOperator) {
-    LinkedList original({4, 5, 6}, arena);
-    LinkedList moved(arena);
+    LinkedList original({4, 5, 6}, arena.get());
+    LinkedList moved(arena.get());
 
     moved = std::move(original);
     test_linked_list_integrity(moved, {4, 5, 6});
@@ -66,7 +66,7 @@ TEST_F(LinkedListInitTest, T_06_MoveAssignmentOperator) {
 }
 
 TEST_F(LinkedListInitTest, T_07_SelfMoveAssignmentDoesNothing) {
-    LinkedList list({7, 8, 9}, arena);
+    LinkedList list({7, 8, 9}, arena.get());
     LinkedList& ref = list;
 
     list = std::move(ref);  // simulate self-move
@@ -86,19 +86,19 @@ TEST_F(LinkedListInitTest, T_09_VectorAndArenaSizeConstructor) {
 }
 
 TEST_F(LinkedListInitTest, T_10_OnlyArenaConstructor) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     EXPECT_TRUE(list.empty());
     EXPECT_EQ(list.arena, arena);
 }
 
 TEST_F(LinkedListInitTest, T_11_RobustnessAccessAfterRelease) {
     {
-        LinkedList list({9, 8, 7}, arena);
+        LinkedList list({9, 8, 7}, arena.get());
         test_linked_list_integrity(list, {9, 8, 7});
     }
     MemoryManager::instance().release_arena(arena.get()); // deallocate everything
     // Ensure we don't crash or reuse released arena
-    LinkedList list2(arena);
+    LinkedList list2(arena.get());
     EXPECT_TRUE(list2.empty());
 }
 

@@ -20,14 +20,14 @@ protected:
 // ============================== push_front(size_t) ==============================
 
 TEST_F(LinkedListPushTest, T01_PushFrontOnEmptyList) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     list.push_front(42);
 
     test_linked_list_integrity(list, {42});
 }
 
 TEST_F(LinkedListPushTest, T02_PushFrontMultipleElements) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     list.push_front(1);
     list.push_front(2);
     list.push_front(3);
@@ -38,7 +38,7 @@ TEST_F(LinkedListPushTest, T02_PushFrontMultipleElements) {
 // ============================== push_front(Node*) ==============================
 
 TEST_F(LinkedListPushTest, T03_PushFrontNodeOnEmptyList) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     Node* node = Node::create(arena.get(), 42);
 
     list.push_front(node);
@@ -47,7 +47,7 @@ TEST_F(LinkedListPushTest, T03_PushFrontNodeOnEmptyList) {
 }
 
 TEST_F(LinkedListPushTest, T04_PushFrontNodeMultipleElements) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     std::pmr::polymorphic_allocator<Node> alloc(arena.get());
 
     Node* node1 = Node::create(arena.get(), 1);
@@ -62,21 +62,21 @@ TEST_F(LinkedListPushTest, T04_PushFrontNodeMultipleElements) {
 }
 
 TEST_F(LinkedListPushTest, T05_PushFrontThrowsOnNullptr) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     EXPECT_THROW(list.push_front(static_cast<Node*>(nullptr)), std::invalid_argument);
 }
 
 // ============================== push_back(size_t) ==============================
 
 TEST_F(LinkedListPushTest, T06_PushBackOnEmptyList) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     list.push_back(7);
 
     test_linked_list_integrity(list, {7});
 }
 
 TEST_F(LinkedListPushTest, T07_PushBackMultipleElements) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     list.push_back(10);
     list.push_back(20);
     list.push_back(30);
@@ -87,7 +87,7 @@ TEST_F(LinkedListPushTest, T07_PushBackMultipleElements) {
 // ============================== push_back(Node*) ==============================
 
 TEST_F(LinkedListPushTest, T08_PushBackNodeOnEmptyList) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     Node* node = Node::create(arena.get(), 99);
     list.push_back(node);
 
@@ -95,7 +95,7 @@ TEST_F(LinkedListPushTest, T08_PushBackNodeOnEmptyList) {
 }
 
 TEST_F(LinkedListPushTest, T09_PushBackMultipleNodes) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     std::pmr::polymorphic_allocator<Node> alloc(arena.get());
 
     Node* node1 = Node::create(arena.get(), 1);
@@ -110,7 +110,7 @@ TEST_F(LinkedListPushTest, T09_PushBackMultipleNodes) {
 }
 
 TEST_F(LinkedListPushTest, T10_PushBackThrowsOnNullptr) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     EXPECT_THROW(list.push_back(static_cast<Node*>(nullptr)), std::invalid_argument);
 }
 

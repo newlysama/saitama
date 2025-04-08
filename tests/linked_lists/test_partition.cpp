@@ -56,37 +56,37 @@ class LinkedListPartitionTest : public ::testing::Test {
  */
 
 TEST_F(LinkedListPartitionTest, T01_Lomuto_SortedList) {
-    LinkedList list({1, 2, 3, 4, 5}, arena);
+    LinkedList list({1, 2, 3, 4, 5}, arena.get());
     partition_lomuto(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
 TEST_F(LinkedListPartitionTest, T02_Lomuto_UnsortedList) {
-    LinkedList list({1, 3, 5, 4, 2}, arena);
+    LinkedList list({1, 3, 5, 4, 2}, arena.get());
     partition_lomuto(list);
     test_linked_list_integrity(list, expected_unsorted_lomuto);
 }
 
 TEST_F(LinkedListPartitionTest, T03_Lomuto_ReversedList) {
-    LinkedList list({5, 4, 3, 2, 1}, arena);
+    LinkedList list({5, 4, 3, 2, 1}, arena.get());
     partition_lomuto(list);
     test_linked_list_integrity(list, expected_reversed_lomuto);
 }
 
 TEST_F(LinkedListPartitionTest, T04_Lomuto_Duplicates) {
-    LinkedList list({3, 3, 3, 3, 3}, arena);
+    LinkedList list({3, 3, 3, 3, 3}, arena.get());
     partition_lomuto(list);
     test_linked_list_integrity(list, {3, 3, 3, 3, 3});
 }
 
 TEST_F(LinkedListPartitionTest, T05_Lomuto_TwoElementsSorted) {
-    LinkedList list({1, 2}, arena);
+    LinkedList list({1, 2}, arena.get());
     partition_lomuto(list);
     test_linked_list_integrity(list, {1, 2});
 }
 
 TEST_F(LinkedListPartitionTest, T06_Lomuto_TwoElementsUnsorted) {
-    LinkedList list({2, 1}, arena);
+    LinkedList list({2, 1}, arena.get());
     partition_lomuto(list);
     test_linked_list_integrity(list, {1, 2});
 }
@@ -101,37 +101,37 @@ TEST_F(LinkedListPartitionTest, T06_Lomuto_TwoElementsUnsorted) {
 
 
 TEST_F(LinkedListPartitionTest, T07_Hoare_SortedList) {
-    LinkedList list({1, 2, 3, 4, 5}, arena);
+    LinkedList list({1, 2, 3, 4, 5}, arena.get());
     partition_hoare(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
 TEST_F(LinkedListPartitionTest, T08_Hoare_UnsortedList) {
-    LinkedList list({1, 3, 5, 4, 2}, arena);
+    LinkedList list({1, 3, 5, 4, 2}, arena.get());
     partition_hoare(list);
     test_linked_list_integrity(list, expected_unsorted_hoare);
 }
 
 TEST_F(LinkedListPartitionTest, T09_Hoare_ReversedList) {
-    LinkedList list({5, 4, 3, 2, 1}, arena);
+    LinkedList list({5, 4, 3, 2, 1}, arena.get());
     partition_hoare(list);
     test_linked_list_integrity(list, expected_reversed_hoare);
 }
 
 TEST_F(LinkedListPartitionTest, T10_Hoare_Duplicates) {
-    LinkedList list({3, 3, 3, 3, 3}, arena);
+    LinkedList list({3, 3, 3, 3, 3}, arena.get());
     partition_hoare(list);
     test_linked_list_integrity(list, {3, 3, 3, 3, 3});
 }
 
 TEST_F(LinkedListPartitionTest, T11_Hoare_TwoElementsSorted) {
-    LinkedList list({1, 2}, arena);
+    LinkedList list({1, 2}, arena.get());
     partition_hoare(list);
     test_linked_list_integrity(list, {1, 2});
 }
 
 TEST_F(LinkedListPartitionTest, T12_Hoare_TwoElementsUnsorted) {
-    LinkedList list({2, 1}, arena);
+    LinkedList list({2, 1}, arena.get());
     partition_hoare(list);
     test_linked_list_integrity(list, {1, 2});
 }

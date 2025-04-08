@@ -22,12 +22,12 @@ protected:
  */
 
 TEST_F(LinkedListPopTest, T_01_PopFrontThrowsOnEmptyList) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     EXPECT_THROW(list.pop_front(), std::invalid_argument);
 }
 
 TEST_F(LinkedListPopTest, T_02_PopFrontOnSingleElementList) {
-    LinkedList list({42}, arena);
+    LinkedList list({42}, arena.get());
     auto node = list.pop_front();
 
     ASSERT_NE(node, nullptr);
@@ -39,7 +39,7 @@ TEST_F(LinkedListPopTest, T_02_PopFrontOnSingleElementList) {
 }
 
 TEST_F(LinkedListPopTest, T_03_PopFrontOnMultipleElementList) {
-    LinkedList list({10, 20, 30}, arena);
+    LinkedList list({10, 20, 30}, arena.get());
     auto node = list.pop_front();
 
     ASSERT_NE(node, nullptr);
@@ -55,18 +55,18 @@ TEST_F(LinkedListPopTest, T_03_PopFrontOnMultipleElementList) {
  */
 
 TEST_F(LinkedListPopTest, T_04_PopBackThrowsOnEmptyList) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     EXPECT_THROW(list.pop_back(), std::invalid_argument);
 }
 
 TEST_F(LinkedListPopTest, T_05_PopBackThrowsIfLastIsNull) {
-    LinkedList list({1}, arena);
+    LinkedList list({1}, arena.get());
     list.last = nullptr;  // Simulate corrupted state
     EXPECT_THROW(list.pop_back(), std::logic_error);
 }
 
 TEST_F(LinkedListPopTest, T_06_PopBackOnSingleElementList) {
-    LinkedList list({99}, arena);
+    LinkedList list({99}, arena.get());
     auto node = list.pop_back();
 
     ASSERT_NE(node, nullptr);
@@ -78,7 +78,7 @@ TEST_F(LinkedListPopTest, T_06_PopBackOnSingleElementList) {
 }
 
 TEST_F(LinkedListPopTest, T_07_PopBackOnMultipleElementList) {
-    LinkedList list({5, 10, 15}, arena);
+    LinkedList list({5, 10, 15}, arena.get());
     auto node = list.pop_back();
 
     ASSERT_NE(node, nullptr);

@@ -18,7 +18,7 @@ class LinkedListGetTest : public ::testing::Test {
 };
     
 TEST_F(LinkedListGetTest, T01_GetFirstElement) {
-    LinkedList list({10, 20, 30, 40, 50}, arena);
+    LinkedList list({10, 20, 30, 40, 50}, arena.get());
     Node* node = list.get(0);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 10);
@@ -26,7 +26,7 @@ TEST_F(LinkedListGetTest, T01_GetFirstElement) {
 }
 
 TEST_F(LinkedListGetTest, T02_GetMiddleElement_FirstHalf) {
-    LinkedList list({10, 20, 30, 40, 50}, arena);
+    LinkedList list({10, 20, 30, 40, 50}, arena.get());
     Node* node = list.get(2);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 30);
@@ -34,7 +34,7 @@ TEST_F(LinkedListGetTest, T02_GetMiddleElement_FirstHalf) {
 }
 
 TEST_F(LinkedListGetTest, T03_GetMiddleElement_SecondHalf) {
-    LinkedList list({10, 20, 30, 40, 50}, arena);
+    LinkedList list({10, 20, 30, 40, 50}, arena.get());
     Node* node = list.get(3);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 40);
@@ -42,7 +42,7 @@ TEST_F(LinkedListGetTest, T03_GetMiddleElement_SecondHalf) {
 }
 
 TEST_F(LinkedListGetTest, T04_GetLastElement) {
-    LinkedList list({10, 20, 30, 40, 50}, arena);
+    LinkedList list({10, 20, 30, 40, 50}, arena.get());
     Node* node = list.get(4);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 50);
@@ -51,28 +51,28 @@ TEST_F(LinkedListGetTest, T04_GetLastElement) {
 }
 
 TEST_F(LinkedListGetTest, T05_IndexEqualToSizeThrows) {
-    LinkedList list({10, 20, 30, 40, 50}, arena);
+    LinkedList list({10, 20, 30, 40, 50}, arena.get());
     EXPECT_THROW({
         list.get(5);
     }, std::invalid_argument);
 }
 
 TEST_F(LinkedListGetTest, T06_IndexMuchGreaterThanSizeThrows) {
-    LinkedList list({10, 20, 30, 40, 50}, arena);
+    LinkedList list({10, 20, 30, 40, 50}, arena.get());
     EXPECT_THROW({
         list.get(999);
     }, std::invalid_argument);
 }
 
 TEST_F(LinkedListGetTest, T07_GetFromEmptyListThrows) {
-    LinkedList empty_list(arena);
+    LinkedList empty_list(arena.get());
     EXPECT_THROW({
         empty_list.get(0);
     }, std::invalid_argument);
 }
 
 TEST_F(LinkedListGetTest, T08_InternalNullTraversalThrowsLogicError) {
-    LinkedList corrupted({1, 2, 3, 4, 5}, arena);
+    LinkedList corrupted({1, 2, 3, 4, 5}, arena.get());
     corrupted.first->next = nullptr; // Force corruption
     EXPECT_THROW({
         corrupted.get(2);
@@ -80,14 +80,14 @@ TEST_F(LinkedListGetTest, T08_InternalNullTraversalThrowsLogicError) {
 }
 
 TEST_F(LinkedListGetTest, T09_TooBigIndexSizeTMaxThrows) {
-    LinkedList list({10, 20, 30, 40, 50}, arena);
+    LinkedList list({10, 20, 30, 40, 50}, arena.get());
     EXPECT_THROW({
         list.get(std::numeric_limits<size_t>::max());
     }, std::invalid_argument);
 }
 
 TEST_F(LinkedListGetTest, T10_GetOnSingleElementList) {
-    LinkedList list({42}, arena);
+    LinkedList list({42}, arena.get());
     Node* node = list.get(0);
     ASSERT_NE(node, nullptr);
     EXPECT_EQ(node->value, 42);

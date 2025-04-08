@@ -19,8 +19,8 @@ class LinkedListConcatTest : public ::testing::Test {
 };
 
 TEST_F(LinkedListConcatTest, T01_TwoNonEmptyLists) {
-    LinkedList left({1, 3}, arena);
-    LinkedList right({2, 4}, arena);
+    LinkedList left({1, 3}, arena.get());
+    LinkedList right({2, 4}, arena.get());
     concat(left, right);
 
     test_linked_list_integrity(left, {1, 3, 2, 4});
@@ -28,8 +28,8 @@ TEST_F(LinkedListConcatTest, T01_TwoNonEmptyLists) {
 }
 
 TEST_F(LinkedListConcatTest, T02_FirstListEmpty) {
-    LinkedList left(arena);
-    LinkedList right({5, 6}, arena);
+    LinkedList left(arena.get());
+    LinkedList right({5, 6}, arena.get());
     concat(left, right);
 
     test_linked_list_integrity(left, {5, 6});
@@ -37,8 +37,8 @@ TEST_F(LinkedListConcatTest, T02_FirstListEmpty) {
 }
 
 TEST_F(LinkedListConcatTest, T03_SecondListEmpty) {
-    LinkedList left({7, 8}, arena);
-    LinkedList right(arena);
+    LinkedList left({7, 8}, arena.get());
+    LinkedList right(arena.get());
     concat(left, right);
 
     test_linked_list_integrity(left, {7, 8});
@@ -46,17 +46,17 @@ TEST_F(LinkedListConcatTest, T03_SecondListEmpty) {
 }
 
 TEST_F(LinkedListConcatTest, T04_BothListsEmpty) {
-    LinkedList left(arena);
-    LinkedList right(arena);
+    LinkedList left(arena.get());
+    LinkedList right(arena.get());
     concat(left, right);
     test_linked_list_integrity(left, {});
     test_linked_list_integrity(right, {});
 }
 
 TEST_F(LinkedListConcatTest, T05_ConcatMultipleTimes) {
-    LinkedList l1({1, 2}, arena);
-    auto l2 = LinkedList({3, 4}, arena);
-    auto l3 = LinkedList({5, 6}, arena);
+    LinkedList l1({1, 2}, arena.get());
+    auto l2 = LinkedList({3, 4}, arena.get());
+    auto l3 = LinkedList({5, 6}, arena.get());
 
     concat(l1, l2);
     concat(l1, l3);
@@ -67,8 +67,8 @@ TEST_F(LinkedListConcatTest, T05_ConcatMultipleTimes) {
 }
 
 TEST_F(LinkedListConcatTest, T06_ForceCorruption) {
-    LinkedList left({1, 3}, arena);
-    LinkedList right({2, 4}, arena);
+    LinkedList left({1, 3}, arena.get());
+    LinkedList right({2, 4}, arena.get());
     left.last = nullptr; // Force corruption
 
     EXPECT_THROW({

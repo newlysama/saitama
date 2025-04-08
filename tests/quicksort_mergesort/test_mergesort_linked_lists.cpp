@@ -19,32 +19,32 @@ class LinkedListMergeSortTest : public ::testing::Test {
 
 
 TEST_F(LinkedListMergeSortTest, T01_EmptyList) {
-    LinkedList list(arena);
+    LinkedList list(arena.get());
     merge_sort(list);
     test_linked_list_integrity(list, {});
 }
 
 TEST_F(LinkedListMergeSortTest, T02_SingleElement) {
-    LinkedList list({42}, arena);
+    LinkedList list({42}, arena.get());
     merge_sort(list);
     test_linked_list_integrity(list, {42});
 }
 
 TEST_F(LinkedListMergeSortTest, T03_RandomValues) {
-    LinkedList list({5, 2, 1, 4, 3}, arena);
+    LinkedList list({5, 2, 1, 4, 3}, arena.get());
     merge_sort(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
 
 TEST_F(LinkedListMergeSortTest, T04_AlreadySorted) {
-    LinkedList list({1, 2, 3, 4, 5}, arena);
+    LinkedList list({1, 2, 3, 4, 5}, arena.get());
     merge_sort(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
 TEST_F(LinkedListMergeSortTest, T05_ReverseSorted) {
-    LinkedList list({5, 4, 3, 2, 1}, arena);
+    LinkedList list({5, 4, 3, 2, 1}, arena.get());
     merge_sort(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
