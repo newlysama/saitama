@@ -43,19 +43,19 @@ LinkedList::LinkedList(std::vector<std::size_t> list, std::size_t arena_size)
 }
 
 // Copy arena constructor
-LinkedList::LinkedList(std::shared_ptr<std::pmr::memory_resource> shared_arena)
+LinkedList::LinkedList(std::pmr::memory_resource* raw_arena)
     : first(nullptr)
     , last(nullptr)
     , size(0)
-    , arena(std::move(shared_arena))
+    , arena(std::shared_ptr<std::pmr::memory_resource>(raw_arena, [](void*){}))
     {}
 
 // Vector + arena copy
-LinkedList::LinkedList(std::vector<std::size_t> list, std::shared_ptr<std::pmr::memory_resource> shared_arena)
+LinkedList::LinkedList(std::vector<std::size_t> list, std::pmr::memory_resource* raw_arena)
     : first(nullptr)
     , last(nullptr)
     , size(0)
-    , arena(std::move(shared_arena)) {
+    , arena(std::shared_ptr<std::pmr::memory_resource>(raw_arena, [](void*){})) {
     for (auto val : list) {
         this->push_back(val);
     }
@@ -65,11 +65,8 @@ LinkedList::LinkedList(std::vector<std::size_t> list, std::shared_ptr<std::pmr::
 LinkedList::LinkedList(LinkedList&& other) noexcept
     : first(other.first),
       last(other.last),
-      size(other.size),
-      arena(std::move(other.arena)) {
-    other.first = nullptr;
-    other.last = nullptr;
-    other.size = 0;
+      size(other.size) {
+    other.clear();
 }
 
 // Move assignment operator
@@ -78,11 +75,8 @@ LinkedList& LinkedList::operator=(LinkedList&& other) noexcept {
         first = other.first;
         last = other.last;
         size = other.size;
-        arena = std::move(other.arena);
 
-        other.first = nullptr;
-        other.last = nullptr;
-        other.size = 0;
+        other.clear();
     }
     return *this;
 }

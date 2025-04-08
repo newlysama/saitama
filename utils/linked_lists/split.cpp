@@ -21,8 +21,8 @@ std::tuple<LinkedList, LinkedList> LinkedListAlgorithm::split(LinkedList& list, 
 
     // Create new lists on the same arena than original list
     // ==> More performant and less memory consuming (pre-allocated + contiguous)
-    LinkedList left(list.arena);
-    LinkedList right(list.arena);
+    LinkedList left(list.arena.get());
+    LinkedList right(list.arena.get());
 
     // Custom handling for split at last element to save time
     // Also, next coming loop compares to split_index - 1, which makes 0 - 1 at first element (doesn't work as expected with size_t's)
@@ -77,9 +77,9 @@ std::tuple<LinkedList, LinkedList, LinkedList> LinkedListAlgorithm::split_around
 
     // Create new lists on the same arena than original list
     // ==> More performant and less memory consuming (pre-allocated + contiguous)
-    LinkedList left(list.arena);
-    LinkedList pivot(list.arena);
-    LinkedList right(list.arena);
+    LinkedList left(list.arena.get());
+    LinkedList pivot(list.arena.get());
+    LinkedList right(list.arena.get());
 
     // Custom handling for split at last element to save time
     // Also, next coming loop compares to split_index - 1, which makes 0 - 1 at first element (doesn't work as expected with size_t's)

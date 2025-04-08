@@ -58,5 +58,6 @@ Node* Node::create(std::pmr::memory_resource* resource, size_t value) noexcept {
     std::pmr::polymorphic_allocator<Node> alloc(resource);
     Node* node = alloc.allocate(1);
     new (node) Node(value);  // Placement new
+
     return node;
 }

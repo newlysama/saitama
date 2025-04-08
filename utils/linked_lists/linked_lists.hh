@@ -65,14 +65,15 @@ class LinkedList {
          * Create a new list that uses an already existing arena
          * @param shared_arena the arena we want to share
          */
-        LinkedList(std::shared_ptr<std::pmr::memory_resource> shared_arena);
+        LinkedList(std::pmr::memory_resource* raw_arena);
 
         /**
          * @brief Vector + copy arena constructor
+         * Create a new list using an existing vector + arena
          * @param list the vector used to construct the list
          * @param shared_arena the arena to share
          */
-        LinkedList(std::vector<size_t> list, std::shared_ptr<std::pmr::memory_resource> shared_arena);
+        LinkedList(std::vector<size_t> list, std::pmr::memory_resource* raw_arena);
 
         /**
          * @brief Move constructor operator
@@ -87,7 +88,7 @@ class LinkedList {
         /**
          * @brief Default destructor
          */
-        ~LinkedList() = default;
+        ~LinkedList() noexcept = default;
 
         /**
          * @brief Check if the linked list is empty

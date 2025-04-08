@@ -53,6 +53,15 @@ namespace Generator {
      * @return the generated linked list
      */
     LinkedList generate_random_linked_list(size_t size, size_t max);
+
+    /**
+     * @brief Generate a linked list of random number values using an existing arena
+     * 
+     * @param size size of the linked list
+     * @param max max value of the linked list
+     * @return the generated linked list
+     */
+    LinkedList generate_random_linked_list(size_t size, size_t max, std::pmr::memory_resource* raw_arena);
     
     /**
      * @brief Generate a linked list of sorted number values
@@ -64,6 +73,15 @@ namespace Generator {
     LinkedList generate_sorted_linked_list(size_t size);
     
     /**
+     * @brief Generate a linked list of sorted number values using an existant arena
+     * 
+     * @param size size of the linked list
+     * @param max max value of the linked list
+     * @return the generated linked list
+     */
+    LinkedList generate_sorted_linked_list(size_t size, std::pmr::memory_resource* raw_arena);
+    
+    /**
      * @brief Generate a linked list of reverse sorted number values
      * 
      * @param size size of the linked list
@@ -71,4 +89,13 @@ namespace Generator {
      * @return the generated linked list
      */
     LinkedList generate_reverse_sorted_linked_list(size_t size);
+
+    /**
+     * @brief Generate a linked list of reverse sorted number values using an existant arena
+     * 
+     * @param size size of the linked list
+     * @param max max value of the linked list
+     * @return the generated linked list
+     */
+    LinkedList generate_reverse_sorted_linked_list(size_t size, std::pmr::memory_resource* raw_arena);
 }
