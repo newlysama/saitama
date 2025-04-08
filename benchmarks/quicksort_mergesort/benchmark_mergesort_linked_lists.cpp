@@ -8,7 +8,7 @@ using namespace Generator;
 #ifdef RANDOM_LISTS
 static void BM_LinkedList_MergeSort_Random(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_random_linked_list(SIZE, MAX_VAL, raw_arena);
+        LinkedList list = generate_random_linked_list(SIZE, MAX_VAL, raw_linked_list_arena);
         merge_sort(list);
         benchmark::DoNotOptimize(list);
         list.clear();
@@ -22,7 +22,7 @@ BENCHMARK(BM_LinkedList_MergeSort_Random);
 #ifdef SORTED_LISTS
 static void BM_LinkedList_MergeSort_Sorted(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_sorted_linked_list(SIZE, raw_arena);
+        LinkedList list = generate_sorted_linked_list(SIZE, raw_linked_list_arena);
         merge_sort(list);
         benchmark::DoNotOptimize(list);
         list.clear();
@@ -36,7 +36,7 @@ BENCHMARK(BM_LinkedList_MergeSort_Sorted);
 #ifdef REVERSED_LISTS
 static void BM_LinkedList_MergeSort_Reverse(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_reverse_sorted_linked_list(SIZE, raw_arena);
+        LinkedList list = generate_reverse_sorted_linked_list(SIZE, raw_linked_list_arena);
         merge_sort(list);
         benchmark::DoNotOptimize(list);
         list.clear();

@@ -1,6 +1,6 @@
 # 🚩 **BENCHMARK RESULTS**</br>
 
-## Benchmark result for quicksort and mergesort algorithms, tested on 500k sized lists</br>
+## Benchmark result for quicksort and mergesort algorithms, tested on 2M sized lists</br>
 
 ### 🚩 [ NOTE ] :
 
@@ -14,9 +14,9 @@ memory managment system (arena pools). It's a good occasion to check the perform
 ```text
 Algo                List Sorting        LinkedList          Vector
 --------------------------------------------------------------------------------
-MergeSort           Random              4.495 s             23.551 s
-MergeSort           Reverse             5.782 s             53.355 s
-MergeSort           Sorted              6.857 s             38.106 s
+MergeSort           Random              9.012 s             3.336 s
+MergeSort           Reverse             7.821 s             3.024 s
+MergeSort           Sorted              8.823 s             3.024 s
 ```
 
 👉 After arena pools :
@@ -24,9 +24,9 @@ MergeSort           Sorted              6.857 s             38.106 s
 ```text
 Algo                List Sorting        LinkedList          Vector
 --------------------------------------------------------------------------------
-MergeSort           Random              0.640 s             1.587 s
-MergeSort           Reverse             0.556 s             1.513 s
-MergeSort           Sorted              0.731 s             1.518 s
+MergeSort           Random              2.577 s             6.835 s
+MergeSort           Reverse             2.263 s             6.538 s
+MergeSort           Sorted              3.016 s             6.689 s
 ```
 
 ### ▶️ Quicksort random pivot :
@@ -36,23 +36,25 @@ MergeSort           Sorted              0.731 s             1.518 s
 ```text
 Algo                List Sorting        LinkedList          Vector
 --------------------------------------------------------------------------------
-QuickSortHoare      Random              26.533 s            0.813 s
-QuickSortHoare      Reverse             32.966 s            0.735 s
-QuickSortHoare      Sorted              29.024 s            0.712 s
-QuickSortLomuto     Random              29.942 s            0.874 s
-QuickSortLomuto     Reverse             38.411 s            0.702 s
-QuickSortLomuto     Sorted              33.809 s            0.657 s
+QuickSortHoare      Random              4.818 s             0.815 s
+QuickSortHoare      Reverse             4.100 s             0.684 s
+QuickSortHoare      Sorted              3.958 s             0.848 s
+QuickSortLomuto     Random              9.040 s             0.925 s
+QuickSortLomuto     Reverse             8.935 s             0.619 s
+QuickSortLomuto     Sorted              8.837 s             0.889 s
 ```
 
 👉 After arena pools :
 
 ```text
-QuickSortHoare      Random              0.980 s             0.772 s
-QuickSortHoare      Reverse             0.798 s             0.742 s
-QuickSortHoare      Sorted              0.776 s             0.746 s
-QuickSortLomuto     Random              1.406 s             0.805 s
-QuickSortLomuto     Reverse             1.374 s             0.754 s
-QuickSortLomuto     Sorted              1.429 s             0.717 s
+Algo                List Sorting        LinkedList          Vector
+--------------------------------------------------------------------------------
+QuickSortHoare      Random              4.076 s             0.866 s
+QuickSortHoare      Reverse             3.399 s             0.717 s
+QuickSortHoare      Sorted              3.329 s             0.662 s
+QuickSortLomuto     Random              5.985 s             0.963 s
+QuickSortLomuto     Reverse             6.151 s             0.609 s
+QuickSortLomuto     Sorted              5.825 s             0.867 s
 ```
 
 ### ▶️ Quicksort mid pivot :
@@ -62,21 +64,23 @@ QuickSortLomuto     Sorted              1.429 s             0.717 s
 ```text
 Algo                List Sorting        LinkedList          Vector
 --------------------------------------------------------------------------------
-QuickSortHoare      Random              27.380 s            0.876 s
-QuickSortHoare      Reverse             30.905 s            0.673 s
-QuickSortHoare      Sorted              27.651 s            0.762 s
-QuickSortLomuto     Random              29.847 s            0.865 s
-QuickSortLomuto     Reverse             33.080 s            0.690 s
-QuickSortLomuto     Sorted              26.054 s            0.729 s
+QuickSortHoare      Random              5.244 s             0.790 s
+QuickSortHoare      Reverse             3.724 s             0.740 s
+QuickSortHoare      Sorted              3.622 s             0.789 s
+QuickSortLomuto     Random              9.535 s             0.949 s
+QuickSortLomuto     Reverse             7.205 s             0.721 s
+QuickSortLomuto     Sorted              6.845 s             0.854 s
 ```
 
 👉 After arena pools :
 
 ```text
-QuickSortHoare      Random              1.094 s             0.694 s
-QuickSortHoare      Reverse             0.788 s             0.813 s
-QuickSortHoare      Sorted              0.769 s             0.686 s
-QuickSortLomuto     Random              1.573 s             0.765 s
-QuickSortLomuto     Reverse             1.205 s             0.716 s
-QuickSortLomuto     Sorted              1.133 s             0.721 s
+Algo                List Sorting        LinkedList          Vector
+--------------------------------------------------------------------------------
+QuickSortHoare      Random              4.737 s             0.834 s
+QuickSortHoare      Reverse             3.373 s             0.780 s
+QuickSortHoare      Sorted              3.258 s             0.693 s
+QuickSortLomuto     Random              6.896 s             0.983 s
+QuickSortLomuto     Reverse             5.211 s             0.775 s
+QuickSortLomuto     Sorted              4.904 s             0.698 s
 ```

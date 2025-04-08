@@ -22,11 +22,14 @@
 #include "exos/quicksort_mergesort/quick_sort.hh"
 #include "exos/quicksort_mergesort/merge_sort.hh"
 
-constexpr size_t SIZE = 500'000;
+constexpr size_t SIZE = 2'000'000;
 constexpr size_t MAX_VAL = 1'000'000;
 
-extern std::shared_ptr<std::pmr::memory_resource> global_arena;
-extern std::pmr::memory_resource* raw_arena;
+extern std::shared_ptr<std::pmr::memory_resource> global_linked_list_arena;
+extern std::pmr::memory_resource* raw_linked_list_arena;
+
+extern std::shared_ptr<std::pmr::memory_resource> global_vector_arena;
+extern std::pmr::memory_resource* raw_vector_arena;
  
 // Custom reporter
 #define USE_CUSTOM_REPORTER
