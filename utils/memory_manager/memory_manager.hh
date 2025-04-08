@@ -110,8 +110,6 @@ class MemoryManager {
         }
 
         void hard_reset() {
-            for (auto& arena : arenas) {
-                delete arena.get();
-            }
+            arenas.clear();
         }
 };

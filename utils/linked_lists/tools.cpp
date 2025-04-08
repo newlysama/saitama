@@ -52,6 +52,7 @@ void LinkedList::clear() {
     this->first = nullptr;
     this->last = nullptr;
     this->size = 0;
+    this->arena = nullptr;
 }
 
 Node* Node::create(std::pmr::memory_resource* resource, size_t value) noexcept {

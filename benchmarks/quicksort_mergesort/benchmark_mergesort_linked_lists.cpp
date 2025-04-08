@@ -7,51 +7,45 @@ using namespace Generator;
 
 #ifdef RANDOM_LISTS
 static void BM_LinkedList_MergeSort_Random(benchmark::State& state) {
-
-    #ifdef USE_CUSTOM_REPORTER 
-        Logger::status("Running: BM_LinkedList_MergeSort_Random...\n");
-    #endif
-
     for (auto _ : state) {
-        auto list = generate_random_linked_list(SIZE, MAX_VAL);
+        LinkedList list = generate_random_linked_list(SIZE, MAX_VAL, raw_arena);
         merge_sort(list);
         benchmark::DoNotOptimize(list);
+        list.clear();
     }
+
+    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_MergeSort_Random);
-#endif // RANDOM_LISTS
+#endif
 
 #ifdef SORTED_LISTS
 static void BM_LinkedList_MergeSort_Sorted(benchmark::State& state) {
-
-    #ifdef USE_CUSTOM_REPORTER 
-        Logger::status("Running: BM_LinkedList_MergeSort_Sorted...\n");
-    #endif
-
     for (auto _ : state) {
-        auto list = generate_sorted_linked_list(SIZE);
+        LinkedList list = generate_sorted_linked_list(SIZE, raw_arena);
         merge_sort(list);
         benchmark::DoNotOptimize(list);
+        list.clear();
     }
+
+    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_MergeSort_Sorted);
-#endif // SORTED_LISTS
+#endif
 
 #ifdef REVERSED_LISTS
 static void BM_LinkedList_MergeSort_Reverse(benchmark::State& state) {
-
-    #ifdef USE_CUSTOM_REPORTER 
-        Logger::status("Running: BM_LinkedList_MergeSort_Reverse...\n");
-    #endif
-
     for (auto _ : state) {
-        auto list = generate_reverse_sorted_linked_list(SIZE);
+        LinkedList list = generate_reverse_sorted_linked_list(SIZE, raw_arena);
         merge_sort(list);
         benchmark::DoNotOptimize(list);
+        list.clear();
     }
+
+    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_MergeSort_Reverse);
-#endif // REVERSED_LISTS
+#endif
 
 #endif // LINKED_LISTS
 #endif // MERGE_SORT

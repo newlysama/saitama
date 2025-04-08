@@ -24,9 +24,12 @@
 
 constexpr size_t SIZE = 500'000;
 constexpr size_t MAX_VAL = 1'000'000;
+
+extern std::shared_ptr<std::pmr::memory_resource> global_arena;
+extern std::pmr::memory_resource* raw_arena;
  
 // Custom reporter
-#define USE_CUSTOM_REPORTER
+// #define USE_CUSTOM_REPORTER
 
 // Tested list cases 
 #define RANDOM_LISTS
