@@ -8,7 +8,7 @@ New features / optimizations / code cleaning should be added daily.
 
 ## ▶️ STRUCTURE
 
-### This projects is structured ass followed :
+### This projects is structured as followed :
 
 **- Makefile :** build the project.<br>
 **- config.mk :** configuration file for building (included in `Makefile`).<br>
