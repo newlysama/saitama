@@ -7,19 +7,14 @@
 
 #include <benchmark/benchmark.h>
 
-// Global arenas
-std::shared_ptr<std::pmr::memory_resource> global_linked_list_arena;
-std::pmr::memory_resource* raw_linked_list_arena = nullptr;
-
-std::shared_ptr<std::pmr::memory_resource> global_vector_arena;
-std::pmr::memory_resource* raw_vector_arena = nullptr;
+ScalableVector vector;
+std::shared_ptr<MemoryManager::FixedArena> arena;
 
 int main(int argc, char** argv) {
-    global_linked_list_arena = MemoryManager::instance().create_arena(size_t(SIZE * sizeof(Node)));
-    raw_linked_list_arena = global_linked_list_arena.get();
-
-    global_vector_arena = MemoryManager::instance().create_arena(size_t(SIZE * sizeof(size_t)));
-    raw_vector_arena = global_vector_arena.get();
+    // Define vector and arena
+    auto arena_size = MemoryManager::compute_safe_allocation_size(sizeof(Node), SIZE);
+    arena = MemoryManager::instance().create_fixed_arena(arena_size);
+    vector.reserve(SIZE);
 
     benchmark::Initialize(&argc, argv);
 

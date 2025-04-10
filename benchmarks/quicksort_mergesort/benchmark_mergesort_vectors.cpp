@@ -13,11 +13,10 @@ static void BM_Vector_MergeSort_Random(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generate_random_vector(SIZE, MAX_VAL, raw_vector_arena);
+        vector = generate_random_vector(SIZE, MAX_VAL);
         benchmark::DoNotOptimize(merge_sort(vector));
+        vector.clear();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_Vector_MergeSort_Random);
 #endif // RANDOM_LISTS
@@ -30,11 +29,10 @@ static void BM_Vector_MergeSort_Sorted(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generate_sorted_vector(SIZE, raw_vector_arena);
+        vector = generate_sorted_vector(SIZE);
         benchmark::DoNotOptimize(merge_sort(vector));
+        vector.clear();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_Vector_MergeSort_Sorted);
 #endif // SORTED_LISTS
@@ -47,11 +45,10 @@ static void BM_Vector_MergeSort_Reverse(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generated_reverse_sorted_vector(SIZE, raw_vector_arena);
+        vector = generated_reverse_sorted_vector(SIZE);
         benchmark::DoNotOptimize(merge_sort(vector));
+        vector.clear();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_Vector_MergeSort_Reverse);
 #endif // REVERSED_LISTS

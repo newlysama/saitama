@@ -8,25 +8,23 @@ using namespace Generator;
 #ifdef RANDOM_LISTS
 static void BM_LinkedList_QuickSortLomuto_Random(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_random_linked_list(SIZE, MAX_VAL, raw_linked_list_arena);
+        LinkedList list = generate_random_linked_list(SIZE, MAX_VAL, arena);
         quick_sort_lomuto(list);
         benchmark::DoNotOptimize(list);
         list.clear();
+        arena->reset();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_QuickSortLomuto_Random);
 
 static void BM_LinkedList_QuickSortHoare_Random(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_random_linked_list(SIZE, MAX_VAL, raw_linked_list_arena);
+        LinkedList list = generate_random_linked_list(SIZE, MAX_VAL, arena);
         quick_sort_hoare(list);
         benchmark::DoNotOptimize(list);
         list.clear();
+        arena->reset();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_QuickSortHoare_Random);
 #endif
@@ -34,25 +32,23 @@ BENCHMARK(BM_LinkedList_QuickSortHoare_Random);
 #ifdef SORTED_LISTS
 static void BM_LinkedList_QuickSortLomuto_Sorted(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_sorted_linked_list(SIZE, raw_linked_list_arena);
+        LinkedList list = generate_sorted_linked_list(SIZE, arena);
         quick_sort_lomuto(list);
         benchmark::DoNotOptimize(list);
         list.clear();
+        arena->reset();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_QuickSortLomuto_Sorted);
 
 static void BM_LinkedList_QuickSortHoare_Sorted(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_sorted_linked_list(SIZE, raw_linked_list_arena);
+        LinkedList list = generate_sorted_linked_list(SIZE, arena);
         quick_sort_hoare(list);
         benchmark::DoNotOptimize(list);
         list.clear();
+        arena->reset();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_QuickSortHoare_Sorted);
 #endif
@@ -60,25 +56,23 @@ BENCHMARK(BM_LinkedList_QuickSortHoare_Sorted);
 #ifdef REVERSED_LISTS
 static void BM_LinkedList_QuickSortLomuto_Reverse(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_reverse_sorted_linked_list(SIZE, raw_linked_list_arena);
+        LinkedList list = generate_reverse_sorted_linked_list(SIZE, arena);
         quick_sort_lomuto(list);
         benchmark::DoNotOptimize(list);
         list.clear();
+        arena->reset();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_QuickSortLomuto_Reverse);
 
 static void BM_LinkedList_QuickSortHoare_Reverse(benchmark::State& state) {
     for (auto _ : state) {
-        LinkedList list = generate_reverse_sorted_linked_list(SIZE, raw_linked_list_arena);
+        LinkedList list = generate_reverse_sorted_linked_list(SIZE, arena);
         quick_sort_hoare(list);
         benchmark::DoNotOptimize(list);
         list.clear();
+        arena->reset();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_LinkedList_QuickSortHoare_Reverse);
 #endif

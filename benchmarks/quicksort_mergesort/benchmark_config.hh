@@ -22,15 +22,17 @@
 #include "exos/quicksort_mergesort/quick_sort.hh"
 #include "exos/quicksort_mergesort/merge_sort.hh"
 
+using ScalableVector = std::vector<size_t, tbb::scalable_allocator<size_t>>;
+
 constexpr size_t SIZE = 2'000'000;
 constexpr size_t MAX_VAL = 1'000'000;
 
-extern std::shared_ptr<std::pmr::memory_resource> global_linked_list_arena;
-extern std::pmr::memory_resource* raw_linked_list_arena;
+// Declare arena for our linked lists
+extern std::shared_ptr<MemoryManager::FixedArena> arena;
 
-extern std::shared_ptr<std::pmr::memory_resource> global_vector_arena;
-extern std::pmr::memory_resource* raw_vector_arena;
- 
+// Declare vector
+extern ScalableVector vector;
+
 // Custom reporter
 #define USE_CUSTOM_REPORTER
 

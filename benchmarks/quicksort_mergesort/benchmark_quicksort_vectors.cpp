@@ -13,9 +13,10 @@ static void BM_Vector_QuickSortLomuto_Random(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generate_random_vector(SIZE, MAX_VAL, raw_vector_arena);
+        vector = generate_random_vector(SIZE, MAX_VAL);
         quick_sort_lomuto(vector);
         benchmark::DoNotOptimize(vector);
+        vector.clear();
     }
 }
 BENCHMARK(BM_Vector_QuickSortLomuto_Random);
@@ -27,9 +28,10 @@ static void BM_Vector_QuickSortHoare_Random(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generate_random_vector(SIZE, MAX_VAL, raw_vector_arena);
+        vector = generate_random_vector(SIZE, MAX_VAL);
         quick_sort_hoare(vector);
         benchmark::DoNotOptimize(vector);
+        vector.clear();
     }
 }
 BENCHMARK(BM_Vector_QuickSortHoare_Random);
@@ -43,12 +45,11 @@ static void BM_Vector_QuickSortLomuto_Sorted(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generate_sorted_vector(SIZE, raw_vector_arena);
+        vector = generate_sorted_vector(SIZE);
         quick_sort_lomuto(vector);
         benchmark::DoNotOptimize(vector);
+        vector.clear();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_Vector_QuickSortLomuto_Sorted);
 
@@ -59,12 +60,11 @@ static void BM_Vector_QuickSortHoare_Sorted(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generate_sorted_vector(SIZE, raw_vector_arena);
+        vector = generate_sorted_vector(SIZE);
         quick_sort_hoare(vector);
         benchmark::DoNotOptimize(vector);
+        vector.clear();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_Vector_QuickSortHoare_Sorted);
 #endif // SORTED_LISTS
@@ -77,12 +77,11 @@ static void BM_Vector_QuickSortLomuto_Reverse(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generated_reverse_sorted_vector(SIZE, raw_vector_arena);
+        vector = generated_reverse_sorted_vector(SIZE);
         quick_sort_lomuto(vector);
         benchmark::DoNotOptimize(vector);
+        vector.clear();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_Vector_QuickSortLomuto_Reverse);
 
@@ -93,12 +92,11 @@ static void BM_Vector_QuickSortHoare_Reverse(benchmark::State& state) {
     #endif
 
     for (auto _ : state) {
-        auto vector = generated_reverse_sorted_vector(SIZE, raw_vector_arena);
+        vector = generated_reverse_sorted_vector(SIZE);
         quick_sort_hoare(vector);
         benchmark::DoNotOptimize(vector);
+        vector.clear();
     }
-
-    MemoryManager::instance().reset_all();
 }
 BENCHMARK(BM_Vector_QuickSortHoare_Reverse);
 #endif // REVERSED_LISTS
