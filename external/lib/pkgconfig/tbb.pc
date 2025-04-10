@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-prefix=/home/thibault/training/saitama/lib
+prefix=/home/thibault/training/saitama/external
 libdir=${prefix}/lib
 includedir=${prefix}/include
 
 Name: oneAPI Threading Building Blocks (oneTBB)
 Description: C++ library for parallel programming on multi-core processors.
 URL: https://github.com/uxlfoundation/oneTBB
-Version: 2022.2.0
+Version: 2022.1.0
 Libs: -L${libdir}  -ltbb
 Cflags: -I${includedir}
