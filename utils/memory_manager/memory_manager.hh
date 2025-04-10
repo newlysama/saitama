@@ -1,113 +1,136 @@
 #pragma once
 
-#include <memory>
-#include <memory_resource>
+#define TBB_PREVIEW_MEMORY_POOL 1
 
+#include <memory>
+#include <vector>
+#include <cstddef>
+
+#include <tbb/memory_pool.h>
+#include <tbb/scalable_allocator.h>
+#include <iostream>
 
 /**
- * @brief Class implementing a dynamic arena memory manager with multiple independent memory pools
+ * @brief MemoryManager handles allocation strategies for high-performance systems.
  *
- * @details This manager allows the creation of multiple independent, heap-allocated arenas (buffers), each managed
- * by a std::pmr::monotonic_buffer_resource (implementation of memory_ressource interface).
- * These arenas are pre-allocated at runtime and can be used to back polymorphic containers such as std::pmr::vector, std::pmr::list, etc...
+ * It provides two types of memory arenas:
+ * - FixedArena: preallocated memory pool using custom bump allocator
+ * - ScalableArena: dynamically allocated memory using TBB scalable_allocator
  *
- * Key advantages:
- * - Allows to create multiple dynamic-size memory pools (no hardcoded limit)
- * - All allocations are done in a contiguous chunk, enabling good cache locality
- * - Node need to allocate anythin, since everything is pre-allocated, and deallocation is instantaneous (via release())
- * - One single manager controls all arenas (ensures scalability among other things)
- *
- * Example usage:
- *
- * auto arena = MemoryManager::instance().create_arena(1024 * 1024); // 1 MB arena
- * std::pmr::vector<int> v(arena.get());
- * v.push_back(42);
+ * This manager is implemented as a singleton.
  */
 class MemoryManager {
-    private:
-        /**
-         * @brief Arena structure
-         * Sotores a memory buffer of dynamic size (defined at runtime)
-         */
-        struct Arena {
-            std::unique_ptr<char[]> buffer;
+public:
+    /**
+     * @brief A memory arena with preallocated fixed-size buffer using custom bump allocator's implementation.
+     *
+     * This arena is designed for predictable memory usage and fast allocation.
+     * Memory is allocated in O(1), but CANNOT be released, we can only override it.
+     * 
+     * [WARNING]
+     * 
+     * This method is not thread safe, as current can point to the same ptr within 2 different threads, leading to
+     * memory overriding when allocating.
+     * Using this bump allocator within threads requires knowing in advance that concurrent threads will not interfeer with
+     * with each other.
+     */
+    struct FixedArena {
+        public:
+            /**
+             * @brief Constructs a FixedArena with a given buffer size.
+             * @param size Number of bytes to preallocate.
+             */
+            FixedArena(size_t size);
 
-            // Instance of monotic_buffer_ressource implementing the memory_resource interface
-            std::unique_ptr<std::pmr::monotonic_buffer_resource> resource;
-            std::size_t size;
-    
-            Arena(std::size_t s)
-                : buffer(std::make_unique<char[]>(s))
-                , resource(std::make_unique<std::pmr::monotonic_buffer_resource>(buffer.get(), s))
-                ,  size(s) 
-                {}
-            
-            void release() noexcept {
-                this->resource->release();
-            }
-        };
-    
-        // Vector of our arenas
-        // Use shared pointers to keep track of them
-        std::vector<std::shared_ptr<Arena>> arenas;
-    
-        /**
-         * @brief Instantiate MemoryManager
-         * Private to ensure it is called only from our instance() method
-         */
-        MemoryManager() = default;
-    
-    public:
-        // Prevent the copy of MemoryManager instances 
-        MemoryManager(const MemoryManager&) = delete;
-        MemoryManager& operator=(const MemoryManager&) = delete;
+            /**
+             * @brief Allocate a sub-chunk within the buffer's arena
+             * @param size Number of bytes to allocate
+             * @return Pointer to allocated memory within the buffer, or nullptr if out of space
+             */
+            void* allocate(size_t size);
 
+            /**
+             * @brief Simply put back current at buffer, allowing to override existing stored datas
+             */
+            void reset();
+
+        private:
+            std::unique_ptr<char[]> buffer; // Pre-allocated memory chunk
+            char* current; // Pointer to the next free byte in the buffer
+            size_t size; // Total size of the buffer in bytes
+    };
+
+    /**
+     * @brief A dynamic memory allocator using TBB's scalable_allocator.
+     * Provides STL-compatible allocation with dynamic behavior.
+     */
+    struct ScalableArena {
         /**
-         * @brief Create a new MemoryManager instance
-         * Singleton pattern
-         * Prevent from creating multiple MemoryManager instances
-         * Ensures to have 1 entry point for our memory managment
-         * @return MemoryManager& 
+         * @brief Default constructor.
          */
-        static MemoryManager& instance() {
-            static MemoryManager manager;
-            return manager;
-        }
-    
-        /**
-         * @brief Create a new memory arena of a given size
-         * @param size Size of the buffer to pre-allocate (in bytes)
-         * @return A polymorphic memory_resource pointer to be used with PMR containers
-         */
-        std::shared_ptr<std::pmr::memory_resource> create_arena(std::size_t size) {
-            auto arena = std::make_shared<Arena>(size);
-            arenas.push_back(arena);
-            return std::shared_ptr<std::pmr::memory_resource>(arena, arena->resource.get());
-        }
+        ScalableArena() = default;
 
         /**
-         * @brief Release a given arena
-         * @param released_arena the arena to release
+         * @brief Returns a TBB scalable allocator for a specific type.
+         * @tparam T Type to allocate.
+         * @return Scalable allocator instance.
          */
-        void release_arena(std::pmr::memory_resource* released_arena) {
-            for (auto& arena : arenas) {
-                if (arena->resource.get() == released_arena) {
-                    arena->release();
-                    break;
-                }
-            }
-        }
+        template <typename T>
+        tbb::scalable_allocator<T> get_allocator() const;
 
         /**
-         * @brief Reset all arenas instances
+         * @brief Allocates memory for n elements of type T.
+         * @tparam T Type to allocate.
+         * @param n Number of elements (defaults to 1).
+         * @return Pointer to allocated memory.
          */
-        void reset_all() {
-            for (auto& arena : arenas) {
-                arena->resource->release();
-            }
-        }
+        template <typename T>
+        T* allocate(size_t n = 1);
 
-        void hard_reset() {
-            arenas.clear();
-        }
+        /**
+         * @brief Deallocates memory allocated for n elements of type T.
+         * @tparam T Type to deallocate.
+         * @param ptr Pointer to the memory to deallocate.
+         * @param n Number of elements (defaults to 1).
+         */
+        template <typename T>
+        void deallocate(T* ptr, size_t n = 1);
+    };
+
+    /**
+     * @brief Returns the singleton instance of the MemoryManager.
+     * @return Reference to the manager.
+     */
+    static MemoryManager& instance();
+
+    /**
+     * @brief Creates and registers a new fixed-size arena.
+     * @param size Number of bytes to preallocate.
+     * @return Shared pointer to the created FixedArena.
+     */
+    std::shared_ptr<FixedArena> create_fixed_arena(size_t size);
+
+    /**
+     * @brief Creates and registers a new scalable arena.
+     * @return Shared pointer to the created ScalableArena.
+     */
+    std::shared_ptr<ScalableArena> create_scalable_arena();
+
+    /**
+     * @brief Reset all registered fixed arenas.
+     */
+    void reset_fixed();
+
+    /**
+     * @brief Clears all registered arenas (both fixed and scalable).
+     */
+    void hard_reset();
+
+private:
+    MemoryManager() = default;
+
+    std::vector<std::shared_ptr<FixedArena>> fixed_arenas;     ///< All active fixed arenas
+    std::vector<std::shared_ptr<ScalableArena>> scalable_arenas; ///< All active scalable arenas
 };
+
+#include "scalable_arena.impl.hpp"
