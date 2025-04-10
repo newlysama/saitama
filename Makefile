@@ -124,10 +124,10 @@ run:
 
 # Force seconds as benchmark time unit
 run-benchmark:
-	./bin/benchmark --benchmark_format=console --benchmark_time_unit=s
+	LD_LIBRARY_PATH=./external/lib ./bin/benchmark --benchmark_format=console --benchmark_time_unit=s
 
 valgrind-benchmark:
-	valgrind --tool=massif ./$(BENCHMARK_NAME) --benchmark_format=console --benchmark_time_unit=s
+	valgrind --tool=massif LD_LIBRARY_PATH=./external/lib ./$(BENCHMARK_NAME) --benchmark_format=console --benchmark_time_unit=s
 
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
