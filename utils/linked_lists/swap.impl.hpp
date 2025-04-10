@@ -1,3 +1,5 @@
+#pragma once
+
 #include "linked_lists.hh"
 
 using namespace Checker;
@@ -14,7 +16,8 @@ static void check_2_indexes(size_t size, size_t i, size_t j) {
     }
 }
 
-void LinkedList::swap_values(size_t i, size_t j) {
+template <typename ArenaType>
+void LinkedList<ArenaType>::swap_values(size_t i, size_t j) {
     // Check indexes
     check_2_indexes(this->size, i, j);
     if (i == j) return;

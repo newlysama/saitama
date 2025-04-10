@@ -1,9 +1,12 @@
+#pragma once
+
 #include "linked_lists.hh"
 #include "linked_lists_algorithms.hh"
 
 using namespace Checker;
 
-void LinkedListAlgorithm::concat(LinkedList& left, LinkedList& right) {
+template <typename ArenaType>
+void LinkedListAlgorithm::concat(LinkedList<ArenaType>& left, LinkedList<ArenaType>& right) {
     // Doesn't check if both are empty, since it doesn't change anything
     if (left.empty()) {
         left = std::move(right);

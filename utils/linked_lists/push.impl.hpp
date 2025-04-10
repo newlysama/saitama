@@ -1,28 +1,35 @@
+#pragma once
+
 #include "linked_lists.hh"
 
 using namespace Checker;
 
-void LinkedList::push_front(size_t value) {
+template <typename ArenaType>
+void LinkedList<ArenaType>::push_front(size_t value) {
     // Custom allocation for new_node
-    Node* new_node = Node::create(arena.get(), value);
+    Node* new_node = Node::create(arena, value);
     insert_node_at_front(new_node);
 }
 
-void LinkedList::push_front(Node* new_node) {
+template <typename ArenaType>
+void LinkedList<ArenaType>::push_front(Node* new_node) {
     insert_node_at_front(new_node);
 }
 
-void LinkedList::push_back(size_t value) {
+template <typename ArenaType>
+void LinkedList<ArenaType>::push_back(size_t value) {
     // Custom allocation for new_node
-    Node* new_node = Node::create(arena.get(), value);
+    Node* new_node = Node::create(arena, value);
     this->insert_node_at_back(new_node);
 }
 
-void LinkedList::push_back(Node* new_node) {
+template <typename ArenaType>
+void LinkedList<ArenaType>::push_back(Node* new_node) {
     this->insert_node_at_back(new_node);
 }
 
-void LinkedList::insert_node_at_front(Node* new_node) {
+template <typename ArenaType>
+void LinkedList<ArenaType>::insert_node_at_front(Node* new_node) {
     if (!new_node) {
         throw std::invalid_argument("LinkedList::push_front() : new_node is nullptr");
     }
@@ -47,7 +54,8 @@ void LinkedList::insert_node_at_front(Node* new_node) {
     this->size++;
 }
 
-void LinkedList::insert_node_at_back(Node* new_node) {
+template <typename ArenaType>
+void LinkedList<ArenaType>::insert_node_at_back(Node* new_node) {
     if (!new_node) {
         throw std::invalid_argument("LinkedList::push_back() : new_node is nullptr");
     }

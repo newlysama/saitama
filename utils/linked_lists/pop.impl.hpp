@@ -1,7 +1,9 @@
+#pragma once
+
 #include "linked_lists.hh"
 
-
-Node* LinkedList::pop_front() {
+template <typename ArenaType>
+Node* LinkedList<ArenaType>::pop_front() {
     if (this->empty()) {
         throw std::invalid_argument("LinkedList::pop_front() : cannot pop on empty list.");
     }
@@ -9,7 +11,8 @@ Node* LinkedList::pop_front() {
     return pop_node(this->first);
 }
 
-Node* LinkedList::pop_back() {
+template <typename ArenaType>
+Node* LinkedList<ArenaType>::pop_back() {
     if (this->empty()) {
         throw std::invalid_argument("LinkedList::pop_back() : cannot pop on empty list.");
     }
@@ -21,8 +24,8 @@ Node* LinkedList::pop_back() {
     return pop_node(this->last);
 }
 
-
-Node* LinkedList::pop_node(Node* node) {
+template <typename ArenaType>
+Node* LinkedList<ArenaType>::pop_node(Node* node) {
     // Update first/last if needed
     if (node == this->first) {
         this->first = node->next;

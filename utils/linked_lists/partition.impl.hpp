@@ -1,3 +1,5 @@
+#pragma once
+
 #include <random>
 
 #include "linked_lists.hh"
@@ -12,7 +14,7 @@ using namespace Checker;
  * @param high 
  * @return size_t 
  */
-static size_t chose_pivot(size_t low, size_t high) {
+inline size_t chose_pivot(size_t low, size_t high) {
     #if PIVOT == RANDOM
         return low + rand() % (high - low + 1);
     #elif PIVOT == FIRST
@@ -28,7 +30,8 @@ static size_t chose_pivot(size_t low, size_t high) {
     #endif
 }
 
-size_t LinkedListAlgorithm::partition_lomuto(LinkedList& list) {
+template <typename ArenaType>
+size_t LinkedListAlgorithm::partition_lomuto(LinkedList<ArenaType>& list) {
     // Get the pivot and swap its place with list[high]
     // since lomuto's partition works with pivot at high place
     auto pivot_index = chose_pivot(0, list.size - 1);
@@ -66,7 +69,8 @@ size_t LinkedListAlgorithm::partition_lomuto(LinkedList& list) {
     return i;
 }
 
-size_t LinkedListAlgorithm::partition_hoare(LinkedList& list) {
+template <typename ArenaType>
+size_t LinkedListAlgorithm::partition_hoare(LinkedList<ArenaType>& list) {
     // Swap chosen pivot value into low position
     auto pivot_index = chose_pivot(0, list.size - 1);
     auto pivot_node = list.get(pivot_index);

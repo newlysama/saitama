@@ -2,11 +2,13 @@
 
 using namespace Checker;
 
-bool LinkedList::empty() noexcept {
+template <typename ArenaType>
+bool LinkedList<ArenaType>::empty() noexcept {
     return this->first == nullptr;
 }
 
-void LinkedList::print() {
+template <typename ArenaType>
+void LinkedList<ArenaType>::print() {
     if (this->empty()) {
         std::cout << "[ ]\n";
         return;
@@ -24,7 +26,8 @@ void LinkedList::print() {
     std::cout << oss.str();
 }
 
-Node *LinkedList::get(std::size_t index) {
+template <typename ArenaType>
+Node *LinkedList<ArenaType>::get(std::size_t index) {
     if (this->empty()) {
         throw std::invalid_argument("LinkedList::get() : cannot get() on empty list.");
     }
@@ -48,17 +51,10 @@ Node *LinkedList::get(std::size_t index) {
     return current;
 }
 
-void LinkedList::clear() {
+template <typename ArenaType>
+void LinkedList<ArenaType>::clear() {
     this->first = nullptr;
     this->last = nullptr;
     this->size = 0;
     this->arena = nullptr;
-}
-
-Node* Node::create(std::pmr::memory_resource* resource, size_t value) noexcept {
-    std::pmr::polymorphic_allocator<Node> alloc(resource);
-    Node* node = alloc.allocate(1);
-    new (node) Node(value);  // Placement new
-
-    return node;
 }

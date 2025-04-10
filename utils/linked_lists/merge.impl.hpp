@@ -1,9 +1,12 @@
+#pragma once
+
 #include "linked_lists.hh"
 #include "linked_lists_algorithms.hh"
 
 using namespace Checker;
 
-void LinkedListAlgorithm::merge(LinkedList& left, LinkedList& right) {
+template <typename ArenaType>
+void LinkedListAlgorithm::merge(LinkedList<ArenaType>& left, LinkedList<ArenaType>& right) {
     if (left.empty()) {
         left = std::move(right);
     } else if (right.empty()) {

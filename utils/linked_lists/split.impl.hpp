@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * @brief Use std::move to build tuples. This prevents make_tuple from copying the list, which would be more time consuming.
  * And we don't have copy constructor anyway, so the call would just fail x)
@@ -8,7 +10,8 @@
 
 using namespace Checker;
 
-std::tuple<LinkedList, LinkedList> LinkedListAlgorithm::split(LinkedList& list, std::optional<size_t> split_index) {
+template <typename ArenaType>
+std::tuple<LinkedList<ArenaType>, LinkedList<ArenaType>> LinkedListAlgorithm::split(LinkedList<ArenaType>& list, std::optional<size_t> split_index) {
     if (list.empty()) {
         throw std::invalid_argument("LinkedListAlgorithm::split() : cannot split empty list.");
     } else if (list.size == 1) {
@@ -21,8 +24,8 @@ std::tuple<LinkedList, LinkedList> LinkedListAlgorithm::split(LinkedList& list, 
 
     // Create new lists on the same arena than original list
     // ==> More performant and less memory consuming (pre-allocated + contiguous)
-    LinkedList left(list.arena.get());
-    LinkedList right(list.arena.get());
+    LinkedList<ArenaType> left(list.arena);
+    LinkedList<ArenaType> right(list.arena);
 
     // Custom handling for split at last element to save time
     // Also, next coming loop compares to split_index - 1, which makes 0 - 1 at first element (doesn't work as expected with size_t's)
@@ -66,7 +69,8 @@ std::tuple<LinkedList, LinkedList> LinkedListAlgorithm::split(LinkedList& list, 
     return std::make_tuple(std::move(left), std::move(right));
 }
 
-std::tuple<LinkedList, LinkedList, LinkedList> LinkedListAlgorithm::split_around_pivot(LinkedList& list, size_t pivot_index) {
+template <typename ArenaType>
+std::tuple<LinkedList<ArenaType>, LinkedList<ArenaType>, LinkedList<ArenaType>> LinkedListAlgorithm::split_around_pivot(LinkedList<ArenaType>& list, size_t pivot_index) {
     if (list.empty()) {
         throw std::invalid_argument("LinkedList::split_around_pivot() : cannot split empty list.");
     } else if (list.size == 1) {
@@ -77,9 +81,9 @@ std::tuple<LinkedList, LinkedList, LinkedList> LinkedListAlgorithm::split_around
 
     // Create new lists on the same arena than original list
     // ==> More performant and less memory consuming (pre-allocated + contiguous)
-    LinkedList left(list.arena.get());
-    LinkedList pivot(list.arena.get());
-    LinkedList right(list.arena.get());
+    LinkedList<ArenaType> left(list.arena);
+    LinkedList<ArenaType> pivot(list.arena);
+    LinkedList<ArenaType> right(list.arena);
 
     // Custom handling for split at last element to save time
     // Also, next coming loop compares to split_index - 1, which makes 0 - 1 at first element (doesn't work as expected with size_t's)
