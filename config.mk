@@ -42,7 +42,7 @@ LDFLAGS  += -Lexternal/lib -ltbb -ltbbmalloc
 
 
 # Always include logger
-UTILS_SRC += $(wildcard utils/logger/*.cpp)
+UTILS_SRC += $(wildcard utils/logger/*.cpp) $(wildcard utils/memory_manager/*.cpp)
 
 # ================================================================
 #       			EXERCISES SOURCES
@@ -54,7 +54,7 @@ ifeq ($(EXO_ON),1)
 	ifeq ($(EXO_QUICKSORT_MERGESORT),1)
 		EXO_SRC		+= exos/mains/quicksort_mergesort.cpp
 		EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC	+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
+		UTILS_SRC	+= $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
 	endif
 
 endif
@@ -70,7 +70,7 @@ ifeq ($(BENCHMARK_ON),1)
 	ifeq ($(BENCHMARK_QUICKSORT_MERGESORT),1)
 		BENCHMARK_SRC	+= benchmarks/quicksort_mergesort/benchmark_runner.cpp
 		EXO_SRC			+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC		+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
+		UTILS_SRC		+= $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
 	endif
 
 endif
@@ -85,9 +85,7 @@ ifeq ($(TEST_ON),1)
 	LDFLAGS  += -lgtest -lgtest_main -pthread
 
 	ifeq ($(TEST_LINKED_LISTS),1)
-		TEST_SRC	+= tests/test_utils.cpp  
 		TEST_SRC	+= $(wildcard tests/linked_lists/*.cpp)
-		UTILS_SRC	+= $(wildcard utils/linked_lists/*.cpp)
 	endif
 
 	ifeq ($(TEST_VECTOR_UTILS),1)
@@ -96,10 +94,9 @@ ifeq ($(TEST_ON),1)
 	endif
 
 	ifeq ($(TEST_QUICKSORT_MERGESORT),1)
-		TEST_SRC	+= tests/test_utils.cpp  
 		TEST_SRC	+= $(wildcard tests/quicksort_mergesort/*.cpp)
 		EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC	+= $(wildcard utils/linked_lists/*.cpp) $(wildcard utils/vector_utils/*.cpp)
+		UTILS_SRC	+= $(wildcard utils/vector_utils/*.cpp)
 	endif
 
 endif

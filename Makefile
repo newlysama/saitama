@@ -30,7 +30,7 @@ export TEST_ON
 CXX			= g++
 CXXFLAGS 	+= -std=c++17 -Wall -Wextra -Werror -pedantic
 CXXFLAGS 	+= -Wconversion -Wno-sign-compare -Wcast-align -Wunused -Wshadow
-CXXFLAGS 	+= -Wold-style-cast -Wpointer-arith
+CXXFLAGS 	+= -Wpointer-arith
 CXXFLAGS 	+= -I.
 
 # =========================
@@ -89,7 +89,7 @@ test: $(TEST_NAME)
 
 $(EXE_NAME): $(OBJ_EXO) $(OBJ_UTILS)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
 
 $(BENCHMARK_NAME): $(OBJ_BENCHMARK) $(OBJ_EXO) $(OBJ_UTILS)
 	@mkdir -p $(BIN_DIR)
@@ -118,7 +118,7 @@ run:
 		if [ -x $$exe ]; then \
 			echo ""; \
 			echo "Running $$exe:"; \
-			./$$exe || exit $$?; \
+			LD_LIBRARY_PATH=./external/lib ./$$exe || exit $$?; \
 		fi; \
 	done
 
