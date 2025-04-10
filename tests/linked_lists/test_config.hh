@@ -4,6 +4,7 @@
 #include "tests/test_utils.hh" 
 #include "utils/linked_lists/linked_lists.hh"
 #include "utils/linked_lists/linked_lists_algorithms.hh"
+#include "utils/memory_manager/memory_manager.hh"
 #include "exos/quicksort_mergesort/pivot.hh"
 
 /**

@@ -5,15 +5,11 @@ using namespace TestUtils;
 #ifdef POP
 
 class LinkedListPopTest : public ::testing::Test {
-protected:
-    std::shared_ptr<std::pmr::memory_resource> arena;
-
+    protected:
+        std::shared_ptr<MemoryManager::FixedArena> arena;
+        
     void SetUp() override {
-        arena = MemoryManager::instance().create_arena(1024 * 16);
-    }
-
-    void TearDown() override {
-        MemoryManager::instance().release_arena(arena.get());
+        arena = MemoryManager::instance().create_fixed_arena(1024 * 10);
     }
 };
 
@@ -22,12 +18,12 @@ protected:
  */
 
 TEST_F(LinkedListPopTest, T_01_PopFrontThrowsOnEmptyList) {
-    LinkedList list(arena.get());
+    LinkedList<MemoryManager::FixedArena> list(arena);
     EXPECT_THROW(list.pop_front(), std::invalid_argument);
 }
 
 TEST_F(LinkedListPopTest, T_02_PopFrontOnSingleElementList) {
-    LinkedList list({42}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({42}, arena);
     auto node = list.pop_front();
 
     ASSERT_NE(node, nullptr);
@@ -39,7 +35,7 @@ TEST_F(LinkedListPopTest, T_02_PopFrontOnSingleElementList) {
 }
 
 TEST_F(LinkedListPopTest, T_03_PopFrontOnMultipleElementList) {
-    LinkedList list({10, 20, 30}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({10, 20, 30}, arena);
     auto node = list.pop_front();
 
     ASSERT_NE(node, nullptr);
@@ -55,18 +51,18 @@ TEST_F(LinkedListPopTest, T_03_PopFrontOnMultipleElementList) {
  */
 
 TEST_F(LinkedListPopTest, T_04_PopBackThrowsOnEmptyList) {
-    LinkedList list(arena.get());
+    LinkedList<MemoryManager::FixedArena> list(arena);
     EXPECT_THROW(list.pop_back(), std::invalid_argument);
 }
 
 TEST_F(LinkedListPopTest, T_05_PopBackThrowsIfLastIsNull) {
-    LinkedList list({1}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({1}, arena);
     list.last = nullptr;  // Simulate corrupted state
     EXPECT_THROW(list.pop_back(), std::logic_error);
 }
 
 TEST_F(LinkedListPopTest, T_06_PopBackOnSingleElementList) {
-    LinkedList list({99}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({99}, arena);
     auto node = list.pop_back();
 
     ASSERT_NE(node, nullptr);
@@ -78,7 +74,7 @@ TEST_F(LinkedListPopTest, T_06_PopBackOnSingleElementList) {
 }
 
 TEST_F(LinkedListPopTest, T_07_PopBackOnMultipleElementList) {
-    LinkedList list({5, 10, 15}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({5, 10, 15}, arena);
     auto node = list.pop_back();
 
     ASSERT_NE(node, nullptr);

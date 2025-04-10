@@ -16,5 +16,8 @@ namespace TestUtils {
      * @param list the list to test
      * @param expected_values the witness vector (reference)
      */
-    void test_linked_list_integrity(LinkedList& list, const std::vector<size_t>& expected_values);
+    template <typename ArenaType>
+    void test_linked_list_integrity(LinkedList<ArenaType>& list, const std::vector<size_t>& expected_values);
 }
+
+#include "test_utils.impl.hpp"

@@ -1,6 +1,9 @@
+#pragma once
+
 #include "test_utils.hh"
 
-void TestUtils::test_linked_list_integrity(LinkedList& list, const std::vector<size_t>& values) {
+template <typename ArenaType>
+void TestUtils::test_linked_list_integrity(LinkedList<ArenaType>& list, const std::vector<size_t>& values) {
     EXPECT_EQ(list.size, values.size());
 
     if (values.empty()) {
