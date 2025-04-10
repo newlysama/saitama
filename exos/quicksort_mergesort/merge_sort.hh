@@ -6,17 +6,19 @@
 #include "utils/linked_lists/linked_lists_algorithms.hh"
 #include "utils/vector_utils/vector_utils.hh"
 
+using ScalableVector = std::vector<size_t, tbb::scalable_allocator<size_t>>;
+
 /**
  * @brief Merge sort algorithm applied to linked lists
  * @param list the list we want to sort
  */
-void merge_sort(LinkedList& list);
+void merge_sort(LinkedList<MemoryManager::FixedArena>& list);
 
 /**
  * @brief Merge sort algorithm applied to vectors
  * @details Can't make this one in-place, since VectorUtils::merge() is not (see details on this function)
- * @param list the list we want to sort
- * @return the new sorted list
+ * @param vector the vector we want to sort
+ * @return the new sorted vector
  * @todo Implement merge_sort in-place
  */
-std::pmr::vector<std::size_t> merge_sort(std::pmr::vector<size_t> list);
+ScalableVector merge_sort(ScalableVector vector);

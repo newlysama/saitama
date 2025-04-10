@@ -12,26 +12,28 @@
 #include "utils/linked_lists/linked_lists_algorithms.hh"
 #include "utils/vector_utils/vector_utils.hh"
 
+using ScalableVector = std::vector<size_t, tbb::scalable_allocator<size_t>>;
+
 /**
  * @brief Quick sort algorithm applied to linked lists using lomuto's partition scheme
  * @param list the list we want to sort
  */
-void quick_sort_lomuto(LinkedList& list);
+void quick_sort_lomuto(LinkedList<MemoryManager::FixedArena>& list);
 
 /**
  * @brief Quick sort algorithm applied to linked lists using hoare's partition scheme
  * @param list the list we want to sort
  */
-void quick_sort_hoare(LinkedList& list);
+void quick_sort_hoare(LinkedList<MemoryManager::FixedArena>& list);
 
 /**
  * @brief Quick sort algorithm applied to vectors using lomuto's partition scheme
- * @param list the list we want to sort
+ * @param vector the vector we want to sort
  */
-void quick_sort_lomuto(std::pmr::vector<size_t>& list);
+void quick_sort_lomuto(ScalableVector& vector);
 
 /**
  * @brief Quick sort algorithm applied to vectors using hoare's partition scheme
- * @param list the list we want to sort
+ * @param vector the vector we want to sort
  */
-void quick_sort_hoare(std::pmr::vector<size_t>& list);
+void quick_sort_hoare(ScalableVector& vector);

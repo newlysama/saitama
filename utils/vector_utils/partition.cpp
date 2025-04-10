@@ -1,6 +1,8 @@
 #include "vector_utils.hh"
 #include "exos/quicksort_mergesort/pivot.hh"
 
+using ScalableVector = std::vector<size_t, tbb::scalable_allocator<size_t>>;
+
 /**
  * @brief Chose which pivot strategy to use, depending on the defined maccros in 'exos/quicksort_mergesort/pivot.hh'
  * @param low 
@@ -24,7 +26,7 @@ static size_t chose_pivot(size_t low, size_t high) {
 }
 
 
-size_t VectorUtils::partition_lomuto(std::pmr::vector<size_t>& vector, size_t low, size_t high) {
+size_t VectorUtils::partition_lomuto(ScalableVector& vector, size_t low, size_t high) {
     if (low >= high || high >= vector.size()) {
         std::ostringstream oss;
         oss << "VectorUtils::partition_lomuto() : invalid indices.";
@@ -52,7 +54,7 @@ size_t VectorUtils::partition_lomuto(std::pmr::vector<size_t>& vector, size_t lo
     return i + 1;
 }
 
-size_t VectorUtils::partition_hoare(std::pmr::vector<size_t>& vector, size_t low, size_t high) {
+size_t VectorUtils::partition_hoare(ScalableVector& vector, size_t low, size_t high) {
     if (low >= high || high >= vector.size()) {
         std::ostringstream oss;
         oss << "VectorUtils::partition_hoare() : invalid indices.";

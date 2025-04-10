@@ -2,13 +2,15 @@
 
 #include <vector>
 #include <sstream>
-#include <cuchar>
+#include <cstddef>
 #include <exception>
 #include <numeric>
 #include <iostream>
 #include <tuple>
 
 #include "utils/memory_manager/memory_manager.hh"
+
+using ScalableVector = std::vector<size_t, tbb::scalable_allocator<size_t>>;
 
 /**
 * @brief Namespace implementing various vector algorithms
@@ -19,7 +21,7 @@ namespace VectorUtils {
     * @see tools.cpp
     * @param vector the vector to print
     */
-    void print(std::pmr::vector<size_t> vector);
+    void print(ScalableVector vector);
     
     /**
     * @brief Split a vector in two equal (if even length of course) parts
@@ -27,7 +29,7 @@ namespace VectorUtils {
     * @param vector the vector we want to split
     * @return tuple containing the 2 resulting vectors
     */
-    std::tuple<std::pmr::vector<size_t>, std::pmr::vector<size_t>> split(std::pmr::vector<size_t> vector);
+    std::tuple<ScalableVector, ScalableVector> split(ScalableVector vector);
     
     /**
     * @brief Merge two sorted vectors into one.
@@ -37,7 +39,7 @@ namespace VectorUtils {
     * @param right the second sorted vector
     * @return the resulting vector
     */
-    std::pmr::vector<size_t> merge(std::pmr::vector<size_t> left, std::pmr::vector<size_t> right);
+    ScalableVector merge(ScalableVector left, ScalableVector right);
     
     /**
     * @brief Lomuto's partition scheme applied to vectors
@@ -47,7 +49,7 @@ namespace VectorUtils {
     * @param high high bound
     * @return the new pivot index
     */
-    size_t partition_lomuto(std::pmr::vector<size_t>& vector, size_t low, size_t high);
+    size_t partition_lomuto(ScalableVector& vector, size_t low, size_t high);
     
     /**
     * @brief Hoare's partition scheme applied to vectors
@@ -57,5 +59,5 @@ namespace VectorUtils {
     * @param high high bound
     * @return the new pivot index
     */
-    size_t partition_hoare(std::pmr::vector<size_t>& vector, size_t low, size_t high);
+    size_t partition_hoare(ScalableVector& vector, size_t low, size_t high);
 };

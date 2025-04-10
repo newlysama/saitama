@@ -1,13 +1,15 @@
 #include "vector_utils.hh"
 
-std::pmr::vector<size_t> VectorUtils::merge(std::pmr::vector<size_t> left, std::pmr::vector<size_t> right) {
+using ScalableVector = std::vector<size_t, tbb::scalable_allocator<size_t>>;
+
+ScalableVector VectorUtils::merge(ScalableVector left, ScalableVector right) {
     if (left.empty()) {
         return right;
     } else if (right.empty()) {
         return left;
     }
 
-    std::pmr::vector<size_t> res(left.get_allocator().resource());
+    ScalableVector res(left.get_allocator());
     size_t i = 0;
     size_t j = 0;
 

@@ -2,115 +2,114 @@
 
 using namespace TestUtils;
 
+#ifdef LINKED_LISTS
+
 class LinkedListQuickSortTest : public ::testing::Test {
     protected:
-        std::shared_ptr<std::pmr::memory_resource> arena;
+        std::shared_ptr<MemoryManager::FixedArena> arena;
 
         void SetUp() override {
-            arena = MemoryManager::instance().create_arena(1024 * 10);
-        }
-        
-        void TearDown() override {
-            MemoryManager::instance().release_arena(arena.get());
+            arena = MemoryManager::instance().create_fixed_arena(1024 * 10);
         }
 };
-
-#ifdef QUICK_SORT_LOMUTO_LINKED_LISTS
-
 /*
  * ======================== quick_sort_lomuto ========================
  */
 
+#ifdef QUICKSORT_LOMUTO
+
 TEST_F(LinkedListQuickSortTest, T01_Lomuto_EmptyList) {
-    LinkedList list(arena.get());
+    LinkedList<MemoryManager::FixedArena> list(arena);
     quick_sort_lomuto(list);
     test_linked_list_integrity(list, {});
 }
 
 TEST_F(LinkedListQuickSortTest, T02_Lomuto_SingleElement) {
-    LinkedList list({42}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({42}, arena);
     quick_sort_lomuto(list);
     test_linked_list_integrity(list, {42});
 }
 
 TEST_F(LinkedListQuickSortTest, T03_Lomuto_RandomValues) {
-    LinkedList list({5, 2, 1, 4, 3}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({5, 2, 1, 4, 3}, arena);
     quick_sort_lomuto(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
 TEST_F(LinkedListQuickSortTest, T04_Lomuto_AlreadySorted) {
-    LinkedList list({1, 2, 3, 4, 5}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({1, 2, 3, 4, 5}, arena);
     quick_sort_lomuto(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
 TEST_F(LinkedListQuickSortTest, T05_Lomuto_ReverseSorted) {
-    LinkedList list({5, 4, 3, 2, 1}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({5, 4, 3, 2, 1}, arena);
     quick_sort_lomuto(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
 TEST_F(LinkedListQuickSortTest, T06_Lomuto_WithDuplicates) {
-    LinkedList list({4, 2, 4, 1, 4}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({4, 2, 4, 1, 4}, arena);
     quick_sort_lomuto(list);
     test_linked_list_integrity(list, {1, 2, 4, 4, 4});
 }
 
 TEST_F(LinkedListQuickSortTest, T07_Lomuto_AllEqual) {
-    LinkedList list({7, 7, 7, 7}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({7, 7, 7, 7}, arena);
     quick_sort_lomuto(list);
     test_linked_list_integrity(list, {7, 7, 7, 7});
 }
 
-#endif
+#endif // QUICKSORT_LOMUTO
 
-#ifdef QUICK_SORT_HOARE_LINKED_LISTS
+#ifdef QUICKSORT_HOARE
 
 /*
  * ======================== quick_sort_hoare ========================
  */
 
 TEST_F(LinkedListQuickSortTest, T08_Hoare_EmptyList) {
-    LinkedList list(arena.get());
+    LinkedList<MemoryManager::FixedArena> list(arena);
     quick_sort_hoare(list);
     test_linked_list_integrity(list, {});
 }
 
 TEST_F(LinkedListQuickSortTest, T09_Hoare_SingleElement) {
-    LinkedList list({99}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({99}, arena);
     quick_sort_hoare(list);
     test_linked_list_integrity(list, {99});
 }
 
 TEST_F(LinkedListQuickSortTest, T10_Hoare_RandomValues) {
-    LinkedList list({5, 2, 1, 4, 3}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({5, 2, 1, 4, 3}, arena);
     quick_sort_hoare(list);
     test_linked_list_integrity(list, {1, 2, 3, 4, 5});
 }
 
 TEST_F(LinkedListQuickSortTest, T11_Hoare_AlreadySorted) {
-    LinkedList list({10, 20, 30, 40}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({10, 20, 30, 40}, arena);
     quick_sort_hoare(list);
     test_linked_list_integrity(list, {10, 20, 30, 40});
 }
 
 TEST_F(LinkedListQuickSortTest, T12_Hoare_ReverseSorted) {
-    LinkedList list({9, 7, 5, 3, 1}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({9, 7, 5, 3, 1}, arena);
     quick_sort_hoare(list);
     test_linked_list_integrity(list, {1, 3, 5, 7, 9});
 }
 
 TEST_F(LinkedListQuickSortTest, T13_Hoare_WithDuplicates) {
-    LinkedList list({4, 2, 4, 1, 4}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({4, 2, 4, 1, 4}, arena);
     quick_sort_hoare(list);
     test_linked_list_integrity(list, {1, 2, 4, 4, 4});
 }
 
 TEST_F(LinkedListQuickSortTest, T14_Hoare_AllEqual) {
-    LinkedList list({7, 7, 7, 7}, arena.get());
+    LinkedList<MemoryManager::FixedArena> list({7, 7, 7, 7}, arena);
     quick_sort_hoare(list);
     test_linked_list_integrity(list, {7, 7, 7, 7});
 }
 
-#endif
+#endif // QUICKSORT_HOARE
+
+#endif // LINKED_LISTS

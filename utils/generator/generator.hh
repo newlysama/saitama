@@ -81,6 +81,7 @@ namespace Generator {
      * @param max max value of the linked list
      * @return the generated linked list
      */
+    template <typename ArenaType>
     LinkedList generate_random_linked_list(size_t size, size_t max);
 
     /**
@@ -90,6 +91,7 @@ namespace Generator {
      * @param max max value of the linked list
      * @return the generated linked list
      */
+    template <typename ArenaType>
     LinkedList generate_random_linked_list(size_t size, size_t max, std::pmr::memory_resource* raw_arena);
     
     /**
@@ -99,6 +101,7 @@ namespace Generator {
      * @param max max value of the linked list
      * @return the generated linked list
      */
+    template <typename ArenaType>
     LinkedList generate_sorted_linked_list(size_t size);
     
     /**
@@ -108,6 +111,7 @@ namespace Generator {
      * @param max max value of the linked list
      * @return the generated linked list
      */
+    template <typename ArenaType>
     LinkedList generate_sorted_linked_list(size_t size, std::pmr::memory_resource* raw_arena);
     
     /**
@@ -117,6 +121,7 @@ namespace Generator {
      * @param max max value of the linked list
      * @return the generated linked list
      */
+    template <typename ArenaType>
     LinkedList generate_reverse_sorted_linked_list(size_t size);
 
     /**
@@ -126,5 +131,8 @@ namespace Generator {
      * @param max max value of the linked list
      * @return the generated linked list
      */
+    template <typename ArenaType>
     LinkedList generate_reverse_sorted_linked_list(size_t size, std::pmr::memory_resource* raw_arena);
 }
+
+#include "generate_linkedlists.impl.hpp"

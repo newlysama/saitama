@@ -2,8 +2,9 @@
 
 using namespace LinkedListAlgorithm;
 using namespace VectorUtils;
+using ScalableVector = std::vector<size_t, tbb::scalable_allocator<size_t>>;
 
-void merge_sort(LinkedList& list) {
+void merge_sort(LinkedList<MemoryManager::FixedArena>& list) {
     if (list.size <= 1) {
         return;
     }
@@ -22,12 +23,12 @@ void merge_sort(LinkedList& list) {
 }
 
 
-std::pmr::vector<size_t> merge_sort(std::pmr::vector<size_t> list) {
-    if (list.size() <= 1) {
-        return list;
+ScalableVector merge_sort(ScalableVector vector) {
+    if (vector.size() <= 1) {
+        return vector;
     }
 
-    auto splited = split(list);
+    auto splited = split(vector);
     auto left = std::get<0>(splited);
     auto right = std::get<1>(splited);
 

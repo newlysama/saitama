@@ -1,6 +1,8 @@
 #include "vector_utils.hh"
 
-void VectorUtils::print(std::pmr::vector<size_t> vector) {
+using ScalableVector = std::vector<size_t, tbb::scalable_allocator<size_t>>;
+
+void VectorUtils::print(ScalableVector vector) {
     size_t i;
     std::cout << "[ ";
 

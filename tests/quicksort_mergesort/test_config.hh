@@ -12,10 +12,11 @@
  *        Simply comment/uncomment the maccros 
  */
 
-#define QUICK_SORT_LOMUTO_LINKED_LISTS
-#define QUICK_SORT_HOARE_LINKED_LISTS
-#define QUICK_SORT_LOMUTO_VECTORS
-#define QUICK_SORT_HOARE_VECTORS
+// Structures
+#define LINKED_LISTS
+#define VECTORS
 
-#define MERGE_SORT_LINKED_LISTS
-#define MERGE_SORT_VECTORS
+// Algorithm
+#define QUICKSORT_LOMUTO
+#define QUICKSORT_HOARE
+#define MERGESORT
