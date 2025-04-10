@@ -7,10 +7,10 @@
 I've been running theese benchmarks on previous implementations of vectors and linked lists.
 It's a good occasion to see how we improved performance over time.
 
-**no MM    : ** For "no memory managment". A time where I wasn't doing any sort of custom memory managment 😎
-**PMR      : ** For "pmr::monotic_buffer_resource" implementation, a library allowing, among other things, to pre-allocate a chunk of memory to work on.
-**Bump     : ** For "custom bump allocator" implementation, a simple (but fully custom) memory managment system (very effective as you will see).
-**Scalable : ** For "tbb::scalable_allocator" implementation, which stands for oneTBB scalable allocator, used to manager my vectors memory.
+**no MM    :** For "no memory managment". A time where I wasn't doing any sort of custom memory managment 😎
+**PMR      :** For "pmr::monotic_buffer_resource" implementation, a library allowing, among other things, to pre-allocate a chunk of memory to work on.
+**Bump     :** For "custom bump allocator" implementation, a simple (but fully custom) memory managment system (very effective as you will see).
+**Scalable :** For "tbb::scalable_allocator" implementation, which stands for oneTBB scalable allocator, used to manager my vectors memory.
 
 ```text
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
