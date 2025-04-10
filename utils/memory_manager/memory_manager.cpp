@@ -29,3 +29,15 @@ void MemoryManager::hard_reset() {
     fixed_arenas.clear();
     scalable_arenas.clear();
 }
+
+
+size_t MemoryManager::compute_safe_allocation_size(size_t object_size, size_t object_count) {
+    constexpr size_t ALIGNMENT = alignof(std::max_align_t);
+
+    // Calculate padded size per object
+    size_t padding = (ALIGNMENT - (object_size % ALIGNMENT)) % ALIGNMENT;
+    size_t padded_size = object_size + padding;
+
+    // Total buffer size
+    return padded_size * object_count;
+}

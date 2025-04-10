@@ -126,6 +126,15 @@ public:
      */
     void hard_reset();
 
+    /**
+     * @brief Compute a safe allocation size for a buffer with alignment padding.
+     * This is useful for arenas that use placement new on objects with specific alignment needs.
+     * @param object_size   Size of the object (e.g. sizeof(Node))
+     * @param object_count  Number of objects to allocate
+     * @return Total number of bytes to safely allocate (includes alignment padding)
+     */
+    static size_t compute_safe_allocation_size(size_t object_size, size_t object_count);
+
 private:
     MemoryManager() = default;
 
