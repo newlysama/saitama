@@ -8,7 +8,8 @@ LinkedList<ArenaType> Generator::generate_random_linked_list(size_t size, size_t
     std::mt19937_64 gen(rd());
     std::uniform_int_distribution<size_t> distrib(0, max);
 
-    LinkedList<ArenaType> list(sizeof(Node) * size);
+    auto arena_size = MemoryManager::compute_safe_allocation_size(sizeof(Node), size);
+    LinkedList<ArenaType> list(arena_size);
     for (size_t i = 0; i < size; ++i) {
         list.push_back(distrib(gen));
     }
@@ -30,7 +31,8 @@ LinkedList<ArenaType> Generator::generate_random_linked_list(size_t size, size_t
 
 template <typename ArenaType>
 LinkedList<ArenaType> Generator::generate_sorted_linked_list(size_t size) {
-    LinkedList<ArenaType> list(sizeof(Node) * size);
+    auto arena_size = MemoryManager::compute_safe_allocation_size(sizeof(Node), size);
+    LinkedList<ArenaType> list(arena_size);
     for (size_t i = 0; i < size; ++i) {
         list.push_back(i);
     }
@@ -48,7 +50,8 @@ LinkedList<ArenaType> Generator::generate_sorted_linked_list(size_t size, std::s
 
 template <typename ArenaType>
 LinkedList<ArenaType> Generator::generate_reverse_sorted_linked_list(size_t size) {
-    LinkedList<ArenaType> list(sizeof(Node) * size);
+    auto arena_size = MemoryManager::compute_safe_allocation_size(sizeof(Node), size);
+    LinkedList<ArenaType> list(arena_size);
     for (size_t i = size; i > 0; --i) {
         list.push_back(i - 1);
     }
