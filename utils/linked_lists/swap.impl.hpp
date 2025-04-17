@@ -7,7 +7,7 @@ using namespace Checker;
 /**
  * @brief Short function to check our swap indexes
  */
-static void check_2_indexes(size_t size, size_t i, size_t j) {
+inline void check_2_indexes(size_t size, size_t i, size_t j) {
     if (i >= size || j >= size) {
         std::ostringstream oss;
         oss << "LinkedList::swap_values() : required index is out of bounds.\n";

@@ -27,9 +27,9 @@ export TEST_ON
 #         COMPILER
 # =========================
 
-CXX			= g++
-CXXFLAGS 	+= -std=c++17 -Wall -Wextra -Werror -pedantic
-CXXFLAGS 	+= -Wconversion -Wno-sign-compare -Wcast-align -Wunused -Wshadow
+CXX			 = clang++
+CXXFLAGS 	+= -std=c++17 -Wall -Wextra -pedantic
+CXXFLAGS 	+= -Wno-sign-compare -Wcast-align -Wshadow
 CXXFLAGS 	+= -Wpointer-arith
 CXXFLAGS 	+= -I.
 
