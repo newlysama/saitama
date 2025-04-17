@@ -13,18 +13,18 @@ It's a good occasion to see how we improved performance over time.
 **Scalable :** For "tbb::scalable_allocator" implementation, which stands for oneTBB scalable allocator, used to manager my vectors memory.   
 
 ```text
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|    Algorithm     | List Type |     LinkedList     |    LinkedList      |   LinkedList     | Perf. Impr |    Vectors     |    Vectors     |   Vectors     |  Perf Impr. |
-|                  |           |      (no MM)       |      (PMR)         |     (Bump)       |     LL     |    (no MM)     |     (PMR)      |  (Scalable)   |   Vectors   |
-|------------------|:---------:|:------------------:|:------------------:|:----------------:|:----------:|:--------------:|:--------------:|:-------------:|:-----------:|
-|   MergeSort      |  Random   |     9.012 s        |     2.577 s        |    0.558 s       |   x16.2    |    3.336 s     |    6.835 s     |   0.576 s     |    x5.8     |
-|   MergeSort      | Reversed  |     7.821 s        |     2.263 s        |    0.602 s       |   x13.0    |    3.024 s     |    6.538 s     |   0.847 s     |    x3.6     |
-|   MergeSort      |  Sorted   |     8.823 s        |     3.010 s        |    0.516 s       |   x17.1    |    3.024 s     |    6.538 s     |   0.851 s     |    x3.5     |
-| QuickSort Hoare  |  Random   |     5.538 s        |     1.999 s        |    0.841 s       |   x6.6     |    2.002 s     |    2.001 s     |   0.747 s     |    x2.7     |
-| QuickSort Hoare  | Reversed  |     4.428 s        |     1.999 s        |    0.601 s       |   x7.4     |    2.001 s     |    2.000 s     |   0.694 s     |    x2.9     |
-| QuickSort Hoare  |  Sorted   |     4.436 s        |     2.000 s        |    0.615 s       |   x7.2     |    2.000 s     |    2.000 s     |   0.690 s     |    x2.9     |
-| QuickSort Lomuto |  Random   |     5.112 s        |     1.998 s        |    1.358 s       |   x3.8     |    2.002 s     |    2.001 s     |   0.753 s     |    x2.7     |
-| QuickSort Lomuto | Reversed  |     4.227 s        |     1.999 s        |    1.280 s       |   x3.3     |    2.001 s     |    2.000 s     |   0.694 s     |    x2.9     |
-| QuickSort Lomuto |  Sorted   |     4.223 s        |     2.000 s        |    1.264 s       |   x3.3     |    2.000 s     |    2.000 s     |   0.710 s     |    x2.8     |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------
+|    Algorithm     | List Type |     LinkedList     |    LinkedList      |   LinkedList     |    Vectors     |    Vectors     |   Vectors     |
+|                  |           |      (no MM)       |      (PMR)         |     (Bump)       |    (no MM)     |     (PMR)      |  (Scalable)   |
+|------------------|:---------:|:------------------:|:------------------:|:----------------:|:--------------:|:--------------:|:-------------:|
+|   MergeSort      |  Random   |     4.501 s        |     2.577 s        |    0.558 s       |    23.053 s    |    6.835 s     |   0.576 s     |
+|   MergeSort      | Reversed  |     5.735 s        |     2.263 s        |    0.602 s       |    53.078 s    |    6.538 s     |   0.847 s     |
+|   MergeSort      |  Sorted   |     6.772 s        |     3.010 s        |    0.516 s       |    37.552 s    |    6.538 s     |   0.851 s     |
+| QuickSort Hoare  |  Random   |     26.531 s       |     4.038 s        |    0.841 s       |    0.638 s     |    0.817 s     |   0.747 s     |
+| QuickSort Hoare  | Reversed  |     33.232 s       |     3.185 s        |    0.601 s       |    0.714 s     |    0.690 s     |   0.694 s     |
+| QuickSort Hoare  |  Sorted   |     28.564 s       |     3.243 s        |    0.615 s       |    0.717 s     |    0.632 s     |   0.690 s     |
+| QuickSort Lomuto |  Random   |     29.341 s       |     6.246 s        |    1.358 s       |    0.626 s     |    0.923 s     |   0.753 s     |
+| QuickSort Lomuto | Reversed  |     37.445 s       |     5.760 s        |    1.280 s       |    0.723 s     |    0.591 s     |   0.694 s     |
+| QuickSort Lomuto |  Sorted   |     33.647 s       |     5.728 s        |    1.264 s       |    0.719 s     |    0.811 s     |   0.710 s     |
+-----------------------------------------------------------------------------------------------------------------------------------------------
 ```
