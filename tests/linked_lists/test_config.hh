@@ -1,7 +1,7 @@
 #pragma once
 
 #include <gtest/gtest.h>
-#include "tests/test_utils.hh" 
+#include "tests/test_utils/test_utils.hh" 
 #include "utils/linked_lists/linked_lists.hh"
 #include "utils/linked_lists/linked_lists_algorithms.hh"
 #include "utils/memory_manager/memory_manager.hh"
