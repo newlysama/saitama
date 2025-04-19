@@ -19,16 +19,23 @@ endif
 #       			    SOURCES SELECTION
 # ================================================================
 
-# EXERCISE
+### EXERCISE ###
+
 EXO_QUICKSORT_MERGESORT			:= 1
 
-# BENCHMARK
-BENCHMARK_QUICKSORT_MERGESORT	:= 1
 
-# TESTS
+#### BENCHMARK ###
+
+BENCHMARK_QUICKSORT_MERGESORT	:= 1
+BENCHMARK_WEBSOCKET				:= 1
+
+
+### TESTS ###
+
 # Test Utils
 TEST_LINKED_LISTS				:= 1
 TEST_VECTOR_UTILS				:= 1
+TEST_WEBSOCKET					:= 1
 
 # Test Exercises
 TEST_QUICKSORT_MERGESORT		:= 1
@@ -73,6 +80,12 @@ ifeq ($(BENCHMARK_ON),1)
 		UTILS_SRC		+= $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
 	endif
 
+	ifeq ($(BENCHMARK_WEBSOCKET),1)
+		LDFLAGS         += -lmbedtls -lmbedx509 -lmbedcrypto
+		BENCHMARK_SRC	+= benchmarks/websocket/benchmark_runner.cpp
+		UTILS_SRC		+= $(wildcard utils/websocket/*.cpp)
+	endif
+
 endif
 
 # ================================================================
@@ -82,7 +95,7 @@ endif
 ifeq ($(TEST_ON),1)
 #	Only use fsanitize in tests, since this options drastically reduces perfs.
 	CXXFLAGS += -fsanitize=address
-	LDFLAGS  += -lgtest -lgtest_main -pthread
+	LDFLAGS  += -lgtest -lgtest_main -lpthread
 
 	ifeq ($(TEST_LINKED_LISTS),1)
 		TEST_SRC	+= $(wildcard tests/linked_lists/*.cpp)
@@ -93,11 +106,18 @@ ifeq ($(TEST_ON),1)
 		UTILS_SRC	+= $(wildcard utils/vector_utils/*.cpp)
 	endif
 
+	ifeq ($(TEST_WEBSOCKET),1)
+		LDFLAGS     += -lmbedtls -lmbedx509 -lmbedcrypto
+		TEST_SRC	+= $(wildcard tests/websocket/*.cpp)
+		UTILS_SRC   += $(wildcard utils/websocket/*.cpp)
+	endif
+
 	ifeq ($(TEST_QUICKSORT_MERGESORT),1)
 		TEST_SRC	+= $(wildcard tests/quicksort_mergesort/*.cpp)
 		EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
 		UTILS_SRC	+= $(wildcard utils/vector_utils/*.cpp)
 	endif
+
 
 endif
 
