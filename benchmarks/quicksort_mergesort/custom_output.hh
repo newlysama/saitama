@@ -51,7 +51,7 @@ public:
         }
     }
 
-    void Finalize() {
+    void Finalize() override {
         std::set<std::string> all_structures;
         std::set<std::string> all_types;
         std::set<std::string> all_algos;
