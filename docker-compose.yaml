@@ -1,0 +1,33 @@
+services:
+
+  submodules:
+    user: "1000:1000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: submodules
+      args:
+        - HOST_UID=1000
+        - HOST_GID=1000
+    container_name: submodules-build
+    image: submodules-build:latest
+    volumes:
+      - ./:/app
+    command: bash /app/scripts/build_submodules.sh
+
+  build:
+    user: "1000:1000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+      args:
+        - HOST_UID=1000
+        - HOST_GID=1000
+    container_name: saitama-build
+    image: saitama-builder:latest
+    volumes:
+      - ./:/app
+    depends_on:
+      - submodules
+    command: bash -lc "make -j\$(nproc) ${MAKE_TARGET}"
