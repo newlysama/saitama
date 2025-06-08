@@ -10,7 +10,7 @@
  * 
  * When using the custom format output, the default unit for time is second, but not for
  * default output format. So if you want to use default and get second as unit, make sure
- * to run the benchmark with make-benchmark rule, as it forces the unit type to second.
+ * to run the benchmark with run-benchmark rule, as it forces the unit type to second.
  */
 
 #include <benchmark/benchmark.h>
