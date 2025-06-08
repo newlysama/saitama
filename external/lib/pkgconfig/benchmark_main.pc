@@ -1,7 +1,0 @@
-libdir=/home/thibault/training/saitama/external/lib
-
-Name: benchmark
-Description: Google microbenchmark framework (with main() function)
-Version: 1.9.2.3
-Requires: benchmark
-Libs: -L${libdir} -lbenchmark_main
