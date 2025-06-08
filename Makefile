@@ -111,7 +111,7 @@ $(TEST_NAME): $(OBJ_TESTS) $(OBJ_UTILS) $(OBJ_EXO)
 
 $(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	@echo "$(COLOR_BLUE)[CC]$(COLOR_RESET) $<"
+	@echo "$(COLOR_BLUE)[CXX]$(COLOR_RESET) $<"
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # =========================
