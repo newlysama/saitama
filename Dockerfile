@@ -28,7 +28,7 @@ CMD ["bash"]
 #--------------------------------------#
 # Build project                        #
 #--------------------------------------#
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:22.04 AS saitama
 
 ENV DEBIAN_FRONTEND=noninteractive
 

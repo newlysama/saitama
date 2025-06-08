@@ -15,19 +15,17 @@ services:
       - ./:/app
     command: bash /app/scripts/build_submodules.sh
 
-  build:
+  saitama:
     user: "1000:1000"
     build:
       context: .
       dockerfile: Dockerfile
-      target: builder
+      target: saitama
       args:
         - HOST_UID=1000
         - HOST_GID=1000
     container_name: saitama-build
-    image: saitama-builder:latest
+    image: saitama-build:latest
     volumes:
       - ./:/app
-    depends_on:
-      - submodules
     command: bash -lc "make -j\$(nproc) ${MAKE_TARGET}"
