@@ -4,3 +4,6 @@
 [submodule "submodules/benchmark"]
 	path = submodules/benchmark
 	url = https://github.com/google/benchmark.git
+[submodule "submodules/oneTBB"]
+	path = submodules/oneTBB
+	url = git@github.com:uxlfoundation/oneTBB.git
