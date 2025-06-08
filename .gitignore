@@ -4,6 +4,7 @@ bin/
 
 # Trash files
 .vscode/
+.idea/
 
 # Submodules
 submodules/
