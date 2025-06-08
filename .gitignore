@@ -4,3 +4,7 @@ bin/
 
 # Trash files
 .vscode/
+
+# Submodules
+submodules/
+external/
