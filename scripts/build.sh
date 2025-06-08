@@ -45,24 +45,24 @@ build_submodules() {
 }
 
 build_all() {
-  log INFO "Starting all build..."
+  log INFO "Starting saitama all build..."
 
   export MAKE_TARGET=all
-  docker compose up --build build
+  docker compose up --build saitama
 }
 
 build_test() {
-  log INFO "Starting test build..."
+  log INFO "Starting saitama test build..."
 
   export MAKE_TARGET=test
-  docker compose up --build build
+  docker compose up --build saitama
 }
 
 build_benchmark() {
-  log INFO "Starting benchmark build..."
+  log INFO "Starting saitama benchmark build..."
 
   export MAKE_TARGET=benchmark
-  docker compose up --build build
+  docker compose up --build saitama
 }
 
 #------------------------------------------------------------------------------#
