@@ -1,6 +1,6 @@
 [submodule "submodules/gtest"]
-	path = submodules/gtest
+	path = external/submodules/gtest
 	url = https://github.com/google/googletest.git
 [submodule "submodules/benchmark"]
-	path = submodules/benchmark
+	path = external/submodules/benchmark
 	url = https://github.com/google/benchmark.git
