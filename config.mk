@@ -42,7 +42,7 @@ LDFLAGS  += -Lexternal/lib -ltbb -ltbbmalloc
 
 
 # Always include logger
-UTILS_SRC += $(wildcard utils/logger/*.cpp) $(wildcard utils/memory_manager/*.cpp)
+UTILS_SRC += $(wildcard src/utils/logger/*.cpp) $(wildcard src/utils/memory_manager/*.cpp)
 
 # ================================================================
 #       			EXERCISES SOURCES
@@ -52,9 +52,9 @@ UTILS_SRC += $(wildcard utils/logger/*.cpp) $(wildcard utils/memory_manager/*.cp
 ifeq ($(EXO_ON),1)
 
 	ifeq ($(EXO_QUICKSORT_MERGESORT),1)
-		EXO_SRC		+= exos/mains/quicksort_mergesort.cpp
-		EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC	+= $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
+		EXO_SRC		+= src/exos/mains/quicksort_mergesort.cpp
+		EXO_SRC		+= $(wildcard src/exos/quicksort_mergesort/*.cpp)
+		UTILS_SRC	+= $(wildcard src/utils/vector_utils/*.cpp) $(wildcard src/utils/generator/*.cpp)
 	endif
 
 endif
@@ -64,13 +64,13 @@ endif
 # ================================================================
 
 ifeq ($(BENCHMARK_ON),1)
-	CXXFLAGS += -O2
+	CXXFLAGS += -O3
 	LDFLAGS  += -lbenchmark -lbenchmark_main -lpthread
 
 	ifeq ($(BENCHMARK_QUICKSORT_MERGESORT),1)
-		BENCHMARK_SRC	+= benchmarks/quicksort_mergesort/benchmark_runner.cpp
-		EXO_SRC			+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC		+= $(wildcard utils/vector_utils/*.cpp) $(wildcard utils/generator/*.cpp)
+		BENCHMARK_SRC	+= src/benchmarks/quicksort_mergesort/benchmark_runner.cpp
+		EXO_SRC			+= $(wildcard src/exos/quicksort_mergesort/*.cpp)
+		UTILS_SRC		+= $(wildcard src/utils/vector_utils/*.cpp) $(wildcard src/utils/generator/*.cpp)
 	endif
 
 endif
@@ -85,19 +85,18 @@ ifeq ($(TEST_ON),1)
 	LDFLAGS  += -lgtest -lgtest_main -pthread
 
 	ifeq ($(TEST_LINKED_LISTS),1)
-		TEST_SRC	+= $(wildcard tests/linked_lists/*.cpp)
+		TEST_SRC	+= $(wildcard src/tests/linked_lists/*.cpp)
 	endif
 
 	ifeq ($(TEST_VECTOR_UTILS),1)
-		TEST_SRC	+= $(wildcard tests/vector_utils/*.cpp)
-		UTILS_SRC	+= $(wildcard utils/vector_utils/*.cpp)
+		TEST_SRC	+= $(wildcard src/tests/vector_utils/*.cpp)
+		UTILS_SRC	+= $(wildcard src/utils/vector_utils/*.cpp)
 	endif
 
 	ifeq ($(TEST_QUICKSORT_MERGESORT),1)
-		TEST_SRC	+= $(wildcard tests/quicksort_mergesort/*.cpp)
-		EXO_SRC		+= $(wildcard exos/quicksort_mergesort/*.cpp)
-		UTILS_SRC	+= $(wildcard utils/vector_utils/*.cpp)
+		TEST_SRC	+= $(wildcard src/tests/quicksort_mergesort/*.cpp)
+		EXO_SRC		+= $(wildcard src/exos/quicksort_mergesort/*.cpp)
+		UTILS_SRC	+= $(wildcard src/utils/vector_utils/*.cpp)
 	endif
 
 endif
-

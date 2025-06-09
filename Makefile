@@ -38,7 +38,7 @@ export TEST_ON
 CXX       = clang++
 CXXFLAGS += -std=c++20 -Wall -Wextra -pedantic
 CXXFLAGS += -Wno-sign-compare -Wno-self-move
-CXXFLAGS += -I.
+CXXFLAGS += -Isrc
 
 # =========================
 #        FOLDERS
