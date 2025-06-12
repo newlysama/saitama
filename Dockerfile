@@ -38,7 +38,6 @@ ARG HOST_GID=1000
 RUN groupadd -g ${HOST_GID} hostgroup \
  && useradd -l -u ${HOST_UID} -g ${HOST_GID} -m hostuser
 
-# Installer outils de build et dépendances système de votre projet
 RUN apt-get update && apt-get install -y --no-install-recommends \
       build-essential clang llvm make && \
     rm -rf /var/lib/apt/lists/*
